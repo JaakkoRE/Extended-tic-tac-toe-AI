@@ -7,6 +7,7 @@ package com.mycompany.UserInterface;
 
 import com.mycompany.tictactoeai.BoardLogic.Board;
 import com.mycompany.tictactoeai.BoardLogic.GameStatus;
+import com.mycompany.tictactoeai.AILogic.MinMaxAI;
 import java.util.Scanner;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Scanner;
  * @author Jaakko
  */
 
+//  work in progress
 public class UI {
     public GameStatus status;
     Scanner scanner = new Scanner(System.in);
@@ -25,19 +27,37 @@ public class UI {
         this.status = new GameStatus(new Board(xLength, yLength, vcl));
         System.out.println("move:");
     }
+ /**
+ * Method takes first the 3 values of the board and then moves with . in between. For example 3 enter 3 enter 3 enter 2.2 enter
+ */
+ //  work in progress
     public void UILogic() {
+        MinMaxAI ai = new MinMaxAI(this.status);
+        this.status = ai.alphaBetaBoard(this.status);
+        System.out.println(this.status.board);
         while (!this.status.isBoardFull()) {
             String nextMove = scanner.nextLine(); 
             String[] split = nextMove.split("\\.");
             int[] cord = new int[2];
             cord[0] = Integer.parseInt(split[0]);
             cord[1] = Integer.parseInt(split[1]); 
-            char result = this.status.setBoardValue(cord[0], cord[1]);
+            
+            this.status.setBoardValue(cord[0], cord[1]);
             System.out.println(this.status.board.toString());
+            char result = status.checkAll();
+            if (!(result == 0)) {
+                System.out.println(result);
+                break;
+            } 
+            
+            this.status = ai.alphaBetaBoard(this.status);
+            System.out.println(this.status.board.toString());
+            result = status.checkAll();
             if (!(result == 0)) {
                 System.out.println(result);
                 break;
             }
+            System.out.println(status.checkAll() + "haha");
             
         }
     }

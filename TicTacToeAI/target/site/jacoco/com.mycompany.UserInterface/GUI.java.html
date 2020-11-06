@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.UserInterface</a> &gt; <span class="el_source">GUI.java</span></div><h1>GUI.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.UserInterface;
+
+/**
+ *
+ * @author Jaakko
+ */
+import com.mycompany.tictactoeai.BoardLogic.Board;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+// rough. very work in progress
+public class GUI extends Application {
+
+    public GridPane boardUi;
+    public Board board;
+    public char[][] gameBoard;
+    public Button[][] buttons;
+<span class="nc" id="L38">    public GUI() {</span>
+<span class="nc" id="L39">        this.board = new Board(1,1,1);</span>
+<span class="nc" id="L40">        this.gameBoard = board.getGameBoard();</span>
+<span class="nc" id="L41">    }</span>
+    public void setBoard(Board board) {
+<span class="nc" id="L43">        this.board = board;</span>
+<span class="nc" id="L44">        this.gameBoard = board.getGameBoard();</span>
+<span class="nc" id="L45">    }</span>
+    public void interFaceStart() {  
+<span class="nc" id="L47">        launch(GUI.class);</span>
+<span class="nc" id="L48">    }</span>
+    @Override
+    public void start(Stage window) throws Exception {
+<span class="nc" id="L51">        VBox startingScreen = new VBox();</span>
+<span class="nc" id="L52">        TextField xLength = new TextField();</span>
+<span class="nc" id="L53">        xLength.setPromptText(&quot;Board width&quot;);</span>
+<span class="nc" id="L54">        TextField yLength = new TextField();</span>
+<span class="nc" id="L55">        yLength.setPromptText(&quot;Board height&quot;);</span>
+<span class="nc" id="L56">        TextField vclField = new TextField();</span>
+<span class="nc" id="L57">        vclField.setPromptText(&quot;Victory condition length&quot;);</span>
+<span class="nc" id="L58">        Button start = new Button(&quot;Start&quot;);</span>
+<span class="nc" id="L59">        startingScreen.getChildren().addAll(xLength,yLength,vclField,start);</span>
+<span class="nc" id="L60">        int hei = 5;</span>
+<span class="nc" id="L61">        start.setOnAction((event) -&gt; {</span>
+<span class="nc" id="L62">            int x =  Integer.parseInt(xLength.getText());</span>
+<span class="nc" id="L63">            int y =  Integer.parseInt(yLength.getText());</span>
+<span class="nc" id="L64">            int vcl =  Integer.parseInt(vclField.getText());</span>
+<span class="nc" id="L65">            this.board = new Board(x,y,vcl);</span>
+<span class="nc" id="L66">            this.gameBoard = board.getGameBoard();</span>
+<span class="nc" id="L67">            GridPane gridpane = boardSetUp();</span>
+<span class="nc" id="L68">            Scene view = new Scene(gridpane, 450, 300);</span>
+<span class="nc" id="L69">            window.setScene(view);</span>
+<span class="nc" id="L70">            boardUi = gridpane;</span>
+<span class="nc" id="L71">        });</span>
+        
+<span class="nc" id="L73">        Scene view = new Scene(startingScreen, 450, 300);</span>
+<span class="nc" id="L74">        window.setScene(view);</span>
+<span class="nc" id="L75">        window.show();</span>
+<span class="nc" id="L76">    }</span>
+    
+    public GridPane boardSetUp() {
+<span class="nc" id="L79">        GridPane gridpane = new GridPane();</span>
+<span class="nc" id="L80">        gridpane.setPadding(new Insets(7,7,7,7));</span>
+<span class="nc" id="L81">        gridpane.setVgap(4);</span>
+<span class="nc" id="L82">        gridpane.setHgap(4);</span>
+        
+<span class="nc" id="L84">        Button[][] buttonlist = new Button[gameBoard.length][gameBoard[0].length];</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        for (int i = 0; i &lt; gameBoard.length; i++){</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            for (int j = 0; j &lt; gameBoard[0].length; j++){</span>
+<span class="nc" id="L87">                buttonlist[i][j] = new Button(gameBoard[i][j]+&quot;&quot;);</span>
+<span class="nc" id="L88">                gridpane.add(buttonlist[i][j],i,j);</span>
+<span class="nc" id="L89">                Button hei = new Button();</span>
+<span class="nc" id="L90">                buttonlist[i][j].setOnAction((event) -&gt; {</span>
+<span class="nc" id="L91">                });</span>
+            }
+        }
+
+<span class="nc" id="L95">        return gridpane;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

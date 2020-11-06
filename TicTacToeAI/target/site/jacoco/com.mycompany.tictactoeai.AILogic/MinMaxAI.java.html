@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinMaxAI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.AILogic</a> &gt; <span class="el_source">MinMaxAI.java</span></div><h1>MinMaxAI.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.AILogic;
+
+import com.mycompany.tictactoeai.BoardLogic.Board;
+import com.mycompany.tictactoeai.BoardLogic.GameStatus;
+import com.mycompany.tictactoeai.Methods.MinimumMaximum;
+import com.mycompany.tictactoeai.Methods.ArrayList;
+
+/**
+ *
+ * @author Jaakko
+ */
+
+/**
+ * Class is the MinMax part of the AI 
+ */
+public class MinMaxAI {
+    public GameStatus status;
+    public MinimumMaximum minmax;
+    public int bestV;
+    public GameStatus bestStatus;
+    public char originalStart;
+    public char opponentOriginalStart;
+    
+<span class="nc" id="L29">    public MinMaxAI(GameStatus status) {</span>
+<span class="nc" id="L30">        bestV = -99999999;</span>
+<span class="nc" id="L31">        this.status = status;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (status.currentPlayer == 'O') {</span>
+<span class="nc" id="L33">            opponentOriginalStart = 'X';</span>
+        } else {
+<span class="nc" id="L35">            opponentOriginalStart = 'O';</span>
+        }
+<span class="nc" id="L37">        this.minmax = new MinimumMaximum();</span>
+<span class="nc" id="L38">    }</span>
+    
+    /**
+    * Method returns the heuristic value of the best possible move
+    * 
+    * 
+    * @return int heuristic value
+    */
+    public int alphaBetaValue(GameStatus status) {
+<span class="nc" id="L47">        this.status = status;   </span>
+<span class="nc" id="L48">        this.originalStart = status.currentPlayer;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (status.currentPlayer == 'O') {</span>
+<span class="nc" id="L50">            opponentOriginalStart = 'X';</span>
+        } else {
+<span class="nc" id="L52">            opponentOriginalStart = 'O';</span>
+        }
+<span class="nc" id="L54">        int returnVal = maxValue(this.status, -1, 1, 0);</span>
+<span class="nc" id="L55">        return returnVal;</span>
+    }
+    /**
+    * Method returns the best next move
+    * 
+    * 
+     *@param status 
+    * @return GameStatus status of the best move
+    */
+    public GameStatus alphaBetaBoard(GameStatus status) {
+<span class="nc" id="L65">        this.status = status;</span>
+<span class="nc" id="L66">        this.originalStart = status.currentPlayer;</span>
+<span class="nc" id="L67">        bestV = -99999999;</span>
+<span class="nc" id="L68">        maxValue(this.status, -1, 1, 0);</span>
+<span class="nc" id="L69">        return bestStatus;</span>
+    }
+    /**
+    * Max part of the min max algorithm
+    * 
+    * 
+    * @param status GameStatus that is being checked 
+    * @param alpha int alpha value of the min-max 
+    * @param beta int beta value of the min-max 
+    * @param depth tells how deep is the recursion
+    * @return int of the max value
+    */
+    private int maxValue(GameStatus status, int alpha, int beta, int depth) {
+<span class="nc" id="L82">        this.status = status;</span>
+<span class="nc" id="L83">        char statusValue = status.checkAll();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (statusValue == 'n') {</span>
+<span class="nc" id="L85">            return 0;</span>
+        }
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (statusValue == originalStart) {</span>
+<span class="nc" id="L88">            return 1000;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        } else if (statusValue == opponentOriginalStart) {</span>
+<span class="nc" id="L90">            return -1000;</span>
+        }
+//            System.out.println(&quot;joi&quot;);
+//            System.out.println(node.toString());
+//            System.out.println(node.value(originalStart));
+//            System.out.println(node.isEndState() +&quot; ja &quot; + node.won('o')); 
+        
+<span class="nc" id="L97">        int v = -9999999;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
+<span class="nc" id="L99">            v = minmax.max(v, minValue(nodeChild, alpha, beta, depth + 1));</span>
+<span class="nc" id="L100">            alpha = minmax.max(alpha, v);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">            if (alpha  &gt;= beta) {</span>
+
+<span class="nc" id="L103">                return v;</span>
+                
+            }
+        }
+
+<span class="nc" id="L108">        return v;</span>
+//    if end_state(node): return value(node)
+//    v = -Inf
+//    for each child in node.children():
+//       v = max(v, min_value(child, alpha, beta))
+//       alpha = max(alpha, v)
+//       if alpha &gt;= beta: return v
+//    return v
+    }
+    /**
+    * Min part of the min max algorithm
+    * 
+    * 
+    * @param status GameStatus that is being checked 
+    * @param alpha int alpha value of the min-max 
+    * @param beta int beta value of the min-max 
+    * @param depth tells how deep is the recursion
+    * int of the min value
+    */
+    private int minValue(GameStatus status, int alpha, int beta, int depth) {
+
+<span class="nc" id="L129">        this.status = status;</span>
+<span class="nc" id="L130">        char statusValue = status.checkAll();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (statusValue == 'O') {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            if (depth == 1) {</span>
+<span class="nc" id="L133">                this.bestStatus = status.copyGameStatus();</span>
+<span class="nc" id="L134">                bestV = 1000;</span>
+            }
+<span class="nc" id="L136">            return 1000;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        } else if (statusValue == 'X') {</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">            if (depth == 1 &amp;&amp; bestV &gt; -1000) {</span>
+<span class="nc" id="L139">                this.bestStatus = status.copyGameStatus();</span>
+            }
+<span class="nc" id="L141">            bestV = -1000;</span>
+<span class="nc" id="L142">            return -1000;</span>
+        }
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (statusValue == 'n') {</span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">            if (depth == 1 &amp;&amp; bestV &lt; 0) {</span>
+<span class="nc" id="L146">                this.bestStatus = status.copyGameStatus();</span>
+<span class="nc" id="L147">                bestV = 0;</span>
+            }
+<span class="nc" id="L149">            return 0;</span>
+        }
+<span class="nc" id="L151">        int v = 9999999;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
+<span class="nc" id="L153">            v = minmax.min(v, maxValue(nodeChild, alpha, beta, depth + 1));</span>
+<span class="nc" id="L154">            beta = minmax.min(beta, v);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">            if (alpha  &gt;= beta) {</span>
+
+<span class="nc bnc" id="L157" title="All 4 branches missed.">                if (depth == 1 &amp;&amp; v &gt; bestV) {</span>
+<span class="nc" id="L158">                    this.bestStatus = status.copyGameStatus();</span>
+<span class="nc" id="L159">                    bestV = v;</span>
+                }
+<span class="nc" id="L161">                return v;</span>
+            }
+        }
+
+<span class="nc bnc" id="L165" title="All 4 branches missed.">        if (depth == 1 &amp;&amp; v &gt; bestV) {</span>
+<span class="nc" id="L166">            this.bestStatus = status.copyGameStatus();</span>
+<span class="nc" id="L167">            bestV = v;</span>
+        }
+<span class="nc" id="L169">        return v;        </span>
+        
+    }
+    /*
+    * Methods generates all legal boards possible and returns an ArrayList of them
+    * @return ArrayList that contains legal possible moves
+    */
+    private ArrayList generateBoards() {
+<span class="nc" id="L177">        ArrayList children = new ArrayList();</span>
+<span class="nc" id="L178">        Board board = status.board;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        for (int i = 0; i &lt; board.gameBoard.length; i++) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            for (int j = 0; j &lt; board.gameBoard[0].length; j++) {</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">                if ((board.gameBoard[i][j] == '_')) {</span>
+<span class="nc" id="L182">                    board.gameBoard[i][j] = status.currentPlayer;</span>
+<span class="nc" id="L183">                    children.add(new GameStatus(this.status.board.copyBoard(), status.otherPlayer()));</span>
+<span class="nc" id="L184">                    board.gameBoard[i][j] = '_';</span>
+                }
+            }
+        }
+
+<span class="nc" id="L189">        return children;</span>
+    }
+
+}
+
+    
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -50,4 +50,11 @@
                 <goal>checkstyle:check</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-jacoco</actionName>
+            <displayName>jacoco</displayName>
+            <goals>
+                <goal>jacoco:report</goal>
+            </goals>
+        </action>
     </actions>

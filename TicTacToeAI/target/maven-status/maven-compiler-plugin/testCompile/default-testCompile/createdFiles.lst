@@ -1,0 +1,4 @@
+boardLogicTests\boardTest.class
+boardLogicTests\gameStatusTest.class
+methodTests\ArrayListTests.class
+methodTests\MinMaxTests.class

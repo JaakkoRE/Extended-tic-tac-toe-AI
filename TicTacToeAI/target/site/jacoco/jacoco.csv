@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+TicTacToeAi,com.mycompany.tictactoeai.AILogic,MinMaxAI,341,0,48,0,74,0,30,0,6,0
+TicTacToeAi,com.mycompany.UserInterface,UI,146,0,6,0,32,0,5,0,2,0
+TicTacToeAi,com.mycompany.UserInterface,Main,93,0,0,0,16,0,2,0,2,0
+TicTacToeAi,com.mycompany.UserInterface,GUI,239,0,4,0,47,0,9,0,7,0
+TicTacToeAi,com.mycompany.tictactoeai.Methods,MinimumMaximum,0,17,0,4,0,7,0,5,0,3
+TicTacToeAi,com.mycompany.tictactoeai.Methods,ArrayList,0,105,0,8,0,25,0,10,0,6
+TicTacToeAi,com.mycompany.tictactoeai.BoardLogic,GameStatus,21,425,2,76,8,102,3,48,1,11
+TicTacToeAi,com.mycompany.tictactoeai.BoardLogic,Board,0,205,1,31,0,37,1,22,0,7

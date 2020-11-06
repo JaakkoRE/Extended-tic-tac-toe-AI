@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.BoardLogic</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.BoardLogic;
+
+/**
+ *
+ * @author Jaakko
+ */
+/**
+ * Class is storing and giving basic operations of the gameboard of tic-tac-toe
+ */
+public class Board {
+    public char[][] gameBoard;
+    public int vcl;
+    public int sizex;
+    public int sizey;
+<span class="fc" id="L20">    public Board(int sizeX, int sizeY, int victoryConditionLength) {</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (sizeX &lt;= 1) {</span>
+<span class="fc" id="L22">            sizeX = 1;</span>
+        }
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (sizeY &lt;= 1) {</span>
+<span class="fc" id="L25">            sizeY = 1;</span>
+        }
+<span class="fc" id="L27">        this.sizex = sizeX;</span>
+<span class="fc" id="L28">        this.sizey = sizeY;</span>
+<span class="fc bfc" id="L29" title="All 4 branches covered.">        if (victoryConditionLength &gt; sizeX &amp;&amp; victoryConditionLength &gt; sizeY) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (sizeX &lt;= sizeY) {</span>
+<span class="fc" id="L31">                victoryConditionLength = sizeY;</span>
+            } else {
+<span class="fc" id="L33">                victoryConditionLength = sizeX;</span>
+            }
+        }           
+<span class="fc" id="L36">        this.gameBoard = new char[sizeX][sizeY];</span>
+<span class="fc" id="L37">        this.vcl = victoryConditionLength;</span>
+<span class="fc" id="L38">        setUpBoard();</span>
+<span class="fc" id="L39">    }</span>
+    
+    /**
+    * Method changes an empty slot in the tic-tac-toe board to players symbol
+    * 
+    * @param x int that gives the x coordinates
+    * @param y int that gives the y coordinates
+    * @param symbol char that tells which symbol will be put in the slot
+    * 
+    * @return boolean that confirms that the change was succesful or not
+    */
+    public boolean changeBoardValue(int x, int y, char symbol) {
+<span class="pc bpc" id="L51" title="1 of 8 branches missed.">        if (x &gt;= 0 &amp;&amp; x &lt; gameBoard.length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; gameBoard[0].length) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (gameBoard[x][y] == ('_')) {</span>
+<span class="fc" id="L53">                this.gameBoard[x][y] = symbol;</span>
+<span class="fc" id="L54">                return true;</span>
+            }
+        }
+<span class="fc" id="L57">        return false;</span>
+    }
+    /**
+    * Method sets an empty board
+    * 
+    */
+    public void setUpBoard() {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L66">                gameBoard[i][j] = '_';</span>
+            }
+        }
+<span class="fc" id="L69">    }</span>
+    /**
+    * Method returns the board as an two dimensional list
+    * 
+    * @return char[][] char list with all symbols in the board
+    */
+    public char[][] getGameBoard() {
+<span class="fc" id="L76">        return gameBoard;</span>
+    }
+    /**
+    * Method returns victory length condition
+    * 
+    * @return returns int that is the victory length condition
+    */
+    public int getVcl() {
+<span class="fc" id="L84">        return vcl;</span>
+    }
+    /**
+    * Method returns a copy of the current board
+    * 
+    * @return Board that is the copy of the current board
+    */
+    public Board copyBoard() {
+<span class="fc" id="L92">        Board returnBoard = new Board(sizex, sizey, vcl);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L95">                returnBoard.gameBoard[i][j] = gameBoard[i][j];</span>
+            }
+        }
+<span class="fc" id="L98">        return returnBoard;</span>
+    }
+    /**
+    * Method returns a string of the board
+    * 
+    * @return String which displays all of the symbols in the board
+    */
+    @Override
+    public String toString() {
+<span class="fc" id="L107">        String boardToString = &quot;&quot;;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L110">                boardToString += gameBoard[i][j] + &quot; &quot;;</span>
+            }
+<span class="fc" id="L112">            boardToString += &quot;\n&quot;;</span>
+        }
+<span class="fc" id="L114">        return boardToString;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
