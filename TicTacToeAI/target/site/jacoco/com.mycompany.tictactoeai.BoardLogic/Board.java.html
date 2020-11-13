@@ -14,29 +14,33 @@ package com.mycompany.tictactoeai.BoardLogic;
  */
 public class Board {
     public char[][] gameBoard;
+    public int boardSize;
+    public int boardfulfillment;
     public int vcl;
     public int sizex;
     public int sizey;
-<span class="fc" id="L20">    public Board(int sizeX, int sizeY, int victoryConditionLength) {</span>
-<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (sizeX &lt;= 1) {</span>
-<span class="fc" id="L22">            sizeX = 1;</span>
+<span class="fc" id="L22">    public Board(int sizeX, int sizeY, int victoryConditionLength) {</span>
+<span class="fc" id="L23">        boardfulfillment = 0;</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (sizeX &lt;= 1) {</span>
+<span class="fc" id="L25">            sizeX = 1;</span>
         }
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (sizeY &lt;= 1) {</span>
-<span class="fc" id="L25">            sizeY = 1;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (sizeY &lt;= 1) {</span>
+<span class="fc" id="L28">            sizeY = 1;</span>
         }
-<span class="fc" id="L27">        this.sizex = sizeX;</span>
-<span class="fc" id="L28">        this.sizey = sizeY;</span>
-<span class="fc bfc" id="L29" title="All 4 branches covered.">        if (victoryConditionLength &gt; sizeX &amp;&amp; victoryConditionLength &gt; sizeY) {</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (sizeX &lt;= sizeY) {</span>
-<span class="fc" id="L31">                victoryConditionLength = sizeY;</span>
+<span class="fc" id="L30">        this.sizex = sizeX;</span>
+<span class="fc" id="L31">        this.sizey = sizeY;</span>
+<span class="fc bfc" id="L32" title="All 4 branches covered.">        if (victoryConditionLength &gt; sizeX &amp;&amp; victoryConditionLength &gt; sizeY) {</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (sizeX &lt;= sizeY) {</span>
+<span class="fc" id="L34">                victoryConditionLength = sizeY;</span>
             } else {
-<span class="fc" id="L33">                victoryConditionLength = sizeX;</span>
+<span class="fc" id="L36">                victoryConditionLength = sizeX;</span>
             }
         }           
-<span class="fc" id="L36">        this.gameBoard = new char[sizeX][sizeY];</span>
-<span class="fc" id="L37">        this.vcl = victoryConditionLength;</span>
-<span class="fc" id="L38">        setUpBoard();</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L39">        this.gameBoard = new char[sizeX][sizeY];</span>
+<span class="fc" id="L40">        this.vcl = victoryConditionLength;</span>
+<span class="fc" id="L41">        boardSize = sizeX * sizeY;</span>
+<span class="fc" id="L42">        setUpBoard();</span>
+<span class="fc" id="L43">    }</span>
     
     /**
     * Method changes an empty slot in the tic-tac-toe board to players symbol
@@ -48,32 +52,33 @@ public class Board {
     * @return boolean that confirms that the change was succesful or not
     */
     public boolean changeBoardValue(int x, int y, char symbol) {
-<span class="pc bpc" id="L51" title="1 of 8 branches missed.">        if (x &gt;= 0 &amp;&amp; x &lt; gameBoard.length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; gameBoard[0].length) {</span>
-<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (gameBoard[x][y] == ('_')) {</span>
-<span class="fc" id="L53">                this.gameBoard[x][y] = symbol;</span>
-<span class="fc" id="L54">                return true;</span>
+<span class="pc bpc" id="L55" title="2 of 8 branches missed.">        if (x &gt;= 0 &amp;&amp; x &lt; gameBoard.length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; gameBoard[0].length) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (gameBoard[x][y] == ('_')) {</span>
+<span class="fc" id="L57">                this.gameBoard[x][y] = symbol;</span>
+<span class="fc" id="L58">                boardfulfillment++;</span>
+<span class="fc" id="L59">                return true;</span>
             }
         }
-<span class="fc" id="L57">        return false;</span>
+<span class="fc" id="L62">        return false;</span>
     }
     /**
     * Method sets an empty board
     * 
     */
     public void setUpBoard() {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
-<span class="fc" id="L66">                gameBoard[i][j] = '_';</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L71">                gameBoard[i][j] = '_';</span>
             }
         }
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L74">    }</span>
     /**
     * Method returns the board as an two dimensional list
     * 
     * @return char[][] char list with all symbols in the board
     */
     public char[][] getGameBoard() {
-<span class="fc" id="L76">        return gameBoard;</span>
+<span class="fc" id="L81">        return gameBoard;</span>
     }
     /**
     * Method returns victory length condition
@@ -81,7 +86,7 @@ public class Board {
     * @return returns int that is the victory length condition
     */
     public int getVcl() {
-<span class="fc" id="L84">        return vcl;</span>
+<span class="fc" id="L89">        return vcl;</span>
     }
     /**
     * Method returns a copy of the current board
@@ -89,13 +94,13 @@ public class Board {
     * @return Board that is the copy of the current board
     */
     public Board copyBoard() {
-<span class="fc" id="L92">        Board returnBoard = new Board(sizex, sizey, vcl);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
-<span class="fc" id="L95">                returnBoard.gameBoard[i][j] = gameBoard[i][j];</span>
+<span class="fc" id="L97">        Board returnBoard = new Board(sizex, sizey, vcl);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L100">                returnBoard.gameBoard[i][j] = gameBoard[i][j];</span>
             }
         }
-<span class="fc" id="L98">        return returnBoard;</span>
+<span class="fc" id="L103">        return returnBoard;</span>
     }
     /**
     * Method returns a string of the board
@@ -104,14 +109,14 @@ public class Board {
     */
     @Override
     public String toString() {
-<span class="fc" id="L107">        String boardToString = &quot;&quot;;</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
-<span class="fc" id="L110">                boardToString += gameBoard[i][j] + &quot; &quot;;</span>
+<span class="fc" id="L112">        String boardToString = &quot;&quot;;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L115">                boardToString += gameBoard[i][j] + &quot; &quot;;</span>
             }
-<span class="fc" id="L112">            boardToString += &quot;\n&quot;;</span>
+<span class="fc" id="L117">            boardToString += &quot;\n&quot;;</span>
         }
-<span class="fc" id="L114">        return boardToString;</span>
+<span class="fc" id="L119">        return boardToString;</span>
     }
     
 }

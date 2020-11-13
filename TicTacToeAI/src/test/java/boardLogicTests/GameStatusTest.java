@@ -17,9 +17,9 @@ import org.junit.Test;
  *
  * @author Jaakko
  */
-public class gameStatusTest {
+public class GameStatusTest {
     private GameStatus status;
-    public gameStatusTest() {
+    public GameStatusTest() {
         
     }
     
@@ -37,6 +37,8 @@ public class gameStatusTest {
     }
      @Test
     public void isBoardFullTest() {
+        assertEquals(status.board.boardSize,4);
+        assertEquals(status.board.boardfulfillment,0);
         assertEquals(status.isBoardFull(),false);
         status.board.changeBoardValue(0, 0, 'X');
         assertEquals(status.isBoardFull(),false);

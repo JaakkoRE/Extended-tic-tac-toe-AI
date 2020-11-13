@@ -25,16 +25,28 @@ public class MinMaxAI {
     public GameStatus bestStatus;
     public char originalStart;
     public char opponentOriginalStart;
+    private Heuristic heuristic;
+    private int depthWhereToCalculateHeuristic;
     
     public MinMaxAI(GameStatus status) {
         bestV = -99999999;
+        heuristic = new Heuristic(status.board);
         this.status = status;
+        depthStop();
         if (status.currentPlayer == 'O') {
             opponentOriginalStart = 'X';
         } else {
             opponentOriginalStart = 'O';
         }
         this.minmax = new MinimumMaximum();
+    }
+    public void depthStop() {
+        if (status.board.boardSize >= 10) {
+            depthWhereToCalculateHeuristic = 3;  
+        } else {
+            depthWhereToCalculateHeuristic = 9999;  
+        }
+       
     }
     
     /**
@@ -64,7 +76,8 @@ public class MinMaxAI {
     public GameStatus alphaBetaBoard(GameStatus status) {
         this.status = status;
         this.originalStart = status.currentPlayer;
-        bestV = -99999999;
+        System.out.println(originalStart);
+        bestV = -1000000005;
         maxValue(this.status, -1, 1, 0);
         return bestStatus;
     }
@@ -85,16 +98,15 @@ public class MinMaxAI {
             return 0;
         }
         if (statusValue == originalStart) {
-            return 1000;
+            return 1000000000;
         } else if (statusValue == opponentOriginalStart) {
-            return -1000;
+            return -1000000000;
         }
-//            System.out.println("joi");
-//            System.out.println(node.toString());
-//            System.out.println(node.value(originalStart));
-//            System.out.println(node.isEndState() +" ja " + node.won('o')); 
-        
-        int v = -9999999;
+
+        if (depth == depthWhereToCalculateHeuristic) {
+            return heuristic.evaluate(status, originalStart, opponentOriginalStart);
+        }
+        int v = -2000000000;
         for (GameStatus nodeChild: generateBoards().getAll()) {
             v = minmax.max(v, minValue(nodeChild, alpha, beta, depth + 1));
             alpha = minmax.max(alpha, v);
@@ -106,13 +118,7 @@ public class MinMaxAI {
         }
 
         return v;
-//    if end_state(node): return value(node)
-//    v = -Inf
-//    for each child in node.children():
-//       v = max(v, min_value(child, alpha, beta))
-//       alpha = max(alpha, v)
-//       if alpha >= beta: return v
-//    return v
+
     }
     /**
     * Min part of the min max algorithm
@@ -128,18 +134,18 @@ public class MinMaxAI {
 
         this.status = status;
         char statusValue = status.checkAll();
-        if (statusValue == 'O') {
+        if (statusValue == originalStart) {
             if (depth == 1) {
                 this.bestStatus = status.copyGameStatus();
-                bestV = 1000;
+                bestV = 1000000000;
             }
-            return 1000;
-        } else if (statusValue == 'X') {
-            if (depth == 1 && bestV > -1000) {
+            return 1000000000;
+        } else if (statusValue == opponentOriginalStart) {
+            if (depth == 1 && bestV < -1000000000) {
                 this.bestStatus = status.copyGameStatus();
+                bestV = -1000000000;
             }
-            bestV = -1000;
-            return -1000;
+            return -1000000000;
         }
         if (statusValue == 'n') {
             if (depth == 1 && bestV < 0) {
@@ -148,7 +154,10 @@ public class MinMaxAI {
             }
             return 0;
         }
-        int v = 9999999;
+        if (depth == depthWhereToCalculateHeuristic) {
+            return heuristic.evaluate(status, originalStart, opponentOriginalStart);
+        }
+        int v = 2000000000;
         for (GameStatus nodeChild: generateBoards().getAll()) {
             v = minmax.min(v, maxValue(nodeChild, alpha, beta, depth + 1));
             beta = minmax.min(beta, v);
@@ -173,7 +182,7 @@ public class MinMaxAI {
     * Methods generates all legal boards possible and returns an ArrayList of them
     * @return ArrayList that contains legal possible moves
     */
-    private ArrayList generateBoards() {
+    public ArrayList generateBoards() {
         ArrayList children = new ArrayList();
         Board board = status.board;
         for (int i = 0; i < board.gameBoard.length; i++) {

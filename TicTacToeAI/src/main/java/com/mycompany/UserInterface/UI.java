@@ -21,17 +21,31 @@ public class UI {
     Scanner scanner = new Scanner(System.in);
 
     public UI() {
-        int xLength = Integer.parseInt(scanner.nextLine()); 
-        int yLength = Integer.parseInt(scanner.nextLine()); 
-        int vcl = Integer.parseInt(scanner.nextLine()); 
-        this.status = new GameStatus(new Board(xLength, yLength, vcl));
-        System.out.println("move:");
+        
     }
  /**
  * Method takes first the 3 values of the board and then moves with . in between. For example 3 enter 3 enter 3 enter 2.2 enter
  */
  //  work in progress
-    public void UILogic() {
+    public void UILogicStart() {
+        System.out.println("set board height: ");
+        int xLength = Integer.parseInt(scanner.nextLine()); 
+        System.out.println("set board length: ");
+        int yLength = Integer.parseInt(scanner.nextLine()); 
+        System.out.println("set victory row length: ");
+        int vcl = Integer.parseInt(scanner.nextLine()); 
+        this.status = new GameStatus(new Board(xLength, yLength, vcl));
+        System.out.println("Type 's' if you want to play vs AI or 'a' if u want ai to play vs itself: ");
+        String AIOrSolo = scanner.nextLine(); 
+        if (AIOrSolo.equals("s")) {
+            UILogicPlayerVSAI();
+        }
+        if (AIOrSolo.equals("a")) {
+            UILogicAIVSAI();
+        }
+    }
+    public void UILogicPlayerVSAI() {
+        System.out.println("move in format (length.height):");
         MinMaxAI ai = new MinMaxAI(this.status);
         this.status = ai.alphaBetaBoard(this.status);
         System.out.println(this.status.board);
@@ -57,8 +71,33 @@ public class UI {
                 System.out.println(result);
                 break;
             }
-            System.out.println(status.checkAll() + "haha");
+            System.out.println(status.checkAll());
             
         }
     }
+    public void UILogicAIVSAI() {
+        MinMaxAI ai = new MinMaxAI(this.status);
+        this.status = ai.alphaBetaBoard(this.status);
+        System.out.println(this.status.board);
+        while (!this.status.isBoardFull()) {
+            this.status = ai.alphaBetaBoard(this.status);
+            System.out.println(this.status.board.toString());
+            char result = status.checkAll();
+            if (!(result == 0)) {
+                System.out.println(result);
+                break;
+            } 
+            
+            this.status = ai.alphaBetaBoard(this.status);
+            System.out.println(this.status.board.toString());
+            result = status.checkAll();
+            if (!(result == 0)) {
+                System.out.println(result);
+                break;
+            }
+            System.out.println(status.checkAll());
+            
+        }
+    }
+
 }

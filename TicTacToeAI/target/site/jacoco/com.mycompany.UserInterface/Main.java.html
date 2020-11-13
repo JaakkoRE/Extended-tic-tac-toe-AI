@@ -9,31 +9,26 @@ import com.mycompany.UserInterface.GUI;
 import com.mycompany.tictactoeai.BoardLogic.Board;
 import com.mycompany.tictactoeai.BoardLogic.GameStatus;
 import com.mycompany.tictactoeai.AILogic.MinMaxAI;
+import com.mycompany.tictactoeai.Methods.ArrayList;
 
 /**
  *
  * @author Jaakko
  */
-<span class="nc" id="L17">public class Main {</span>
+<span class="nc" id="L18">public class Main {</span>
     public static void main(String[] args) {
-<span class="nc" id="L19">        GameStatus status = new GameStatus(new Board(3,3,3),'O');</span>
-<span class="nc" id="L20">        status.board.changeBoardValue(0, 0, 'X');</span>
-<span class="nc" id="L21">        status.board.changeBoardValue(0, 1, 'O');</span>
-<span class="nc" id="L22">        status.board.changeBoardValue(0, 2, 'X');</span>
-<span class="nc" id="L23">        status.board.changeBoardValue(1, 0, 'X');</span>
-<span class="nc" id="L24">        status.board.changeBoardValue(1, 1, 'X');</span>
-<span class="nc" id="L25">        status.board.changeBoardValue(1, 2, 'O');</span>
-<span class="nc" id="L26">        status.board.changeBoardValue(2, 0, 'O');</span>
-<span class="nc" id="L27">        status.board.changeBoardValue(2, 1, 'X');</span>
-<span class="nc" id="L28">        status.board.changeBoardValue(2, 2, 'O');</span>
-<span class="nc" id="L29">        System.out.println(status.board.toString());</span>
-<span class="nc" id="L30">        GUI u = new GUI();</span>
-<span class="nc" id="L31">        UI u2 = new UI();</span>
-<span class="nc" id="L32">        u2.UILogic();</span>
+        
+<span class="nc" id="L21">        GameStatus statusTest = new GameStatus(new Board(2,2,2),'O');</span>
+<span class="nc" id="L22">        MinMaxAI ai = new MinMaxAI(statusTest);</span>
+<span class="nc" id="L23">        ArrayList testList = ai.generateBoards();</span>
+<span class="nc" id="L24">        System.out.println(testList.getValueIndex(0).board);</span>
+<span class="nc" id="L25">        GUI u = new GUI();</span>
+<span class="nc" id="L26">        UI u2 = new UI();</span>
+<span class="nc" id="L27">        u2.UILogicStart();</span>
       //  MinMaxAI ai = new MinMaxAI(new GameStatus(new Board(2,2,1)));
       //  System.out.println(ai.alphaBetaValue());
         
-<span class="nc" id="L36">    }</span>
+<span class="nc" id="L31">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

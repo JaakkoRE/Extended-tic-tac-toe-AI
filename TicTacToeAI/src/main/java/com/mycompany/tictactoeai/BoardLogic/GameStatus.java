@@ -70,6 +70,10 @@ public class GameStatus {
     * @return true if board is full else false
     */ 
     public boolean isBoardFull() {
+//        if(board.boardSize == board.boardfulfillment) {
+//            return true;
+//        }
+//        return false;
         this.gameBoard = board.getGameBoard();
         for (int i = 0; i < gameBoard.length; i++) {
             for (int j = 0; j < gameBoard[0].length; j++) {

@@ -1,4 +1,6 @@
-boardLogicTests\boardTest.class
-boardLogicTests\gameStatusTest.class
+boardLogicTests\GameStatusTest.class
+AiLogicTests\AiLogicTests.class
 methodTests\ArrayListTests.class
+boardLogicTests\BoardTest.class
+AiLogicTests\HeuristicTest.class
 methodTests\MinMaxTests.class

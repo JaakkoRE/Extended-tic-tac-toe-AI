@@ -16,9 +16,9 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class boardTest {
+public class BoardTest {
     private Board board;
-    public boardTest() {
+    public BoardTest() {
 
     }
     

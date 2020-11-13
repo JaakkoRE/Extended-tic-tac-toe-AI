@@ -14,10 +14,13 @@ package com.mycompany.tictactoeai.BoardLogic;
  */
 public class Board {
     public char[][] gameBoard;
+    public int boardSize;
+    public int boardfulfillment;
     public int vcl;
     public int sizex;
     public int sizey;
     public Board(int sizeX, int sizeY, int victoryConditionLength) {
+        boardfulfillment = 0;
         if (sizeX <= 1) {
             sizeX = 1;
         }
@@ -35,6 +38,7 @@ public class Board {
         }           
         this.gameBoard = new char[sizeX][sizeY];
         this.vcl = victoryConditionLength;
+        boardSize = sizeX * sizeY;
         setUpBoard();
     }
     
@@ -51,6 +55,7 @@ public class Board {
         if (x >= 0 && x < gameBoard.length && y >= 0 && y < gameBoard[0].length) {
             if (gameBoard[x][y] == ('_')) {
                 this.gameBoard[x][y] = symbol;
+                boardfulfillment++;
                 return true;
             }
         }

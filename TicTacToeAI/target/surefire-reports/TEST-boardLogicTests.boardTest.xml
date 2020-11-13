@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="boardLogicTests.boardTest" time="0.001" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="boardLogicTests.BoardTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.8+10"/>
@@ -64,10 +64,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="boardLogicTests.boardTest" name="getterTest" time="0.001"/>
-  <testcase classname="boardLogicTests.boardTest" name="differentBoardTests" time="0"/>
-  <testcase classname="boardLogicTests.boardTest" name="isBoardToStringWorking" time="0"/>
-  <testcase classname="boardLogicTests.boardTest" name="isBoardCopyWorking" time="0"/>
-  <testcase classname="boardLogicTests.boardTest" name="isBoardValueChangeWorking" time="0"/>
-  <testcase classname="boardLogicTests.boardTest" name="isBoardSetUpWorking" time="0"/>
+  <testcase classname="boardLogicTests.BoardTest" name="getterTest" time="0"/>
+  <testcase classname="boardLogicTests.BoardTest" name="differentBoardTests" time="0"/>
+  <testcase classname="boardLogicTests.BoardTest" name="isBoardToStringWorking" time="0"/>
+  <testcase classname="boardLogicTests.BoardTest" name="isBoardCopyWorking" time="0"/>
+  <testcase classname="boardLogicTests.BoardTest" name="isBoardValueChangeWorking" time="0"/>
+  <testcase classname="boardLogicTests.BoardTest" name="isBoardSetUpWorking" time="0"/>
 </testsuite>
