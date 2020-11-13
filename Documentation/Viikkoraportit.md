@@ -19,7 +19,7 @@ Mahdollisia käyttöliittymän parannuksia, mahdollisuus tekoälyn pelata itseä
 ## tuntimäärä 
 Kaiken kaikkiaan 20 tuntia sekoilujen kanssa.
 
-# Viikon 2 viikkoraportti
+# Viikon 3 viikkoraportti
 Kone pystyy nyt pelaamaan itseään vastaan, heuristiikka alulla, testit edennyt, heuristiikan testaus vielä kesken koska heuristiikka on hyvin kesken. Käyttöliittymä on vähän ymmärrettävämpi.
 ## Mitä seuraavaksi
 Heuristiikan kehitystä pää osin. Ehkä Graafisen liittymän alkua.
