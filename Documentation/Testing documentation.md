@@ -15,5 +15,5 @@ these tests are from week 4 <br>
 https://pastebin.com/Nm2w6kE0 raw data of time tests. HashMap utilization is work in progress. Hopefully I can improve it so it improves performance. Currently only makes performance worse.<br>
 jacoco report
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Jacoco%20report.png">
-Length, height and victory length (how many of the same symbol is needed to be in a row for a win) are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is below 20 seconds. Depth is the biggest optimization factor and changing depth by 1 has big impact on performance.
+Length, height and victory length (how many of the same symbol is needed to be in a row for a win) are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is below 20 seconds. Depth (how many turns are made before checking turns heuristic value estimation) is the biggest optimization factor and changing depth by 1 has big impact on performance. For example 11x11 board with depth 3 takes over 100 seconds but with depth 2 it takes less than 2 seconds.
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Graph1.png" >
