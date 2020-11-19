@@ -1,12 +1,3 @@
-## Miten ja mitä testattu
-Testaus on suoritettu monilla eri Junit testeilla. 
-Koodi on yleisesti tarkastettu lukuisilla yksikkö teisteillä. 
-Muutama laajempi testaus pienille kentille (3x3, 2x2). Isojen kenttien testaus on vielä kesken.
-Käyttöliittymä on jätetty testauksen ulkopuolella.
-Lisäksi tehty muutama aikatestaus. Aikatestausten määrää lisätään koodin edetessä ja optimisaation parantuessa.
-##
-Yksikkö testausten testit yritetty tehdä mahdollisimman erilaisilla tapauksilla. 3x3 ja 2x2 kenttien testaus on tehty muutamalla eri tilanteella.
-Aika testaus painottuu
 
 ## How has code been tested and what has been tested.
 Testing has been done with different JUnit tests.
