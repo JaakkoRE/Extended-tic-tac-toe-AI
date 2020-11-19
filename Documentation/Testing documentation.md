@@ -11,7 +11,9 @@ Also few time tests have been done. More time tests will be made when optimisati
 Unit tests have been tried to made using diverse situations and with different edge cases. 3x3 and 2x2 boards have only few scenarios currently.<br/>
 Time testing has been made using diverse linearly comperable boards.<br/>
 ## Timetests and graphs
-https://pastebin.com/Nm2w6kE0 raw data of big time tests.
-<img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Graph1.png">
+these tests are from week 4 <br>
+https://pastebin.com/Nm2w6kE0 raw data of big time tests.<br>
+jacoco report
+<img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Jacoco%20report.png">
 Length, height and vcl are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is below 20 seconds. 
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Graph1.png" >
