@@ -10,7 +10,7 @@ Also few time tests have been done. More time tests will be made when optimisati
 ## What inputs have been used in testing
 Unit tests have been tried to made using diverse situations and with different edge cases. 3x3 and 2x2 boards have only few scenarios currently.<br/>
 Time testing has been made using diverse linearly comperable boards.<br/>
-## Timetests and graphs
+## Code coverage and test result information
 these tests are from week 4 <br>
 https://pastebin.com/Nm2w6kE0 raw data of time tests. HashMap utilization is work in progress. Hopefully I can improve it so it improves performance. Currently only makes performance worse.<br>
 jacoco report
