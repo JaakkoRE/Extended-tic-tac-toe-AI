@@ -15,5 +15,5 @@ these tests are from week 4 <br>
 https://pastebin.com/Nm2w6kE0 raw data of big time tests.<br>
 jacoco report
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Jacoco%20report.png">
-Length, height and vcl are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is below 20 seconds. 
+Length, height and vcl are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is below 20 seconds. Depth is the biggest optimization factor and changing depth by 1 has big impact on performance.
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Graph1.png" >
