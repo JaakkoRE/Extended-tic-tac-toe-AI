@@ -25,3 +25,10 @@ Kone pystyy nyt pelaamaan itseään vastaan, heuristiikka alulla, testit edennyt
 Heuristiikan kehitystä pää osin. Ehkä Graafisen liittymän alkua.
 ## tuntimäärä 
 Kaiken kaikkiaan 15 tuntia.
+
+# Viikon 4 viikkoraportti
+Heuristiikkaa kehitetty, hashmap luotu ja integroitu heuristiikan laskentaan (tallensi eri kenttien heuristiikka arvot, hidastaa laskentaa, pyrin keksimään tavan joka parantais suorituskykyä), testausta lisätty, aikatestestaus aloitettu. Suuria bugifixejä minmaxissa, metodi ei valinnut parasta kenttää kunnolla nyt pitäisi sujua paremmin. Syvyys valinta alustavasti toiminnassa. Testaus documentin teko.
+## Mitä seuraavaksi
+Heuristiikan mahdollista kehitystä, syvyysvalintaa, hashmapin hyödyntämisen parantamista, aikatestausta lisää. Mahdollisesti graafista liittymää.
+## tuntimäärä 
+Kaiken kaikkiaan 24 tuntia.
