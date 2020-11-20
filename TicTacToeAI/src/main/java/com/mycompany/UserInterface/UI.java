@@ -29,11 +29,6 @@ public class UI {
  */
  //  work in progress
     public void UILogicStart() {
-        System.out.println("Do you want to do a test y/n"); 
-        String TestOrNo = scanner.nextLine(); 
-        if (TestOrNo.equals("y")) {
-           return;
-        }
         System.out.println("set board height: ");
         int xLength = Integer.parseInt(scanner.nextLine()); 
         System.out.println("set board length: ");
