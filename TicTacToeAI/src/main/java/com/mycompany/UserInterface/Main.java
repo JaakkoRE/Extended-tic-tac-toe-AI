@@ -11,6 +11,7 @@ import com.mycompany.tictactoeai.BoardLogic.Board;
 import com.mycompany.tictactoeai.BoardLogic.GameStatus;
 import com.mycompany.tictactoeai.AILogic.MinMaxAI;
 import com.mycompany.tictactoeai.Methods.ArrayList;
+import com.mycompany.tictactoeai.Methods.HashMap;
 
 /**
  *
@@ -18,7 +19,7 @@ import com.mycompany.tictactoeai.Methods.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
-
+       
         GUI u = new GUI();
         UI u2 = new UI();
         u2.UILogicStart();

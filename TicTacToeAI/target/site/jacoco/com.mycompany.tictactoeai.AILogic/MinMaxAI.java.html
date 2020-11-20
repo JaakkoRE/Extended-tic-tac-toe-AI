@@ -27,9 +27,9 @@ public class MinMaxAI {
     public char opponentOriginalStart;
     private Heuristic heuristic;
     private int depthWhereToCalculateHeuristic;
+    private boolean HashMapUsed;
     
-<span class="fc" id="L31">    public MinMaxAI(GameStatus status) {</span>
-<span class="fc" id="L32">        bestV = -99999999;</span>
+<span class="fc" id="L32">    public MinMaxAI(GameStatus status) {</span>
 <span class="fc" id="L33">        heuristic = new Heuristic(status.board);</span>
 <span class="fc" id="L34">        this.status = status;</span>
 <span class="fc" id="L35">        depthStop();</span>
@@ -40,46 +40,72 @@ public class MinMaxAI {
         }
 <span class="fc" id="L41">        this.minmax = new MinimumMaximum();</span>
 <span class="fc" id="L42">    }</span>
-    public void depthStop() {
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (status.board.boardSize &gt;= 10) {</span>
-<span class="nc" id="L45">            depthWhereToCalculateHeuristic = 3;  </span>
+<span class="fc" id="L43">    public MinMaxAI(GameStatus status, boolean HashMapUsed) {</span>
+<span class="fc" id="L44">        this.HashMapUsed = HashMapUsed;</span>
+        
+<span class="fc" id="L46">        heuristic = new Heuristic(status.board);</span>
+<span class="fc" id="L47">        this.status = status;</span>
+<span class="fc" id="L48">        depthStop();</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (status.currentPlayer == 'O') {</span>
+<span class="fc" id="L50">            opponentOriginalStart = 'X';</span>
         } else {
-<span class="fc" id="L47">            depthWhereToCalculateHeuristic = 9999;  </span>
+<span class="nc" id="L52">            opponentOriginalStart = 'O';</span>
+        }
+<span class="fc" id="L54">        this.minmax = new MinimumMaximum();</span>
+<span class="fc" id="L55">    }</span>
+    /**
+    * Method tells how to deep to check (how many boards are checked) before estimating the board value using heuristics
+    *  
+    */
+    public void depthStop() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (status.board.boardSize &gt;= 10) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            if (status.board.boardSize &lt;= 20) {</span>
+<span class="nc" id="L63">                depthWhereToCalculateHeuristic = 7;  </span>
+            }
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if (status.board.boardSize &lt;= 25) {</span>
+<span class="nc" id="L66">                depthWhereToCalculateHeuristic = 6;  </span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">            } else if (status.board.boardSize &lt;= 36) {</span>
+<span class="nc" id="L68">                depthWhereToCalculateHeuristic = 5; </span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            } else if (status.board.boardSize &lt;= 54) {</span>
+<span class="nc" id="L70">                depthWhereToCalculateHeuristic = 4;              </span>
+            
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">            } else if (status.board.boardSize &lt;= 100) {</span>
+<span class="nc" id="L73">                depthWhereToCalculateHeuristic = 3;              </span>
+            }
+            else {
+<span class="fc" id="L76">                depthWhereToCalculateHeuristic = 2;  </span>
+            }       
+        } else {
+<span class="fc" id="L79">            depthWhereToCalculateHeuristic = 9999;  </span>
         }
        
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L82">    }</span>
     
     /**
-    * Method returns the heuristic value of the best possible move
-    * 
+    * Method returns the heuristic value of the best possible move 
     * 
     * @return int heuristic value
     */
     public int alphaBetaValue(GameStatus status) {
-<span class="nc" id="L59">        this.status = status;   </span>
-<span class="nc" id="L60">        this.originalStart = status.currentPlayer;</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (status.currentPlayer == 'O') {</span>
-<span class="nc" id="L62">            opponentOriginalStart = 'X';</span>
-        } else {
-<span class="nc" id="L64">            opponentOriginalStart = 'O';</span>
-        }
-<span class="nc" id="L66">        int returnVal = maxValue(this.status, -1, 1, 0);</span>
-<span class="nc" id="L67">        return returnVal;</span>
+<span class="fc" id="L90">        this.status = status;   </span>
+<span class="fc" id="L91">        this.originalStart = status.currentPlayer;</span>
+<span class="fc" id="L92">        this.opponentOriginalStart = status.otherPlayer();</span>
+<span class="fc" id="L93">        int returnVal = maxValue(this.status, -2000000000, 2000000000, 0);</span>
+<span class="fc" id="L94">        return returnVal;</span>
     }
     /**
-    * Method returns the best next move
-    * 
+    * Method returns the best next move 
     * 
      *@param status 
     * @return GameStatus status of the best move
     */
     public GameStatus alphaBetaBoard(GameStatus status) {
-<span class="fc" id="L77">        this.status = status;</span>
-<span class="fc" id="L78">        this.originalStart = status.currentPlayer;</span>
-<span class="fc" id="L79">        System.out.println(originalStart);</span>
-<span class="fc" id="L80">        bestV = -1000000005;</span>
-<span class="fc" id="L81">        maxValue(this.status, -1, 1, 0);</span>
-<span class="fc" id="L82">        return bestStatus;</span>
+<span class="fc" id="L103">        this.status = status;</span>
+<span class="fc" id="L104">        this.originalStart = status.currentPlayer;</span>
+<span class="fc" id="L105">        this.opponentOriginalStart = status.otherPlayer();</span>
+<span class="fc" id="L106">        bestV = -2100000001;</span>
+<span class="fc" id="L107">        maxValue(this.status, -2000000000, 2000000000, 0);</span>
+<span class="fc" id="L108">        return bestStatus;</span>
     }
     /**
     * Max part of the min max algorithm
@@ -91,33 +117,33 @@ public class MinMaxAI {
     * @param depth tells how deep is the recursion
     * @return int of the max value
     */
-    private int maxValue(GameStatus status, int alpha, int beta, int depth) {
-<span class="fc" id="L95">        this.status = status;</span>
-<span class="fc" id="L96">        char statusValue = status.checkAll();</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (statusValue == 'n') {</span>
-<span class="nc" id="L98">            return 0;</span>
+    public int maxValue(GameStatus status, int alpha, int beta, int depth) {
+<span class="fc" id="L121">        this.status = status;</span>
+<span class="fc" id="L122">        char statusValue = status.checkAll();</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (statusValue == 'n') {</span>
+<span class="fc" id="L124">            return 0;</span>
         }
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (statusValue == originalStart) {</span>
-<span class="nc" id="L101">            return 1000000000;</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        } else if (statusValue == opponentOriginalStart) {</span>
-<span class="nc" id="L103">            return -1000000000;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (statusValue == originalStart) {</span>
+<span class="nc" id="L127">            return 1000000100 - depth;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        } else if (statusValue == opponentOriginalStart) {</span>
+<span class="fc" id="L129">            return -1000000100 + depth;</span>
         }
-
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (depth == depthWhereToCalculateHeuristic) {</span>
-<span class="nc" id="L107">            return heuristic.evaluate(status, originalStart, opponentOriginalStart);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (depth == depthWhereToCalculateHeuristic) {</span>
+<span class="nc" id="L132">            return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);</span>
         }
-<span class="fc" id="L109">        int v = -2000000000;</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
-<span class="fc" id="L111">            v = minmax.max(v, minValue(nodeChild, alpha, beta, depth + 1));</span>
-<span class="fc" id="L112">            alpha = minmax.max(alpha, v);</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">            if (alpha  &gt;= beta) {</span>
-
-<span class="fc" id="L115">                return v;</span>
-                
+<span class="fc" id="L134">        int v = -2100000000;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
+<span class="fc" id="L136">            v = minmax.max(v, minValue(nodeChild, alpha, beta, depth + 1));</span>
+<span class="fc" id="L137">            alpha = minmax.max(alpha, v);</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">            if (depth == 0 &amp;&amp; v &gt; bestV) {</span>
+<span class="fc" id="L139">                this.bestStatus = nodeChild.copyGameStatus();</span>
+<span class="fc" id="L140">                bestV = v;</span>
+            }
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (alpha  &gt;= beta) {</span>
+<span class="fc" id="L143">                return v;                </span>
             }
         }
-
-<span class="nc" id="L120">        return v;</span>
+<span class="fc" id="L146">        return v;</span>
 
     }
     /**
@@ -130,72 +156,50 @@ public class MinMaxAI {
     * @param depth tells how deep is the recursion
     * int of the min value
     */
-    private int minValue(GameStatus status, int alpha, int beta, int depth) {
-
-<span class="fc" id="L135">        this.status = status;</span>
-<span class="fc" id="L136">        char statusValue = status.checkAll();</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (statusValue == originalStart) {</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">            if (depth == 1) {</span>
-<span class="fc" id="L139">                this.bestStatus = status.copyGameStatus();</span>
-<span class="fc" id="L140">                bestV = 1000000000;</span>
-            }
-<span class="fc" id="L142">            return 1000000000;</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        } else if (statusValue == opponentOriginalStart) {</span>
-<span class="nc bnc" id="L144" title="All 4 branches missed.">            if (depth == 1 &amp;&amp; bestV &lt; -1000000000) {</span>
-<span class="nc" id="L145">                this.bestStatus = status.copyGameStatus();</span>
-<span class="nc" id="L146">                bestV = -1000000000;</span>
-            }
-<span class="nc" id="L148">            return -1000000000;</span>
+    public int minValue(GameStatus status, int alpha, int beta, int depth) {
+<span class="fc" id="L160">        this.status = status;</span>
+<span class="fc" id="L161">        char statusValue = status.checkAll();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (statusValue == 'n') {            </span>
+<span class="fc" id="L163">            return 0;</span>
         }
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (statusValue == 'n') {</span>
-<span class="nc bnc" id="L151" title="All 4 branches missed.">            if (depth == 1 &amp;&amp; bestV &lt; 0) {</span>
-<span class="nc" id="L152">                this.bestStatus = status.copyGameStatus();</span>
-<span class="nc" id="L153">                bestV = 0;</span>
-            }
-<span class="nc" id="L155">            return 0;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (statusValue == originalStart) {</span>
+<span class="fc" id="L166">            return 1000000100 - depth;</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        } else if (statusValue == opponentOriginalStart) {</span>
+<span class="nc" id="L168">            return -1000000100 + depth;</span>
+        }        
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (depth == depthWhereToCalculateHeuristic) {</span>
+<span class="nc" id="L171">            return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);</span>
         }
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (depth == depthWhereToCalculateHeuristic) {</span>
-<span class="nc" id="L158">            return heuristic.evaluate(status, originalStart, opponentOriginalStart);</span>
-        }
-<span class="fc" id="L160">        int v = 2000000000;</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
-<span class="fc" id="L162">            v = minmax.min(v, maxValue(nodeChild, alpha, beta, depth + 1));</span>
-<span class="fc" id="L163">            beta = minmax.min(beta, v);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">            if (alpha  &gt;= beta) {</span>
-
-<span class="nc bnc" id="L166" title="All 4 branches missed.">                if (depth == 1 &amp;&amp; v &gt; bestV) {</span>
-<span class="nc" id="L167">                    this.bestStatus = status.copyGameStatus();</span>
-<span class="nc" id="L168">                    bestV = v;</span>
-                }
-<span class="nc" id="L170">                return v;</span>
+<span class="fc" id="L173">        int v = 2100000000;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
+<span class="fc" id="L175">            v = minmax.min(v, maxValue(nodeChild, alpha, beta, depth + 1));</span>
+<span class="fc" id="L176">            beta = minmax.min(beta, v);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (alpha  &gt;= beta) {</span>
+<span class="fc" id="L178">                return v;</span>
             }
         }
 
-<span class="pc bpc" id="L174" title="2 of 4 branches missed.">        if (depth == 1 &amp;&amp; v &gt; bestV) {</span>
-<span class="fc" id="L175">            this.bestStatus = status.copyGameStatus();</span>
-<span class="fc" id="L176">            bestV = v;</span>
-        }
-<span class="fc" id="L178">        return v;        </span>
+<span class="fc" id="L182">        return v;        </span>
         
     }
     /*
     * Methods generates all legal boards possible and returns an ArrayList of them
-    * @return ArrayList that contains legal possible moves
+    * @return ArrayList that contains all legal possible moves
     */
     public ArrayList generateBoards() {
-<span class="fc" id="L186">        ArrayList children = new ArrayList();</span>
-<span class="fc" id="L187">        Board board = status.board;</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (int i = 0; i &lt; board.gameBoard.length; i++) {</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">            for (int j = 0; j &lt; board.gameBoard[0].length; j++) {</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">                if ((board.gameBoard[i][j] == '_')) {</span>
-<span class="fc" id="L191">                    board.gameBoard[i][j] = status.currentPlayer;</span>
-<span class="fc" id="L192">                    children.add(new GameStatus(this.status.board.copyBoard(), status.otherPlayer()));</span>
-<span class="fc" id="L193">                    board.gameBoard[i][j] = '_';</span>
+<span class="fc" id="L190">        ArrayList children = new ArrayList();</span>
+<span class="fc" id="L191">        Board board = status.board;</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        for (int i = 0; i &lt; board.gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            for (int j = 0; j &lt; board.gameBoard[0].length; j++) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">                if ((board.gameBoard[i][j] == '_')) {</span>
+<span class="fc" id="L195">                    board.gameBoard[i][j] = status.currentPlayer;</span>
+<span class="fc" id="L196">                    children.add(new GameStatus(this.status.board.copyBoard(), status.otherPlayer()));</span>
+<span class="fc" id="L197">                    board.gameBoard[i][j] = '_';</span>
                 }
             }
         }
 
-<span class="fc" id="L198">        return children;</span>
+<span class="fc" id="L202">        return children;</span>
     }
 
 }

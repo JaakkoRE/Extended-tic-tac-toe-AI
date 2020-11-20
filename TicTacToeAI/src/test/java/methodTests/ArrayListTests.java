@@ -59,16 +59,16 @@ public class ArrayListTests {
     }
      @Test
     public void getLength() {
-                assertEquals(arrayList.getLength(),0);  
-                arrayList.add(status1);
-                assertEquals(arrayList.getLength(),1);  
-                arrayList.add(status2);
-                assertEquals(arrayList.getLength(),2); 
-                arrayList.add(status3);
-                assertEquals(arrayList.getLength(),3);
-                arrayList.add(status4);
-                assertEquals(arrayList.getLength(),4); 
-                arrayList.add(status5);
-                assertEquals(arrayList.getLength(),5); 
+        assertEquals(arrayList.getLength(),0);  
+        arrayList.add(status1);
+        assertEquals(arrayList.getLength(),1);  
+        arrayList.add(status2);
+        assertEquals(arrayList.getLength(),2); 
+        arrayList.add(status3);
+        assertEquals(arrayList.getLength(),3);
+        arrayList.add(status4);
+        assertEquals(arrayList.getLength(),4); 
+        arrayList.add(status5);
+        assertEquals(arrayList.getLength(),5); 
     }
 }

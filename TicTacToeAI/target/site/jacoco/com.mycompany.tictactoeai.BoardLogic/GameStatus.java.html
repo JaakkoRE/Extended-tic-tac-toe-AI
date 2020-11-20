@@ -52,8 +52,8 @@ public class GameStatus {
     * @return the status of the game
     */ 
     public char setBoardValue(int x, int y) {
-<span class="fc" id="L55">        boolean setBoolValue = this.board.changeBoardValue(x, y, currentPlayer);</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (setBoolValue) {</span>
+<span class="fc" id="L55">        boolean BoolCouldChangeValue = this.board.changeBoardValue(x, y, currentPlayer);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (BoolCouldChangeValue) {</span>
 <span class="fc bfc" id="L57" title="All 2 branches covered.">            if (currentPlayer == 'O') {</span>
 <span class="fc" id="L58">                currentPlayer = 'X';</span>
             } else {
@@ -125,8 +125,8 @@ public class GameStatus {
 <span class="fc" id="L125">            return returnValue;</span>
         }
 <span class="fc" id="L127">        returnValue = diagonalVictoryCheck2(x, y, sideToBeChecked);</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (!(returnValue == 0)) {</span>
-<span class="nc" id="L129">            return returnValue;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (!(returnValue == 0)) {</span>
+<span class="fc" id="L129">            return returnValue;</span>
         }
 <span class="fc" id="L131">        return 0;</span>
     }

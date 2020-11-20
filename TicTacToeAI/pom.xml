@@ -38,8 +38,7 @@
                 <version>0.8.3</version>
                 <configuration>
                     <excludes>
-                        <exclude>calculatorprogram/gui/*</exclude>
-                        <exclude>calculatorprogram/Main.java</exclude>
+                        <exclude>**/UserInterface/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

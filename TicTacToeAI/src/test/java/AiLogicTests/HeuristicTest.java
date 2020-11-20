@@ -19,8 +19,11 @@ import org.junit.Test;
 public class HeuristicTest {
     private Heuristic heuristic;
     private Heuristic heuristic2;
+    private Heuristic heuristic3;
     private GameStatus gameStatus;
     private GameStatus gameStatus2;
+    private GameStatus gameStatus3;
+
      @Before
     public void setUp() {
         this.heuristic = new Heuristic(new Board(3,3,3));
@@ -35,7 +38,66 @@ public class HeuristicTest {
         this.gameStatus2.setBoardValue(0, 0);
         this.gameStatus2.setBoardValue(1, 1);
         this.gameStatus2.setBoardValue(0, 1);
+        
+        this.heuristic3 = new Heuristic(new Board(4,4,4));
+        this.gameStatus3 = new GameStatus(new Board(4,4,4),'O');
+        this.gameStatus3.setBoardValue(0, 0);
+        this.gameStatus3.setBoardValue(1, 1);
+        this.gameStatus3.setBoardValue(0, 1);
+        this.gameStatus3.setBoardValue(1, 2);
+        this.gameStatus3.setBoardValue(2, 3);
+        this.gameStatus3.setBoardValue(3, 3);       
     }
+     @Test
+    public void theHeuristicTest() {
+        GameStatus statusTest = new GameStatus(new Board(5,4,3),'O');
+        this.heuristic = new Heuristic(new Board(5,4,3));
+        statusTest.setBoardValue(0, 1);
+        statusTest.setBoardValue(0, 0);
+        statusTest.setBoardValue(0, 2);
+        statusTest.setBoardValue(1, 0);
+        statusTest.setBoardValue(0, 3);
+        assertEquals(heuristic.evaluate(statusTest, 'O', 'X',false),1000000000);   
+        
+        assertEquals(heuristic3.evaluate(gameStatus3, 'O', 'X',false),-1); 
+        this.gameStatus3.setBoardValue(1, 3);
+        assertEquals(heuristic3.evaluate(gameStatus3, 'O', 'X',false),177); 
+        
+        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X',false),1000000000); 
+    }
+     @Test 
+     public void heuristicSymbolNearTest() {
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(gameStatus.board.gameBoard,0,0,'O',0),27);
+        assertEquals(heuristic2.heuristicSameSymbolNearSameSymbol(gameStatus2.board.gameBoard,1,1,'X',0),0);
+           
+        GameStatus statusTest = new GameStatus(new Board(5,4,3),'O');
+        this.heuristic = new Heuristic(new Board(5,4,3));
+        statusTest.setBoardValue(0, 1);
+        statusTest.setBoardValue(0, 0);
+        statusTest.setBoardValue(0, 2);
+        statusTest.setBoardValue(1, 0);
+        statusTest.setBoardValue(0, 3);
+        statusTest.setBoardValue(1, 3);
+        statusTest.setBoardValue(2, 3);
+        statusTest.setBoardValue(3, 3);
+        statusTest.setBoardValue(4, 1);
+        statusTest.setBoardValue(2, 1);
+        statusTest.setBoardValue(4, 2);
+        statusTest.setBoardValue(1, 1);
+        statusTest.setBoardValue(1, 2);
+        statusTest.setBoardValue(1, 0);
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,0,0,'X',0),200);
+        this.heuristic = new Heuristic(new Board(5,4,3));
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,2,3,'O',0),500);
+        this.heuristic = new Heuristic(new Board(5,4,3));
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,4,1,'O',0),60);
+        this.heuristic = new Heuristic(new Board(5,4,3));
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,1,1,'X',0),200);
+        this.heuristic = new Heuristic(new Board(5,4,3));
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,4,3,'p',0),0);
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,0,3,'p',0),0);
+        assertEquals(heuristic.heuristicSameSymbolNearSameSymbol(statusTest.board.gameBoard,4,0,'p',0),0);
+     }
      @Test
     public void heuristicBaseTest() {
         assertEquals(heuristic.heuristicBoard[0][0],3);
@@ -51,25 +113,26 @@ public class HeuristicTest {
     }
      @Test
     public void differentDirectionHeuristicsTest() {       
-        assertEquals(heuristic.heuristicDiagonal1(gameStatus.board.gameBoard, 0, 0, 'O'),9);
+        assertEquals(heuristic.heuristicDiagonal1(gameStatus.board.gameBoard, 0, 0, 'O'),1);
         
-        assertEquals(heuristic.heuristicDiagonal2(gameStatus.board.gameBoard, 0, 0, 'O'),9);
+        assertEquals(heuristic.heuristicDiagonal2(gameStatus.board.gameBoard, 0, 0, 'O'),1);
         
-        assertEquals(heuristic.heuristicVertical(gameStatus.board.gameBoard, 0, 0, 'O'),0);
+        assertEquals(heuristic.heuristicVertical(gameStatus.board.gameBoard, 0, 0, 'O'),1);
         
-        assertEquals(heuristic.heuristicHorizontal(gameStatus.board.gameBoard, 0, 0, 'O'),36);
+        assertEquals(heuristic.heuristicHorizontal(gameStatus.board.gameBoard, 0, 0, 'O'),2);
     }
      @Test
     public void evaluateHeuristicTest() {       
-        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X'),0);
-        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O'),0);
+        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X',false),-3);
+        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O',false),3);
         this.gameStatus.setBoardValue(2, 2);
-        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X'),30);
-        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O'),-30);
+        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X',false),18);
+        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O',false),-18);
         
-        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X'),100000010);
+        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X',false),1000000000);
         assertEquals(gameStatus2.vcl,2);
-        assertEquals(heuristic2.evaluate(gameStatus2, 'X', 'O'),-100000010);   
+        assertEquals(heuristic2.evaluate(gameStatus2, 'X', 'O',false),-1000000000);   
         
+       
     }
 }

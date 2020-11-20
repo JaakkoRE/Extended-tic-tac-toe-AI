@@ -1,10 +1,14 @@
 com\mycompany\tictactoeai\BoardLogic\GameStatus.class
+com\mycompany\tictactoeai\Methods\ArrayList.class
+com\mycompany\tictactoeai\Methods\MinimumMaximum.class
+com\mycompany\UserInterface\GUI.class
+com\mycompany\tictactoeai\AILogic\AIVSAI.class
 com\mycompany\tictactoeai\AILogic\MinMaxAI.class
 com\mycompany\tictactoeai\AILogic\Heuristic.class
 com\mycompany\tictactoeai\Methods\AbsoluteValue.class
-com\mycompany\tictactoeai\Methods\ArrayList.class
-com\mycompany\tictactoeai\Methods\MinimumMaximum.class
+com\mycompany\tictactoeai\Methods\ArrayListContainer.class
+com\mycompany\tictactoeai\Methods\HashMap.class
 com\mycompany\tictactoeai\BoardLogic\Board.class
-com\mycompany\UserInterface\GUI.class
+com\mycompany\tictactoeai\Methods\Container.class
 com\mycompany\UserInterface\UI.class
 com\mycompany\UserInterface\Main.class

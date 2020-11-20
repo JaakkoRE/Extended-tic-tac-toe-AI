@@ -52,8 +52,8 @@ public class GameStatus {
     * @return the status of the game
     */ 
     public char setBoardValue(int x, int y) {
-        boolean setBoolValue = this.board.changeBoardValue(x, y, currentPlayer);
-        if (setBoolValue) {
+        boolean BoolCouldChangeValue = this.board.changeBoardValue(x, y, currentPlayer);
+        if (BoolCouldChangeValue) {
             if (currentPlayer == 'O') {
                 currentPlayer = 'X';
             } else {

@@ -1,6 +1,8 @@
 boardLogicTests\GameStatusTest.class
-AiLogicTests\AiLogicTests.class
 methodTests\ArrayListTests.class
+methodTests\HashMapTests.class
 boardLogicTests\BoardTest.class
 AiLogicTests\HeuristicTest.class
 methodTests\MinMaxTests.class
+AiLogicTests\AiLogicTests.class
+TimeTests\TimeTests.class

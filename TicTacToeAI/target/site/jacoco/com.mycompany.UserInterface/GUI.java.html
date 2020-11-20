@@ -28,7 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-// rough. very work in progress
+// rough. very work in progress. Useless currently
 public class GUI extends Application {
 
     public GridPane boardUi;

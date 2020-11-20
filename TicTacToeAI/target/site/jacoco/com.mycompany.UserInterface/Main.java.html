@@ -6,29 +6,27 @@
 package com.mycompany.UserInterface;
 
 import com.mycompany.UserInterface.GUI;
+import com.mycompany.tictactoeai.AILogic.Heuristic;
 import com.mycompany.tictactoeai.BoardLogic.Board;
 import com.mycompany.tictactoeai.BoardLogic.GameStatus;
 import com.mycompany.tictactoeai.AILogic.MinMaxAI;
 import com.mycompany.tictactoeai.Methods.ArrayList;
+import com.mycompany.tictactoeai.Methods.HashMap;
 
 /**
  *
  * @author Jaakko
  */
-<span class="nc" id="L18">public class Main {</span>
+<span class="nc" id="L20">public class Main {</span>
     public static void main(String[] args) {
-        
-<span class="nc" id="L21">        GameStatus statusTest = new GameStatus(new Board(2,2,2),'O');</span>
-<span class="nc" id="L22">        MinMaxAI ai = new MinMaxAI(statusTest);</span>
-<span class="nc" id="L23">        ArrayList testList = ai.generateBoards();</span>
-<span class="nc" id="L24">        System.out.println(testList.getValueIndex(0).board);</span>
-<span class="nc" id="L25">        GUI u = new GUI();</span>
-<span class="nc" id="L26">        UI u2 = new UI();</span>
-<span class="nc" id="L27">        u2.UILogicStart();</span>
+       
+<span class="nc" id="L23">        GUI u = new GUI();</span>
+<span class="nc" id="L24">        UI u2 = new UI();</span>
+<span class="nc" id="L25">        u2.UILogicStart();</span>
       //  MinMaxAI ai = new MinMaxAI(new GameStatus(new Board(2,2,1)));
       //  System.out.println(ai.alphaBetaValue());
         
-<span class="nc" id="L31">    }</span>
+<span class="nc" id="L29">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

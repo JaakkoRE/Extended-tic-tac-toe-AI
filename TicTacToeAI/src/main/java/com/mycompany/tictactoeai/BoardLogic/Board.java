@@ -5,6 +5,7 @@
  */
 package com.mycompany.tictactoeai.BoardLogic;
 
+
 /**
  *
  * @author Jaakko
@@ -118,5 +119,62 @@ public class Board {
         }
         return boardToString;
     }
+    /**
+    * Method creates a hash from the board (djb2 hash modified)
+    * @return int hash value
+    * */
+    @Override
+    public int hashCode() {
+        String hashable = toString();
+        int hash = 31;
+        for (int i = 0; i < hashable.length(); i++) {
+            if (hashable.charAt(i) == 'X') {
+                hash = ((hash << 5) + hash) + 7;
+            }
+            if (hashable.charAt(i) == 'O') {
+                hash = ((hash << 5) + hash) + 11;
+            }
+            if (hashable.charAt(i) == '_') {
+                hash = ((hash << 5) + hash) + 3;
+            }
+            if (hash < 0) {
+                hash = -hash;
+            }
+            while (hash >= 10000000) {                
+                hash = hash - 97 * 100 - 83 * 1000 - 67 * 100000;
+            }
+        }
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Board other = (Board) obj;
+        if (this.vcl != other.vcl) {
+            return false;
+        }
+        if (!(toString().equals(obj.toString()))) {
+            return false;
+        }
+        return true;
+    }
     
+    public boolean equals(Board board) {
+        if (!(this.vcl == board.vcl)) {
+            return false;
+        }
+        if (!(toString().equals(board.toString()))) {
+            return false;
+        }
+        return true;
+    }
 }

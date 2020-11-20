@@ -27,9 +27,9 @@ public class MinMaxAI {
     public char opponentOriginalStart;
     private Heuristic heuristic;
     private int depthWhereToCalculateHeuristic;
+    private boolean HashMapUsed;
     
     public MinMaxAI(GameStatus status) {
-        bestV = -99999999;
         heuristic = new Heuristic(status.board);
         this.status = status;
         depthStop();
@@ -40,9 +40,41 @@ public class MinMaxAI {
         }
         this.minmax = new MinimumMaximum();
     }
+    public MinMaxAI(GameStatus status, boolean HashMapUsed) {
+        this.HashMapUsed = HashMapUsed;
+        
+        heuristic = new Heuristic(status.board);
+        this.status = status;
+        depthStop();
+        if (status.currentPlayer == 'O') {
+            opponentOriginalStart = 'X';
+        } else {
+            opponentOriginalStart = 'O';
+        }
+        this.minmax = new MinimumMaximum();
+    }
+    /**
+    * Method tells how to deep to check (how many boards are checked) before estimating the board value using heuristics
+    *  
+    */
     public void depthStop() {
         if (status.board.boardSize >= 10) {
-            depthWhereToCalculateHeuristic = 3;  
+            if (status.board.boardSize <= 20) {
+                depthWhereToCalculateHeuristic = 7;  
+            }
+            if (status.board.boardSize <= 25) {
+                depthWhereToCalculateHeuristic = 6;  
+            } else if (status.board.boardSize <= 36) {
+                depthWhereToCalculateHeuristic = 5; 
+            } else if (status.board.boardSize <= 54) {
+                depthWhereToCalculateHeuristic = 4;              
+            
+            } else if (status.board.boardSize <= 100) {
+                depthWhereToCalculateHeuristic = 3;              
+            }
+            else {
+                depthWhereToCalculateHeuristic = 2;  
+            }       
         } else {
             depthWhereToCalculateHeuristic = 9999;  
         }
@@ -50,25 +82,19 @@ public class MinMaxAI {
     }
     
     /**
-    * Method returns the heuristic value of the best possible move
-    * 
+    * Method returns the heuristic value of the best possible move 
     * 
     * @return int heuristic value
     */
     public int alphaBetaValue(GameStatus status) {
         this.status = status;   
         this.originalStart = status.currentPlayer;
-        if (status.currentPlayer == 'O') {
-            opponentOriginalStart = 'X';
-        } else {
-            opponentOriginalStart = 'O';
-        }
-        int returnVal = maxValue(this.status, -1, 1, 0);
+        this.opponentOriginalStart = status.otherPlayer();
+        int returnVal = maxValue(this.status, -2000000000, 2000000000, 0);
         return returnVal;
     }
     /**
-    * Method returns the best next move
-    * 
+    * Method returns the best next move 
     * 
      *@param status 
     * @return GameStatus status of the best move
@@ -76,9 +102,9 @@ public class MinMaxAI {
     public GameStatus alphaBetaBoard(GameStatus status) {
         this.status = status;
         this.originalStart = status.currentPlayer;
-        System.out.println(originalStart);
-        bestV = -1000000005;
-        maxValue(this.status, -1, 1, 0);
+        this.opponentOriginalStart = status.otherPlayer();
+        bestV = -2100000001;
+        maxValue(this.status, -2000000000, 2000000000, 0);
         return bestStatus;
     }
     /**
@@ -91,32 +117,32 @@ public class MinMaxAI {
     * @param depth tells how deep is the recursion
     * @return int of the max value
     */
-    private int maxValue(GameStatus status, int alpha, int beta, int depth) {
+    public int maxValue(GameStatus status, int alpha, int beta, int depth) {
         this.status = status;
         char statusValue = status.checkAll();
         if (statusValue == 'n') {
             return 0;
         }
         if (statusValue == originalStart) {
-            return 1000000000;
+            return 1000000100 - depth;
         } else if (statusValue == opponentOriginalStart) {
-            return -1000000000;
+            return -1000000100 + depth;
         }
-
         if (depth == depthWhereToCalculateHeuristic) {
-            return heuristic.evaluate(status, originalStart, opponentOriginalStart);
+            return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);
         }
-        int v = -2000000000;
+        int v = -2100000000;
         for (GameStatus nodeChild: generateBoards().getAll()) {
             v = minmax.max(v, minValue(nodeChild, alpha, beta, depth + 1));
             alpha = minmax.max(alpha, v);
+            if (depth == 0 && v > bestV) {
+                this.bestStatus = nodeChild.copyGameStatus();
+                bestV = v;
+            }
             if (alpha  >= beta) {
-
-                return v;
-                
+                return v;                
             }
         }
-
         return v;
 
     }
@@ -130,57 +156,35 @@ public class MinMaxAI {
     * @param depth tells how deep is the recursion
     * int of the min value
     */
-    private int minValue(GameStatus status, int alpha, int beta, int depth) {
-
+    public int minValue(GameStatus status, int alpha, int beta, int depth) {
         this.status = status;
         char statusValue = status.checkAll();
-        if (statusValue == originalStart) {
-            if (depth == 1) {
-                this.bestStatus = status.copyGameStatus();
-                bestV = 1000000000;
-            }
-            return 1000000000;
-        } else if (statusValue == opponentOriginalStart) {
-            if (depth == 1 && bestV < -1000000000) {
-                this.bestStatus = status.copyGameStatus();
-                bestV = -1000000000;
-            }
-            return -1000000000;
-        }
-        if (statusValue == 'n') {
-            if (depth == 1 && bestV < 0) {
-                this.bestStatus = status.copyGameStatus();
-                bestV = 0;
-            }
+        if (statusValue == 'n') {            
             return 0;
         }
+        if (statusValue == originalStart) {
+            return 1000000100 - depth;
+        } else if (statusValue == opponentOriginalStart) {
+            return -1000000100 + depth;
+        }        
         if (depth == depthWhereToCalculateHeuristic) {
-            return heuristic.evaluate(status, originalStart, opponentOriginalStart);
+            return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);
         }
-        int v = 2000000000;
+        int v = 2100000000;
         for (GameStatus nodeChild: generateBoards().getAll()) {
             v = minmax.min(v, maxValue(nodeChild, alpha, beta, depth + 1));
             beta = minmax.min(beta, v);
             if (alpha  >= beta) {
-
-                if (depth == 1 && v > bestV) {
-                    this.bestStatus = status.copyGameStatus();
-                    bestV = v;
-                }
                 return v;
             }
         }
 
-        if (depth == 1 && v > bestV) {
-            this.bestStatus = status.copyGameStatus();
-            bestV = v;
-        }
         return v;        
         
     }
     /*
     * Methods generates all legal boards possible and returns an ArrayList of them
-    * @return ArrayList that contains legal possible moves
+    * @return ArrayList that contains all legal possible moves
     */
     public ArrayList generateBoards() {
         ArrayList children = new ArrayList();

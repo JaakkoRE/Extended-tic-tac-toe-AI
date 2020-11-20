@@ -28,10 +28,11 @@ public class AiLogicTests {
      @Test
     public void minMaxAIBoardTestWithSmallBoards() {
         GameStatus statusTest = new GameStatus(new Board(1,1,1),'O');
-        MinMaxAI ai = new MinMaxAI(statusTest);
+        MinMaxAI ai = new MinMaxAI(statusTest, false);
         GameStatus statusCheck = ai.alphaBetaBoard(statusTest);
         statusTest.setBoardValue(0, 0);
         assertEquals(ai.bestStatus.board.toString(),statusCheck.board.toString()); 
+        assertEquals(-1000000100,ai.alphaBetaValue(statusTest));
         
         
         statusTest = new GameStatus(new Board(3,2,3),'O');
@@ -40,9 +41,10 @@ public class AiLogicTests {
         statusTest.setBoardValue(1, 0);
         statusTest.setBoardValue(1, 1);
         ai = new MinMaxAI(statusTest);
-        statusCheck = ai.alphaBetaBoard(statusTest);
-        statusTest.setBoardValue(2, 0);
-        assertEquals(ai.bestStatus.board.toString(),statusCheck.board.toString());
+        GameStatus statusChecker = statusTest.copyGameStatus();
+        statusChecker.setBoardValue(2, 0);
+        assertEquals(statusChecker.board.toString(),ai.alphaBetaBoard(statusTest).board.toString());
+        assertEquals(1000000099,ai.alphaBetaValue(statusTest));
         
         statusTest = new GameStatus(new Board(3,3,3),'O');
         statusTest.setBoardValue(0, 1);
@@ -51,9 +53,39 @@ public class AiLogicTests {
         statusTest.setBoardValue(1, 0);
         statusTest.setBoardValue(2, 2);
         ai = new MinMaxAI(statusTest);
-        statusCheck = ai.alphaBetaBoard(statusTest);
-        statusTest.setBoardValue(1, 2);
-        assertEquals(ai.bestStatus.board.toString(),statusCheck.board.toString());   
+        statusChecker = statusTest.copyGameStatus();
+        statusChecker.setBoardValue(1, 2);
+        assertEquals(statusChecker.board.toString(),ai.alphaBetaBoard(statusTest).board.toString()); 
+        assertEquals(1000000099,ai.alphaBetaValue(statusTest));
+    }
+      @Test
+    public void maxValueTest() {
+        GameStatus statusTest = new GameStatus(new Board(1,1,1),'O');
+        MinMaxAI ai = new MinMaxAI(statusTest);
+        // initizialization
+        ai.alphaBetaValue(statusTest);
+        assertEquals(ai.maxValue(statusTest, -2000000000, 2000000000, 0),1000000099);
+        
+        statusTest = new GameStatus(new Board(3,3,3),'O');
+        ai = new MinMaxAI(statusTest);
+        // initizialization
+        ai.alphaBetaValue(statusTest);
+        assertEquals(ai.maxValue(statusTest, -2000000000, 2000000000, 0),0);
+    }
+    
+      @Test
+    public void minValueTest() {
+        GameStatus statusTest = new GameStatus(new Board(1,1,1),'O');
+        MinMaxAI ai = new MinMaxAI(statusTest);
+        // initizialization
+        ai.alphaBetaValue(statusTest);
+        assertEquals(ai.maxValue(statusTest, -2000000000, 2000000000, 0),1000000099);
+        
+        statusTest = new GameStatus(new Board(3,3,3),'O');
+        ai = new MinMaxAI(statusTest);
+        // initizialization
+        ai.alphaBetaValue(statusTest);
+        assertEquals(ai.maxValue(statusTest, -2000000000, 2000000000, 0),0);
     }
      @Test
     public void generateChildrenBoards() {

@@ -11,7 +11,9 @@ package boardLogicTests;
  * @author Jaakko
  */
 
+import com.mycompany.tictactoeai.AILogic.MinMaxAI;
 import com.mycompany.tictactoeai.BoardLogic.Board;
+import com.mycompany.tictactoeai.BoardLogic.GameStatus;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -63,6 +65,34 @@ public class BoardTest {
         assertEquals(board.sizey, 3);
         assertEquals(board.vcl, 3);
     }
+     @Test
+     public void hashTest() {
+        assertEquals(board.hashCode(), 9140526);
+        
+        Board testBoard1 = new Board(3,2,1);
+        Board testBoard2 = new Board(3,2,2);
+        assertEquals(testBoard1.hashCode(), testBoard2.hashCode());
+        
+        Board testBoard3 = new Board(10,10,5);
+        assertEquals(testBoard3.hashCode(), 4969531);
+        GameStatus status = new GameStatus(new Board(15,15,5),'O');
+        MinMaxAI forTests = new MinMaxAI(status);
+        int[] hashValues = new int[225];
+        int index = 0;
+        for (GameStatus statusTestsForHash: forTests.generateBoards().getAll()) {
+            hashValues[index] = statusTestsForHash.board.hashCode();
+            index++;
+        }
+        //tests that hashes are diverse enough
+        for (int i = 0; i < 224; i++) {
+            int hashValue = hashValues[i];
+            for (int j = i+1; j < 225; j++) {
+                if (hashValue == hashValues[j]) {
+                    assertEquals("at point " + i, " and " + j + " are same");
+                }
+            }
+        }
+     }
      @Test
     public void differentBoardTests() {
         Board testBoard = new Board(-1,2,2);

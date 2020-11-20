@@ -5,6 +5,7 @@
  */
 package com.mycompany.UserInterface;
 
+import com.mycompany.tictactoeai.AILogic.AIVSAI;
 import com.mycompany.tictactoeai.BoardLogic.Board;
 import com.mycompany.tictactoeai.BoardLogic.GameStatus;
 import com.mycompany.tictactoeai.AILogic.MinMaxAI;
@@ -18,87 +19,81 @@ import java.util.Scanner;
 //  work in progress
 public class UI {
     public GameStatus status;
-<span class="nc" id="L21">    Scanner scanner = new Scanner(System.in);</span>
-
-<span class="nc" id="L23">    public UI() {</span>
+<span class="nc" id="L22">    Scanner scanner = new Scanner(System.in);</span>
+    
+<span class="nc" id="L24">    public UI() {</span>
         
-<span class="nc" id="L25">    }</span>
+<span class="nc" id="L26">    }</span>
  /**
  * Method takes first the 3 values of the board and then moves with . in between. For example 3 enter 3 enter 3 enter 2.2 enter
  */
  //  work in progress
     public void UILogicStart() {
-<span class="nc" id="L31">        System.out.println(&quot;set board height: &quot;);</span>
-<span class="nc" id="L32">        int xLength = Integer.parseInt(scanner.nextLine()); </span>
-<span class="nc" id="L33">        System.out.println(&quot;set board length: &quot;);</span>
-<span class="nc" id="L34">        int yLength = Integer.parseInt(scanner.nextLine()); </span>
-<span class="nc" id="L35">        System.out.println(&quot;set victory row length: &quot;);</span>
-<span class="nc" id="L36">        int vcl = Integer.parseInt(scanner.nextLine()); </span>
-<span class="nc" id="L37">        this.status = new GameStatus(new Board(xLength, yLength, vcl));</span>
-<span class="nc" id="L38">        System.out.println(&quot;Type 's' if you want to play vs AI or 'a' if u want ai to play vs itself: &quot;);</span>
-<span class="nc" id="L39">        String AIOrSolo = scanner.nextLine(); </span>
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (AIOrSolo.equals(&quot;s&quot;)) {</span>
-<span class="nc" id="L41">            UILogicPlayerVSAI();</span>
+<span class="nc" id="L32">        System.out.println(&quot;Do you want to do a test y/n&quot;); </span>
+<span class="nc" id="L33">        String TestOrNo = scanner.nextLine(); </span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (TestOrNo.equals(&quot;y&quot;)) {</span>
+<span class="nc" id="L35">           return;</span>
         }
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (AIOrSolo.equals(&quot;a&quot;)) {</span>
-<span class="nc" id="L44">            UILogicAIVSAI();</span>
+<span class="nc" id="L37">        System.out.println(&quot;set board height: &quot;);</span>
+<span class="nc" id="L38">        int xLength = Integer.parseInt(scanner.nextLine()); </span>
+<span class="nc" id="L39">        System.out.println(&quot;set board length: &quot;);</span>
+<span class="nc" id="L40">        int yLength = Integer.parseInt(scanner.nextLine()); </span>
+<span class="nc" id="L41">        System.out.println(&quot;set victory row length: &quot;);</span>
+<span class="nc" id="L42">        int vcl = Integer.parseInt(scanner.nextLine()); </span>
+<span class="nc" id="L43">        this.status = new GameStatus(new Board(xLength, yLength, vcl));</span>
+<span class="nc" id="L44">        System.out.println(&quot;Type 's' if you want to play vs AI or 'a' if u want ai to play vs itself: &quot;);</span>
+<span class="nc" id="L45">        String AIOrSolo = scanner.nextLine(); </span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (AIOrSolo.equals(&quot;s&quot;)) {</span>
+<span class="nc" id="L47">            UILogicPlayerVSAI();</span>
         }
-<span class="nc" id="L46">    }</span>
-    public void UILogicPlayerVSAI() {
-<span class="nc" id="L48">        System.out.println(&quot;move in format (length.height):&quot;);</span>
-<span class="nc" id="L49">        MinMaxAI ai = new MinMaxAI(this.status);</span>
-<span class="nc" id="L50">        this.status = ai.alphaBetaBoard(this.status);</span>
-<span class="nc" id="L51">        System.out.println(this.status.board);</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        while (!this.status.isBoardFull()) {</span>
-<span class="nc" id="L53">            String nextMove = scanner.nextLine(); </span>
-<span class="nc" id="L54">            String[] split = nextMove.split(&quot;\\.&quot;);</span>
-<span class="nc" id="L55">            int[] cord = new int[2];</span>
-<span class="nc" id="L56">            cord[0] = Integer.parseInt(split[0]);</span>
-<span class="nc" id="L57">            cord[1] = Integer.parseInt(split[1]); </span>
-            
-<span class="nc" id="L59">            this.status.setBoardValue(cord[0], cord[1]);</span>
-<span class="nc" id="L60">            System.out.println(this.status.board.toString());</span>
-<span class="nc" id="L61">            char result = status.checkAll();</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (!(result == 0)) {</span>
-<span class="nc" id="L63">                System.out.println(result);</span>
-<span class="nc" id="L64">                break;</span>
-            } 
-            
-<span class="nc" id="L67">            this.status = ai.alphaBetaBoard(this.status);</span>
-<span class="nc" id="L68">            System.out.println(this.status.board.toString());</span>
-<span class="nc" id="L69">            result = status.checkAll();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (!(result == 0)) {</span>
-<span class="nc" id="L71">                System.out.println(result);</span>
-<span class="nc" id="L72">                break;</span>
-            }
-<span class="nc" id="L74">            System.out.println(status.checkAll());</span>
-            
-<span class="nc" id="L76">        }</span>
-<span class="nc" id="L77">    }</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (AIOrSolo.equals(&quot;a&quot;)) {</span>
+<span class="nc" id="L50">            UILogicAIVSAI();</span>
+        }
+<span class="nc" id="L52">    }</span>
+    
+<span class="nc" id="L54">    public void UILogicPlayerVSAI() {</span>
+        System.out.println(&quot;move in format (length.height):&quot;);
+<span class="nc" id="L56">        MinMaxAI ai = new MinMaxAI(this.status);</span>
+        this.status = ai.alphaBetaBoard(this.status);
+<span class="nc" id="L58">        System.out.println(this.status.board);</span>
+<span class="nc" id="L59">        while (!this.status.isBoardFull()) {</span>
+<span class="nc" id="L60">            String nextMove = scanner.nextLine(); </span>
+<span class="nc" id="L61">            String[] split = nextMove.split(&quot;\\.&quot;);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            int[] cord = new int[2];</span>
+<span class="nc" id="L63">            cord[0] = Integer.parseInt(split[0]);</span>
+<span class="nc" id="L64">            cord[1] = Integer.parseInt(split[1]); </span>
+<span class="nc" id="L65">            </span>
+<span class="nc" id="L66">            this.status.setBoardValue(cord[0], cord[1]);</span>
+<span class="nc" id="L67">            System.out.println(this.status.board.toString());</span>
+            char result = status.checkAll();
+<span class="nc" id="L69">            if (!(result == 0)) {</span>
+<span class="nc" id="L70">                System.out.println(result);</span>
+<span class="nc" id="L71">                break;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            } </span>
+<span class="nc" id="L73">            </span>
+<span class="nc" id="L74">            this.status = ai.alphaBetaBoard(this.status);</span>
+            System.out.println(this.status.board.toString());
+            result = status.checkAll();
+<span class="nc" id="L77">            if (!(result == 0)) {</span>
+<span class="nc" id="L78">                System.out.println(result);</span>
+<span class="nc" id="L79">                break;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            }</span>
+<span class="nc" id="L81">            System.out.println(status.checkAll());</span>
+<span class="nc" id="L82">            </span>
+        }
+<span class="nc" id="L84">    }</span>
     public void UILogicAIVSAI() {
-<span class="nc" id="L79">        MinMaxAI ai = new MinMaxAI(this.status);</span>
-<span class="nc" id="L80">        this.status = ai.alphaBetaBoard(this.status);</span>
-<span class="nc" id="L81">        System.out.println(this.status.board);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        while (!this.status.isBoardFull()) {</span>
-<span class="nc" id="L83">            this.status = ai.alphaBetaBoard(this.status);</span>
-<span class="nc" id="L84">            System.out.println(this.status.board.toString());</span>
-<span class="nc" id="L85">            char result = status.checkAll();</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (!(result == 0)) {</span>
-<span class="nc" id="L87">                System.out.println(result);</span>
-<span class="nc" id="L88">                break;</span>
-            } 
-            
-<span class="nc" id="L91">            this.status = ai.alphaBetaBoard(this.status);</span>
-<span class="nc" id="L92">            System.out.println(this.status.board.toString());</span>
-<span class="nc" id="L93">            result = status.checkAll();</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (!(result == 0)) {</span>
-<span class="nc" id="L95">                System.out.println(result);</span>
-<span class="nc" id="L96">                break;</span>
-            }
-<span class="nc" id="L98">            System.out.println(status.checkAll());</span>
-            
-<span class="nc" id="L100">        }</span>
-<span class="nc" id="L101">    }</span>
-
+<span class="nc" id="L86">        System.out.println(&quot;Use HashMap for board value heuristics? y/n&quot;);</span>
+<span class="nc" id="L87">        String hashMapOrNo = scanner.nextLine(); </span>
+        boolean hashMapBool = false;
+<span class="nc" id="L89">        if (hashMapOrNo.equals(&quot;y&quot;)) {</span>
+<span class="nc" id="L90">            hashMapBool = true;</span>
+<span class="nc" id="L91">        }        </span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        AIVSAI AIVersus = new AIVSAI();</span>
+<span class="nc" id="L93">        AIVersus.AIVSAIPlay(status, hashMapBool, true);</span>
+    }
+<span class="nc" id="L95">    </span>
+<span class="nc" id="L96">    </span>
+<span class="nc" id="L97"></span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
