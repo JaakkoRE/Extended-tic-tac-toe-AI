@@ -36,7 +36,7 @@ Because of alpha beta pruning, the worst case is rarely reached
 - ArrayList size increase time complexity is O(n), thus add methods time complexity is O(n), the rest are constants (no remove function)
 - HashMap put requires O(a) time complexity for hash and o(n) for ArrayList size increase, so the timecomplexity is O(an)=O(c). Get method is constant. (Hashmap list size is always 10000000 currently)
 #### Other methods
-Constant memory complexities
+Constant time complexities
 ## Flaws 
 - HashMap implementation is still flawed, reduces performance.
 - The AI assumes that the other player plays like the AI (min max algorithm) so if there is a way for the opponent to win, all moves are all as bad since the opponent can win from any move. (AI still tries to win as fast as possible or to lose as fast as possible)
