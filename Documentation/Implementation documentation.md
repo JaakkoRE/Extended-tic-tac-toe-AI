@@ -1,4 +1,4 @@
-#Implementation documentation
+# Implementation documentation
 
 ## Flaws 
 - HashMap implementation is still flawed, reduces performance.
@@ -8,3 +8,7 @@
 - UI could be more user friendly.
 - Bigger boards limit the depth because of the calculation times leading to flawed plays.
 - Heuristics are made for general purpose, they might work better on some boards than on others.
+## References
+- http://www.cse.yorku.ca/~oz/hash.html used for djb 2 hash
+- https://en.wikipedia.org/wiki/Minimax used for minMax algorithm
+- Tietorakenteet ja algoritmit Antti Laaksonen (2020) used for ArrayList and HashMap
