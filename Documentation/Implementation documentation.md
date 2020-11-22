@@ -3,17 +3,19 @@
 - a is the size of board (xLength time yLength)
 - p tells how deep the recursion of minmax algorithm goes.
 - n is the amount of values in HashMap or ArrayList
-## Memory compexity
-### Board and GameStatus
+## Memory and time compexity
+### Memory compexity
+
+#### Board and GameStatus
 - Boards memory usage is O(a)
 - Gamestatus memory usage is the same as board O(a) = S
-### MinMax
+#### MinMax
 MinMax generates children of all possible GameStatuses. At first it generates a amount of boards then from that board configuration a-1 boards.<br> 
 This continues until depth p is reached so the Memory requirement is O((a!/(a-p)!)S)=O((a!/(a-p)!)a)=O(a!/(a-p)!)
-### HashMap and ArrayList
+#### HashMap and ArrayList
 ArrayList and Hashmaps memory requirements are O(n)
-## Time complexity
-### Board and GameStatus
+### Time complexity
+#### Board and GameStatus
 - Boards board setup, copying, string generation, hash generation time complexities are O(a), the rest are constants
 - GameStatus victorychecks are O(a)=c (worst case for example, 1 height 4 length, 4 victory length board: x,x,x,x)
 - GameStatus checkAll is O(ac)=O(a^2), realistically this worst case is rarely reached. 
