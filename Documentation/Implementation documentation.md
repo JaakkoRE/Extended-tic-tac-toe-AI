@@ -11,15 +11,32 @@
 - Gamestatus memory usage is the same as board O(a) = S
 #### MinMax
 MinMax generates children of all possible GameStatuses. At first it generates a amount of boards then from that board configuration a-1 boards.<br> 
-This continues until depth p is reached so the Memory requirement is O((a!/(a-p)!)S)=O((a!/(a-p)!)a)=O(a!/(a-p)!)
+This continues until depth p is reached so the Memory requirement is O((a!/(a-p)!)S)=O((a!/(a-p)!)a)=O(a!/(a-p)!)<br>
+Because of alpha beta pruning, the worst case is rarely reached
 #### HashMap and ArrayList
 ArrayList and Hashmaps memory requirements are O(n)
+#### Other methods
+Constant memory complexities
 ### Time complexity
 #### Board and GameStatus
 - Boards board setup, copying, string generation, hash generation time complexities are O(a), the rest are constants
 - GameStatus victorychecks are O(a)=c (worst case for example, 1 height 4 length, 4 victory length board: x,x,x,x)
 - GameStatus checkAll is O(ac)=O(a^2), realistically this worst case is rarely reached. 
 - Other Gamestatus method time complexities are constants.
+#### Heuristics
+- Heuristics has multiple different methods which time complexities are O(a)=d (For example heuristic vertical has similar time complexity to Gamestatus victorychecks)
+- Heuristics evaluate time complexity is then O(ad)=O(a^2)=d
+#### MinMaxAI
+MinMax generates children of all possible GameStatuses. At first it generates a amount of boards then from that board configuration a-1 boards.<br> 
+This continues until depth p so at worst a!/(a-p)! calculations in which GameStatus checkAll c=O(a) is used and at the end of the recursion d=O(a^2)evaluate method. <br>
+so O(a!/(a-p)!cd)=O(a!/(a-p)!a^3)=O(a!/(a-p)!)
+<br>
+Because of alpha beta pruning, the worst case is rarely reached
+#### HashMap and ArrayList
+- ArrayList size increase time complexity is O(n), thus add methods time complexity is O(n), the rest are constants (no remove function)
+- HashMap put requires O(a) time complexity for hash and o(n) for ArrayList size increase, so the timecomplexity is O(an)=O(c). Get method is constant. (Hashmap list size is always 10000000 currently)
+#### Other methods
+Constant memory complexities
 ## Flaws 
 - HashMap implementation is still flawed, reduces performance.
 - The AI assumes that the other player plays like the AI (min max algorithm) so if there is a way for the opponent to win, all moves are all as bad since the opponent can win from any move. (AI still tries to win as fast as possible or to lose as fast as possible)
