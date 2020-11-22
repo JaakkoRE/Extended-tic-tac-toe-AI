@@ -2,13 +2,13 @@
 ## Values for memory and processing calculations
 - a is the size of board (xLength time yLength)
 - p tells how deep the recursion of minmax algorithm goes.
-## Memory usage
+## Memory compexity
 ### Board and GameStatus
 - Boards memory usage is O(a)
 - Gamestatus memory usage is the same as board O(a) = S
 ### MinMax
 MinMax generates children of all possible GameStatuses. At first it generates a amount of boards then from that board configuration a-1 boards.<br> 
-This continues until depth p is reached so the Memory requirement is O((a!/(a-p)!)S)=O(a(a!/a-p)!)=O(a!/(a-p)!)
+This continues until depth p is reached so the Memory requirement is O((a!/(a-p)!)S)=O((a!/(a-p)!)a)=O(a!/(a-p)!)
 ## Flaws 
 - HashMap implementation is still flawed, reduces performance.
 - The AI assumes that the other player plays like the AI (min max algorithm) so if there is a way for the opponent to win, all moves are all as bad since the opponent can win from any move. (AI still tries to win as fast as possible or to lose as fast as possible)
