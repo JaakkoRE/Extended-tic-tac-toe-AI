@@ -32,3 +32,10 @@ Heuristiikkaa kehitetty, hashmap luotu ja integroitu heuristiikan laskentaan (ta
 Heuristiikan mahdollista kehitystä, syvyysvalintaa, hashmapin hyödyntämisen parantamista, aikatestausta lisää. Mahdollisesti graafista liittymää.
 ## tuntimäärä 
 Kaiken kaikkiaan 24 tuntia.
+
+# Viikon 5 viikkoraportti
+Testausta edistetty, Kuinka syvälle lasketaan nousee kun kenttä on tyhjempi. Toteutettu siten, että laskenta ei kasva liikaa ja alku syvyyttä ei tarvi laskea. Parempi pitää alussa ja koko ajan mahdollisimman korkea syvyys kun taas pistää se heti alussa liian pieneksi jolloin voi tulla nopea häviö. GUI alustavasti rakennettu, teksti UI parannuksia, pieniä parannuksia siellä täällä.
+## Mitä seuraavaksi
+Heuristiikan kehitys, hashmapin hyödyntämisen parantamista.
+## tuntimäärä 
+Kaiken kaikkiaan 16 tuntia.
