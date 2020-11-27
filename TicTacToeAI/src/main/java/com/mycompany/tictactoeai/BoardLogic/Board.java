@@ -96,12 +96,25 @@ public class Board {
     */
     public Board copyBoard() {
         Board returnBoard = new Board(sizex, sizey, vcl);
+        returnBoard.boardfulfillment = this.boardfulfillment;
         for (int i = 0; i < gameBoard.length; i++) {
             for (int j = 0; j < gameBoard[0].length; j++) {
                 returnBoard.gameBoard[i][j] = gameBoard[i][j];
             }
         }
         return returnBoard;
+    }
+    /**
+    * Method prints the board positions based on number. Used in user vs ai play.
+    * 
+    */
+    public void boardPositions() {
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j < gameBoard[0].length; j++) {
+                System.out.print(i + "." + j+"|");
+            }
+            System.out.print("\n");
+        }
     }
     /**
     * Method returns a string of the board
@@ -140,8 +153,8 @@ public class Board {
             if (hash < 0) {
                 hash = -hash;
             }
-            while (hash >= 10000000) {                
-                hash = hash - 97 * 100 - 83 * 1000 - 67 * 100000;
+            if (hash >= 10000000) {                
+                hash = hash % 10000000;
             }
         }
         return hash;

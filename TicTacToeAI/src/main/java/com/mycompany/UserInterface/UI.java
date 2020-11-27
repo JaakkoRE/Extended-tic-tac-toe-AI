@@ -16,7 +16,6 @@ import java.util.Scanner;
  * @author Jaakko
  */
 
-//  work in progress
 public class UI {
     public GameStatus status;
     Scanner scanner = new Scanner(System.in);
@@ -29,6 +28,7 @@ public class UI {
  */
  //  work in progress
     public void UILogicStart() {
+        try {
         System.out.println("set board height: ");
         int xLength = Integer.parseInt(scanner.nextLine()); 
         System.out.println("set board length: ");
@@ -44,21 +44,40 @@ public class UI {
         if (AIOrSolo.equals("a")) {
             UILogicAIVSAI();
         }
+        }catch (Exception e) {
+            System.out.println("Bad input (restart)");
+            UILogicStart();
+        }
     }
     
     public void UILogicPlayerVSAI() {
+        System.out.println("if you want board positions, type 'p'");
         System.out.println("move in format (length.height):");
         MinMaxAI ai = new MinMaxAI(this.status);
         this.status = ai.alphaBetaBoard(this.status);
         System.out.println(this.status.board);
         while (!this.status.isBoardFull()) {
-            String nextMove = scanner.nextLine(); 
-            String[] split = nextMove.split("\\.");
-            int[] cord = new int[2];
-            cord[0] = Integer.parseInt(split[0]);
-            cord[1] = Integer.parseInt(split[1]); 
+            while (true) {
+                char rightCords = 'e';
+                String nextMove = scanner.nextLine(); 
+                if (nextMove.equals("p")) {
+                    this.status.board.boardPositions();
+                } else {
+                    
+                    String[] split = nextMove.split("\\.");
+                    int[] cord = new int[2];
+                    cord[0] = Integer.parseInt(split[0]);
+                    cord[1] = Integer.parseInt(split[1]); 
             
-            this.status.setBoardValue(cord[0], cord[1]);
+                    rightCords = this.status.setBoardValue(cord[0], cord[1]);
+                }
+                if (rightCords != 'e') {
+                    break;
+                }
+                if (!nextMove.equals("p")) {
+                    System.out.println("invalid position");
+                }
+            }
             System.out.println(this.status.board.toString());
             char result = status.checkAll();
             if (!(result == 0)) {

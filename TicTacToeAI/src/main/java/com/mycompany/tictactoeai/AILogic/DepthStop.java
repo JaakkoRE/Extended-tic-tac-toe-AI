@@ -1,0 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.AILogic;
+
+/**
+ *
+ * @author Jaakko
+ */
+
+/**
+ * Class tells the minmax ai how deep the recursion can go (endless recursions on larger boards take too long to process).
+ */
+public class DepthStop {
+    /**
+    * Method tells how to deep to check (how many boards are checked) before estimating the board value using heuristics
+    *  
+    */
+    public int depthStopStart(int boardSize) {
+        int depthWhereToCalculateHeuristic = 9999;
+        if (boardSize >= 10) {
+            if (boardSize <= 20) {
+                depthWhereToCalculateHeuristic = 7;  
+            } else if (boardSize <= 25) {
+                depthWhereToCalculateHeuristic = 6;  
+            } else if (boardSize <= 36) {
+                depthWhereToCalculateHeuristic = 5; 
+            } else if (boardSize <= 54) {
+                depthWhereToCalculateHeuristic = 4;              
+            
+            } else if (boardSize <= 100) {
+                depthWhereToCalculateHeuristic = 3;              
+            }
+            else if (boardSize <= 324) {
+                depthWhereToCalculateHeuristic = 2;  
+            } else {
+                depthWhereToCalculateHeuristic = 1; //very imprecise  
+            }       
+        } 
+        return depthWhereToCalculateHeuristic;
+    }  
+    /**
+    * Method corrects the algorithm on the depth. As boardsize gets smaller the deeper the recursion can go before significant slow down. 
+    *  
+    */
+    public int depthStopCorrection(int size, int fullfillment, int oldDepthWhereToCalculateHeuristic) {
+       //   System.out.print(oldDepthWhereToCalculateHeuristic + " hö ");
+        int depthWhereToCalculateHeuristic = 9999;
+        if (size - fullfillment >= 9) {
+            if (size - fullfillment <= 11) {
+                depthWhereToCalculateHeuristic = 7;  
+            } else if (size - fullfillment <= 13) {
+                depthWhereToCalculateHeuristic = 6;  
+            } else if (size - fullfillment <= 15) {
+                depthWhereToCalculateHeuristic = 5; 
+            } else if (size - fullfillment <= 23) {
+                depthWhereToCalculateHeuristic = 4;              
+            
+            } else if (size - fullfillment <= 81) {
+                depthWhereToCalculateHeuristic = 3;              
+            }
+            else if (size - fullfillment <= 300) {
+                depthWhereToCalculateHeuristic = 2;  
+            } else {
+                depthWhereToCalculateHeuristic = 1;
+            }       
+        }
+      //  System.out.println(depthWhereToCalculateHeuristic + " ha");
+        if (depthWhereToCalculateHeuristic >= oldDepthWhereToCalculateHeuristic) {
+            return depthWhereToCalculateHeuristic;
+        }
+        
+        return oldDepthWhereToCalculateHeuristic;
+    }
+}

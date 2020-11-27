@@ -70,19 +70,20 @@ public class GameStatus {
     * @return true if board is full else false
     */ 
     public boolean isBoardFull() {
-//        if(board.boardSize == board.boardfulfillment) {
-//            return true;
-//        }
-//        return false;
-        this.gameBoard = board.getGameBoard();
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (int j = 0; j < gameBoard[0].length; j++) {
-                if ((gameBoard[i][j] == '_')) {
-                    return false;
-                }
-            }
+        if (board.boardSize == board.boardfulfillment) {
+            return true;
         }
-        return true;
+        return false;
+//System.out.println(board.boardSize + " ja " + board.boardfulfillment);
+//        this.gameBoard = board.getGameBoard();
+//        for (int i = 0; i < gameBoard.length; i++) {
+//            for (int j = 0; j < gameBoard[0].length; j++) {
+//                if ((gameBoard[i][j] == '_')) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
     }
     /**
     * Method checks all points of the board and tells the status of the game

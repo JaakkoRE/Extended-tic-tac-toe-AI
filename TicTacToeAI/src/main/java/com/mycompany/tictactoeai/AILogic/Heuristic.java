@@ -89,6 +89,7 @@ public class Heuristic {
             for (int j = 0; j < gameBoard[0].length; j++) {
                 heuristic += evaluateHeuristic(gameBoard, i, j, currentSymbol, opponentSymbol);
                 //if heuristic is so strong (win or lose guaranteed) no need to calculate further
+                //But this shouldn't happen since victory is checked with victorycheck with every board
                 if (heuristic >= 90000000) {
                     return 1000000000;
                 }

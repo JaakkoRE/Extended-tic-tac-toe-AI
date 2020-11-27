@@ -19,10 +19,10 @@ import com.mycompany.tictactoeai.Methods.HashMap;
  */
 public class Main {
     public static void main(String[] args) {
-       
         GUI u = new GUI();
+        u.interFaceStart();
         UI u2 = new UI();
-        u2.UILogicStart();
+       // u2.UILogicStart();
       //  MinMaxAI ai = new MinMaxAI(new GameStatus(new Board(2,2,1)));
       //  System.out.println(ai.alphaBetaValue());
         

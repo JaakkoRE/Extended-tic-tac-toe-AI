@@ -25,6 +25,7 @@ public class MinMaxAI {
     public GameStatus bestStatus;
     public char originalStart;
     public char opponentOriginalStart;
+    public DepthStop depthStop;
     private Heuristic heuristic;
     private int depthWhereToCalculateHeuristic;
     private boolean HashMapUsed;
@@ -32,7 +33,10 @@ public class MinMaxAI {
     public MinMaxAI(GameStatus status) {
         heuristic = new Heuristic(status.board);
         this.status = status;
-        depthStop();
+        
+        this.depthStop = new DepthStop();
+        this.depthWhereToCalculateHeuristic = this.depthStop.depthStopStart(status.board.boardSize);
+        
         if (status.currentPlayer == 'O') {
             opponentOriginalStart = 'X';
         } else {
@@ -42,45 +46,20 @@ public class MinMaxAI {
     }
     public MinMaxAI(GameStatus status, boolean HashMapUsed) {
         this.HashMapUsed = HashMapUsed;
-        
+       
         heuristic = new Heuristic(status.board);
         this.status = status;
-        depthStop();
+        
+        this.depthStop = new DepthStop();
+        this.depthWhereToCalculateHeuristic = this.depthStop.depthStopStart(status.board.boardSize);
+        
         if (status.currentPlayer == 'O') {
             opponentOriginalStart = 'X';
         } else {
             opponentOriginalStart = 'O';
         }
         this.minmax = new MinimumMaximum();
-    }
-    /**
-    * Method tells how to deep to check (how many boards are checked) before estimating the board value using heuristics
-    *  
-    */
-    public void depthStop() {
-        if (status.board.boardSize >= 10) {
-            if (status.board.boardSize <= 20) {
-                depthWhereToCalculateHeuristic = 7;  
-            }
-            if (status.board.boardSize <= 25) {
-                depthWhereToCalculateHeuristic = 6;  
-            } else if (status.board.boardSize <= 36) {
-                depthWhereToCalculateHeuristic = 5; 
-            } else if (status.board.boardSize <= 54) {
-                depthWhereToCalculateHeuristic = 4;              
-            
-            } else if (status.board.boardSize <= 100) {
-                depthWhereToCalculateHeuristic = 3;              
-            }
-            else {
-                depthWhereToCalculateHeuristic = 2;  
-            }       
-        } else {
-            depthWhereToCalculateHeuristic = 9999;  
-        }
-       
-    }
-    
+    }     
     /**
     * Method returns the heuristic value of the best possible move 
     * 
@@ -90,6 +69,7 @@ public class MinMaxAI {
         this.status = status;   
         this.originalStart = status.currentPlayer;
         this.opponentOriginalStart = status.otherPlayer();
+        this.depthWhereToCalculateHeuristic = depthStop.depthStopCorrection(status.board.boardSize, status.board.boardfulfillment, depthWhereToCalculateHeuristic);
         int returnVal = maxValue(this.status, -2000000000, 2000000000, 0);
         return returnVal;
     }
@@ -103,6 +83,7 @@ public class MinMaxAI {
         this.status = status;
         this.originalStart = status.currentPlayer;
         this.opponentOriginalStart = status.otherPlayer();
+        this.depthWhereToCalculateHeuristic = depthStop.depthStopCorrection(status.board.boardSize, status.board.boardfulfillment, depthWhereToCalculateHeuristic);
         bestV = -2100000001;
         maxValue(this.status, -2000000000, 2000000000, 0);
         return bestStatus;
@@ -124,9 +105,9 @@ public class MinMaxAI {
             return 0;
         }
         if (statusValue == originalStart) {
-            return 1000000100 - depth;
+            return 1000000100 - depth; //better to win faster
         } else if (statusValue == opponentOriginalStart) {
-            return -1000000100 + depth;
+            return -1000000100 + depth; //better to lose faster
         }
         if (depth == depthWhereToCalculateHeuristic) {
             return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);
@@ -163,9 +144,9 @@ public class MinMaxAI {
             return 0;
         }
         if (statusValue == originalStart) {
-            return 1000000100 - depth;
+            return 1000000100 - depth; // better to win faster
         } else if (statusValue == opponentOriginalStart) {
-            return -1000000100 + depth;
+            return -1000000100 + depth; // better to lose slower
         }        
         if (depth == depthWhereToCalculateHeuristic) {
             return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);
@@ -192,9 +173,12 @@ public class MinMaxAI {
         for (int i = 0; i < board.gameBoard.length; i++) {
             for (int j = 0; j < board.gameBoard[0].length; j++) {
                 if ((board.gameBoard[i][j] == '_')) {
-                    board.gameBoard[i][j] = status.currentPlayer;
-                    children.add(new GameStatus(this.status.board.copyBoard(), status.otherPlayer()));
-                    board.gameBoard[i][j] = '_';
+                    GameStatus copy = status.copyGameStatus();
+                    copy.setBoardValue(i, j);
+                    children.add(copy);
+//                    board.gameBoard[i][j] = status.currentPlayer;
+//                    children.add(new GameStatus(this.status.board.copyBoard(), status.otherPlayer()));
+//                    board.gameBoard[i][j] = '_';
                 }
             }
         }

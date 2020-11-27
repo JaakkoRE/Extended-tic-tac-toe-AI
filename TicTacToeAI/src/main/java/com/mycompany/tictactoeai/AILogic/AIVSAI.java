@@ -19,7 +19,7 @@ public class AIVSAI {
         while (!status.isBoardFull()) {
             status = ai.alphaBetaBoard(status);
             if (print) {
-            System.out.println(status.board.toString());
+                System.out.println(status.board.toString());
             }
             char result = status.checkAll();
             if (!(result == 0)) {
@@ -29,7 +29,7 @@ public class AIVSAI {
             
             status = ai.alphaBetaBoard(status);
             if (print) {
-            System.out.println(status.board.toString());
+                System.out.println(status.board.toString());
             }
             result = status.checkAll();
             if (!(result == 0)) {

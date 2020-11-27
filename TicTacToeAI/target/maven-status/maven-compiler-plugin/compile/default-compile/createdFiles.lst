@@ -1,3 +1,4 @@
+com\mycompany\tictactoeai\AILogic\DepthStop.class
 com\mycompany\tictactoeai\BoardLogic\GameStatus.class
 com\mycompany\tictactoeai\Methods\ArrayList.class
 com\mycompany\tictactoeai\Methods\MinimumMaximum.class

@@ -33,33 +33,33 @@ public class HashMap {
     * @param value is int of the heuristic value of the board
     */
     public void put(Board key, int value) {
-<span class="fc" id="L36">        boolean itemExists = false;</span>
-<span class="fc" id="L37">        int index = key.hashCode();</span>
-<span class="fc" id="L38">        ArrayListContainer bucket = recordList[index];</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (int i = 0; i &lt; bucket.getLength(); i++) {</span>
-<span class="fc" id="L40">            Container cont = bucket.getValueIndex(i);</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (cont.key.equals(key)) {</span>
-<span class="fc" id="L42">                cont.value = value;</span>
-<span class="fc" id="L43">                itemExists = true;</span>
-<span class="fc" id="L44">                break;</span>
+<span class="nc" id="L36">        boolean itemExists = false;</span>
+<span class="nc" id="L37">        int index = key.hashCode();</span>
+<span class="nc" id="L38">        ArrayListContainer bucket = recordList[index];</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (int i = 0; i &lt; bucket.getLength(); i++) {</span>
+<span class="nc" id="L40">            Container cont = bucket.getValueIndex(i);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (cont.key.equals(key)) {</span>
+<span class="nc" id="L42">                cont.value = value;</span>
+<span class="nc" id="L43">                itemExists = true;</span>
+<span class="nc" id="L44">                break;</span>
             }
         }
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (!itemExists) {</span>
-<span class="fc" id="L48">            bucket.add(new Container(key, value));</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (!itemExists) {</span>
+<span class="nc" id="L48">            bucket.add(new Container(key, value));</span>
         }
-<span class="fc" id="L50">    }</span>
+<span class="nc" id="L50">    }</span>
 	
     public int get(Board key) {
-<span class="fc" id="L53">        int index = key.hashCode();</span>
-<span class="fc" id="L54">        ArrayListContainer bucket = recordList[index];</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int i = 0; i &lt; bucket.getLength(); i++) {</span>
-<span class="fc" id="L56">            Container cont = bucket.getValueIndex(i);</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (cont.key.equals(key)) {</span>
-<span class="fc" id="L58">                return cont.value;</span>
+<span class="nc" id="L53">        int index = key.hashCode();</span>
+<span class="nc" id="L54">        ArrayListContainer bucket = recordList[index];</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        for (int i = 0; i &lt; bucket.getLength(); i++) {</span>
+<span class="nc" id="L56">            Container cont = bucket.getValueIndex(i);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            if (cont.key.equals(key)) {</span>
+<span class="nc" id="L58">                return cont.value;</span>
             }
         }
         // if there is no Board value. Just a random negative int.
-<span class="fc" id="L62">        return -7777;</span>
+<span class="nc" id="L62">        return -7777;</span>
     }   
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
