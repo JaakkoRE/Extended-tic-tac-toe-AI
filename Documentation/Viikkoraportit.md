@@ -34,7 +34,7 @@ Heuristiikan mahdollista kehitystä, syvyysvalintaa, hashmapin hyödyntämisen p
 Kaiken kaikkiaan 24 tuntia.
 
 # Viikon 5 viikkoraportti
-Testausta edistetty, Kuinka syvälle lasketaan nousee kun kenttä on tyhjempi. Toteutettu siten, että laskenta ei kasva liikaa ja alku syvyyttä ei tarvi laskea. Parempi pitää alussa ja koko ajan mahdollisimman korkea syvyys kun taas pistää se heti alussa liian pieneksi jolloin voi tulla nopea häviö. GUI alustavasti rakennettu, teksti UI parannuksia, pieniä parannuksia siellä täällä.
+Testausta edistetty, Kuinka syvälle lasketaan nousee kun kenttä on tyhjempi. Toteutettu siten, että laskenta ei kasva liikaa ja alku syvyyttä ei tarvi laskea. Parempi pitää alussa ja koko ajan mahdollisimman korkea syvyys kun taas pistää se heti alussa liian pieneksi jolloin voi tulla nopea häviö. GUI alustavasti rakennettu, teksti UI parannuksia, pieniä parannuksia siellä täällä. Dokumentaatio kehitystä.
 ## Mitä seuraavaksi
 Heuristiikan kehitys, hashmapin hyödyntämisen parantamista.
 ## tuntimäärä 
