@@ -39,3 +39,7 @@ Testausta edistetty, Kuinka syvälle lasketaan nousee kun kenttä on tyhjempi. T
 Heuristiikan kehitys, hashmapin hyödyntämisen parantamista.
 ## tuntimäärä 
 Kaiken kaikkiaan 16 tuntia.
+# Viikon 6 viikkoraportti
+Testausta edistetty. Tehty erilaisia testejä kuten testi joka satunnaistaa heuristiikan joitakin arvoja ja testaa mikä on paras, pieni ongelma tässä on se, että aloittavalla pelaajalla on aina etu joten täysin tasainen peli on mahdoton. Heuristiikkaa kehitetty. Paljon aikaa kulunu erilaisten arvojen vertailuun ja testailuun. Manuaalista että kone vastaan kone testailua. Tällä hetkellä olen melko tyytyväinen heuristiikan laadusta.
+## Mitä seuraavaksi
+Asioiden viilaamista, mahdollisesti yritän hashmappia hyödyntää vaikka vaikuttaa siltä että on turha. Testauksen laajentamista.
