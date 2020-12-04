@@ -25,18 +25,18 @@ public class DepthStop {
                 depthWhereToCalculateHeuristic = 7;  
             } else if (boardSize <= 25) {
                 depthWhereToCalculateHeuristic = 6;  
-            } else if (boardSize <= 36) {
+            } else if (boardSize <= 30) {
                 depthWhereToCalculateHeuristic = 5; 
-            } else if (boardSize <= 54) {
+            } else if (boardSize <= 60) {
                 depthWhereToCalculateHeuristic = 4;              
             
-            } else if (boardSize <= 100) {
-                depthWhereToCalculateHeuristic = 3;              
+            } else if (boardSize <= 121) {
+                depthWhereToCalculateHeuristic = 3;  // decent            
             }
             else if (boardSize <= 324) {
-                depthWhereToCalculateHeuristic = 2;  
+                depthWhereToCalculateHeuristic = 2;  // pretty bad
             } else {
-                depthWhereToCalculateHeuristic = 1; //very imprecise  
+                depthWhereToCalculateHeuristic = 1; // very imprecise, practically useless
             }       
         } 
         return depthWhereToCalculateHeuristic;

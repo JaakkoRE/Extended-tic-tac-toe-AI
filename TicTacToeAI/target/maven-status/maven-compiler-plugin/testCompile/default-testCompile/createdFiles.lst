@@ -1,4 +1,5 @@
 boardLogicTests\GameStatusTest.class
+PerformanceTests\XLosesTests.class
 AiLogicTests\DepthStopTests.class
 methodTests\ArrayListTests.class
 methodTests\HashMapTests.class
@@ -6,4 +7,6 @@ boardLogicTests\BoardTest.class
 AiLogicTests\HeuristicTest.class
 methodTests\MinMaxTests.class
 AiLogicTests\AiLogicTests.class
-TimeTests\TimeTests.class
+PerformanceTests\LoseVsRandomPlays.class
+PerformanceTests\RandomHeuristicTournament.class
+PerformanceTests\TimeTests.class

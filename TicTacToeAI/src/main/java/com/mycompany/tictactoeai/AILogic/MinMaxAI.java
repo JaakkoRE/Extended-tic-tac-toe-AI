@@ -26,7 +26,7 @@ public class MinMaxAI {
     public char originalStart;
     public char opponentOriginalStart;
     public DepthStop depthStop;
-    private Heuristic heuristic;
+    public Heuristic heuristic;
     private int depthWhereToCalculateHeuristic;
     private boolean HashMapUsed;
     
@@ -59,7 +59,7 @@ public class MinMaxAI {
             opponentOriginalStart = 'O';
         }
         this.minmax = new MinimumMaximum();
-    }     
+    }
     /**
     * Method returns the heuristic value of the best possible move 
     * 
