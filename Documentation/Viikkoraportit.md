@@ -44,4 +44,4 @@ Testausta edistetty. Tehty erilaisia testejä kuten testi joka satunnaistaa heur
 ## Mitä seuraavaksi
 Asioiden viilaamista, mahdollisesti yritän hashmappia hyödyntää vaikka vaikuttaa siltä että on turha. Testauksen laajentamista.
 ## tuntimäärä 
-Vaikea arvioida noin 18 tuntia. Testien pyörittelyssä (varsinkin randomTournament testeissä) kulunu monta tuntia mutta olen tehnyt paljon muuta samalla.
+Vaikea arvioida noin 18 tuntia aktiivista työtä. Testien pyörittelyssä (varsinkin randomTournament testeissä) kulunu monta tuntia mutta olen tehnyt paljon muuta samalla.
