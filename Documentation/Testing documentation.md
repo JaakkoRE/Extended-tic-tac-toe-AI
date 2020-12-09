@@ -23,7 +23,7 @@ Length, height and victory length (how many of the same symbol is needed to be i
 <br>
 In X loses test the idea is that X should always lose or the game should be a tie if the ai plays optimally since O always has equal or more pieces on the board. Succeeding the test doesn't quarantee that the AI is good but losing this test often is an indication that the ai is bad. The test uses 9 premade tests and 26 random boards.<br>
 With current random seed and premade tests x wins with victory length of 5, height of 7 and width of 9.<br>
-<img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/loss.png">
+<img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/loss.png"> <br>
 ###  Random heuristic tournament
 Random heuristic tournament proves that the ai can lose to different versions on itself on harder boards. There is rarely a definitive winner and often these values work better
 on some boards and worse on others. And often these values perform bad on manual testing. 
