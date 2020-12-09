@@ -29,7 +29,7 @@ With current random seed and premade tests x wins with victory length of 5, heig
 <img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/loss.png"> <br>
 
 ## Overall
-Performance tests prove that the ai is not perfect. Harder bigger boards proved to be challenging. For example in 10 x 10 boards the ai can't see 2 opponent moves forwards meaning that if victory length is 5 and opponent has open 3 line the ai can't know that opponent wins with 2 moves. This makes good heuristics important, but creating perfect heuristics is difficult. Overall I am pretty happy with the ai.s performance.
+Performance tests prove that the ai is not perfect. Harder bigger boards proved to be challenging. For example in 10 x 10 boards the ai can't see 2 opponent moves forwards meaning that if victory length is 5 and opponent has open 3 line the ai can't know that opponent wins with 2 moves. This makes good heuristics important, but creating perfect heuristics is difficult. Overall I am pretty happy with the AI performance, the heuristics do a pretty good job at estimating the boards value.
 
 
 
