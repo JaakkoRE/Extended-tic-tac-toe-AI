@@ -44,7 +44,7 @@ This ai uses few pruning methods to limit the worst case scenarios. It uses the 
 ### Simple packet logic
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/simple%20logic.png"> <br>
 ### Method logic
-<img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Complex%20logic.png">
+<img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Complex%20logic.png"> <br>
 ## Flaws 
 - HashMap implementation is still flawed, reduces performance.
 - The AI assumes that the other player plays like the AI (min max algorithm) so if there is a way for the opponent to win, all moves are all as bad since the opponent can win from any move. (AI still tries to win as fast as possible or to lose as fast as possible)
