@@ -15,13 +15,13 @@ Other performance tests (Heuristic tournament and X loses tests) use random valu
 ### jacoco
 jacoco report <br>
 <img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/Jacoco%20code%20coverage%20report.png"><br>
-### Random heuristic tournament
-Random heuristic tournament proves that the ai can lose to different versions on itself on harder boards. There is rarely a definitive winner and often these values work better
-on some boards and worse on others. And often these values perform bad on manual testing. 
 ### Time tests
 https://pastebin.com/Nm2w6kE0 raw data of time tests. HashMap utilization didn't quite pan out.<br>
 Length, height and victory length (how many of the same symbol is needed to be in a row for a win) are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is between 15-60 seconds. Depth (how many turns are made before checking turns heuristic value estimation) is the biggest optimization factor and changing depth by 1 has big impact on performance. Some higher times are accepted to ensure better performance of the ai. 
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Time%20comparison%20graph.png" >
+### Random heuristic tournament
+Random heuristic tournament proves that the ai can lose to different versions on itself on harder boards. There is rarely a definitive winner and often these values work better
+on some boards and worse on others. And often these values perform bad on manual testing. 
 ### X loses test
 <br>
 In X loses test the idea is that X should always lose or the game should be a tie if the ai plays optimally since O always has equal or more pieces on the board. Succeeding the test doesn't quarantee that the AI is good but losing this test often is an indication that the ai is bad. The test uses 9 premade tests and 26 random boards.<br>
