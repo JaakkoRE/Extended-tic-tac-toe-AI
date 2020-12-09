@@ -1,7 +1,7 @@
 # Manual
 ## How to use
 - Type the width of the board, the length of the board and the victory length condition (How many symbols in a row are needed for a win
- - Width and length are recommended to be between 3 - 11 and the victory condition lenght atleast 5 if the board length and width are over 6 <br>
+  - Width and length are recommended to be between 3 - 11 and the victory condition lenght atleast 5 if the board length and width are over 6 <br>
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/manual%201.png"><br>
 - If you play vs ai click on the box you want to cross. Wait few seconds for the ai to make a decision <br>
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/manual%202.png"><br>
