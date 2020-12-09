@@ -42,7 +42,7 @@ Constant time complexities.
 This ai uses few pruning methods to limit the worst case scenarios. It uses the standard alpha beta pruning and if the board has 3 pieces or more in it, it wont judge cases where there is not an 'O' or 'X' within 2 tiles in any direction.
 ## Logic structure
 ### Simple packet logic
-<img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/simple%20logic.png">
+<img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/simple%20logic.png"> <br>
 ### Method logic
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Complex%20logic.png">
 ## Flaws 
