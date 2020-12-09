@@ -52,6 +52,7 @@ This ai uses few pruning methods to limit the worst case scenarios. It uses the 
 - Heuristic estimations are not perfect.
 - Bigger boards limit the depth because of the calculation times leading to flawed plays.
 - Heuristics are made for general purpose, they might work better on some boards than on others.
+- Graphical and text userinterface could be more userfriendly and in general made to work better.
 ## References
 - http://www.cse.yorku.ca/~oz/hash.html used for djb 2 hash
 - https://en.wikipedia.org/wiki/Minimax used for minMax algorithm
