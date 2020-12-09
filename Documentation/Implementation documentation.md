@@ -37,12 +37,13 @@ Because of alpha beta pruning, the worst case is rarely reached.
 - HashMap put requires O(a) time complexity for hash and o(n) for ArrayList size increase, so the timecomplexity is O(an)=O(c). Get method is constant. (Hashmap list size is always 10000000 currently).
 #### Other methods
 Constant time complexities.
+### Ways to limit worst case scenarios
+This ai uses few pruning methods to limit the worst case scenarios. It uses the standard alpha beta pruning and if the board has 3 pieces or more in it, it wont judge cases where there is not an 'O' or 'X' within 2 tiles in any direction.
 ## Flaws 
 - HashMap implementation is still flawed, reduces performance.
 - The AI assumes that the other player plays like the AI (min max algorithm) so if there is a way for the opponent to win, all moves are all as bad since the opponent can win from any move. (AI still tries to win as fast as possible or to lose as fast as possible)
 - Time requirements jump a lot from board size to size. Increasing depth has huge impact on the calculation times.
 - Heuristic estimations are not perfect.
-- UI could be more user friendly.
 - Bigger boards limit the depth because of the calculation times leading to flawed plays.
 - Heuristics are made for general purpose, they might work better on some boards than on others.
 ## References
