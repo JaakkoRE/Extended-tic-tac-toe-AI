@@ -1,3 +1,4 @@
+
 # Implementation documentation
 ## Values for memory and processing calculations
 - a is the size of board (xLength time yLength).
