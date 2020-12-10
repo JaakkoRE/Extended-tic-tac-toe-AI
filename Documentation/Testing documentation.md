@@ -16,7 +16,7 @@ Other performance tests (Heuristic tournament and X loses tests) use random valu
 jacoco report <br>
 <img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/Jacoco%20code%20coverage%20report.png"><br>
 ### Time tests
-https://pastebin.com/Nm2w6kE0 raw data of time tests. HashMap utilization didn't quite pan out.<br>
+https://pastebin.com/GzKZy4xB raw data of time tests. HashMap utilization didn't quite pan out.<br>
 Length, height and victory length (how many of the same symbol is needed to be in a row for a win) are same. Optimization gets bad after larger than 19 x 19 boards. Generally time goal is between 15-60 seconds. Depth (how many turns are made before checking turns heuristic value estimation) is the biggest optimization factor and changing depth by 1 has big impact on performance. Some higher times are accepted to ensure better performance of the ai. 
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/Time%20comparison%20graph.png" >
 ### Random heuristic tournament
