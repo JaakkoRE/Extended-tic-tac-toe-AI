@@ -27,6 +27,7 @@ on some boards and worse on others. And often these values perform bad on manual
 In X loses test the idea is that X should always lose or the game should be a tie if the ai plays optimally since O always has equal or more pieces on the board. Succeeding the test doesn't quarantee that the AI is good but losing this test often is an indication that the ai is bad. The test uses 9 premade tests and 26 random boards.<br>
 With current random seed and premade tests x wins with victory length of 5, height of 7 and width of 9.<br>
 <img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/loss.png"> <br>
+
 ## Difficulties
 There are tons of different board types with different outcomes. The AI is not necassarily as good in all of them and to test all posibilities is hard. This is because the computation required to run these tests is big. A board can easily take over half a minute to test with a good computer so doing hundreds of tests becomes infeasible. A lot of time was spent on just running these tests. 
 ## Overall
