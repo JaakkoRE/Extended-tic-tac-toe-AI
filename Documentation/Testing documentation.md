@@ -29,7 +29,7 @@ With current random seed and premade tests x wins with victory length of 5, heig
 <img src="https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/blob/master/Documentation/Images/loss.png"> <br>
 
 ## Difficulties
-There are tons of different board types with different outcomes. The AI is not necassarily as good in all of them and to test all posibilities is hard. This is because the computation required to run these tests is big. A board can easily take over half a minute to test with a good computer so doing hundreds of tests becomes infeasible. A lot of time was spent on just running these tests. 
+There are tons of different board types with different outcomes. The AI is not necassarily as good in all of them and to test all posibilities is hard. This is because the computation required to run these tests is big. A board can easily take over half a minute to test with a good computer so doing hundreds of tests becomes infeasible. A lot of time was spent on just running these tests. There is also the factor that the game is ineqequal meaning O always has an advantage so there are no balanced games and the fact that I could realistically only test using minmax AI with same or similar heuristics or by doing manual testing.
 ## Overall
 Performance tests prove that the ai is not perfect. Harder bigger boards proved to be challenging. For example in 10 x 10 boards the ai can't see 2 opponent moves forwards meaning that if victory length is 5 and opponent has open 3 line the ai can't know that opponent wins with 2 moves. This makes good heuristics important, but creating perfect heuristics is difficult. Overall I am pretty happy with the AI performance, the heuristics do a pretty good job at estimating the boards value.
 
