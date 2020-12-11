@@ -7,3 +7,6 @@
 <img src="https://raw.githubusercontent.com/JaakkoRE/Extended-tic-tac-toe-AI/master/Documentation/Images/manual%202.png"><br>
 If you want the ai to play vs itself it's recommended that you use the text user interface. The graphical user interface version calculates the match and shows only the end result.
 Text userinterface tells you what inputs you should use.
+## Executable jar
+Jar can be found from the project files in [TicTacToeAI file](https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/tree/master/TicTacToeAI) or from the [Releases](https://github.com/JaakkoRE/Extended-tic-tac-toe-AI/releases)<br>
+The jar can be run by using the command java -jar TIcTacToeAI.jar
