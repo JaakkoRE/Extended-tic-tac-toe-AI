@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DepthStop.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.AILogic</a> &gt; <span class="el_source">DepthStop.java</span></div><h1>DepthStop.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.AILogic;
+
+/**
+ *
+ * @author Jaakko
+ */
+
+/**
+ * Class tells the minmax ai how deep the recursion can go (endless recursions on larger boards take too long to process).
+ */
+<span class="fc" id="L16">public class DepthStop {</span>
+    /**
+    * Method tells how to deep to check (how many boards are checked) before estimating the board value using heuristics
+    *  @param boardSize size of the board
+    * @return depth
+    */
+    public int depthStopStart(int boardSize) {
+<span class="fc" id="L23">        int depthWhereToCalculateHeuristic = 9999;</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (boardSize &gt;= 10) {</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">            if (boardSize &lt;= 20) {</span>
+<span class="fc" id="L26">                depthWhereToCalculateHeuristic = 7;  </span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">            } else if (boardSize &lt;= 25) {</span>
+<span class="fc" id="L28">                depthWhereToCalculateHeuristic = 6;  </span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            } else if (boardSize &lt;= 30) {</span>
+<span class="fc" id="L30">                depthWhereToCalculateHeuristic = 5; </span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            } else if (boardSize &lt;= 60) {</span>
+<span class="fc" id="L32">                depthWhereToCalculateHeuristic = 4;              </span>
+            
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            } else if (boardSize &lt;= 121) {</span>
+<span class="fc" id="L35">                depthWhereToCalculateHeuristic = 3;  // decent            </span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">            } else if (boardSize &lt;= 324) {</span>
+<span class="fc" id="L37">                depthWhereToCalculateHeuristic = 2;  // pretty bad</span>
+            } else {
+<span class="fc" id="L39">                depthWhereToCalculateHeuristic = 1; // very imprecise, practically useless</span>
+            }       
+        } 
+<span class="fc" id="L42">        return depthWhereToCalculateHeuristic;</span>
+    }  
+    /**
+    * Method corrects the algorithm on the depth. As boardsize gets smaller the deeper the recursion can go before significant slow down. 
+    *  @param  size boards size
+    *  @param fullfillment how full the board is
+    *  @param oldDepthWhereToCalculateHeuristic old depth that is being corrected
+    * 
+    *  @return depth
+    */
+    public int depthStopCorrection(int size, int fullfillment, int oldDepthWhereToCalculateHeuristic) {
+       //   System.out.print(oldDepthWhereToCalculateHeuristic + &quot; hö &quot;);
+<span class="fc" id="L54">        int depthWhereToCalculateHeuristic = 9999;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (size - fullfillment &gt;= 9) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (size - fullfillment &lt;= 11) {</span>
+<span class="fc" id="L57">                depthWhereToCalculateHeuristic = 7;  </span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            } else if (size - fullfillment &lt;= 14) {</span>
+<span class="fc" id="L59">                depthWhereToCalculateHeuristic = 6;  </span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            } else if (size - fullfillment &lt;= 16) {</span>
+<span class="fc" id="L61">                depthWhereToCalculateHeuristic = 5; </span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            } else if (size - fullfillment &lt;= 25) {</span>
+<span class="fc" id="L63">                depthWhereToCalculateHeuristic = 4;              </span>
+            
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            } else if (size - fullfillment &lt;= 90) {</span>
+<span class="fc" id="L66">                depthWhereToCalculateHeuristic = 3;              </span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            } else if (size - fullfillment &lt;= 250) {</span>
+<span class="fc" id="L68">                depthWhereToCalculateHeuristic = 2;  </span>
+            } else {
+<span class="fc" id="L70">                depthWhereToCalculateHeuristic = 1;</span>
+            }       
+        }
+      //  System.out.println(depthWhereToCalculateHeuristic + &quot; ha&quot;);
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (depthWhereToCalculateHeuristic &gt;= oldDepthWhereToCalculateHeuristic) {</span>
+<span class="fc" id="L75">            return depthWhereToCalculateHeuristic;</span>
+        }
+        
+<span class="fc" id="L78">        return oldDepthWhereToCalculateHeuristic;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

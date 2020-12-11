@@ -57,13 +57,13 @@ public class HeuristicTest {
         statusTest.setBoardValue(0, 2);
         statusTest.setBoardValue(1, 0);
         statusTest.setBoardValue(0, 3);
-        assertEquals(heuristic.evaluate(statusTest, 'O', 'X',false),521);   
+        assertEquals(heuristic.evaluate(statusTest, 'O', 'X',false),174);   
         
         assertEquals(heuristic3.evaluate(gameStatus3, 'O', 'X',false),-114); 
         this.gameStatus3.setBoardValue(1, 3);
         assertEquals(heuristic3.evaluate(gameStatus3, 'O', 'X',false),44); 
         
-        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X',false),83); 
+        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X',false),91); 
     }
      @Test 
      public void heuristicSymbolNearTest() {
@@ -122,16 +122,27 @@ public class HeuristicTest {
         assertEquals(heuristic.heuristicHorizontal(gameStatus.board.gameBoard, 0, 0, 'O'),2);
     }
      @Test
+    public void realLengthTest() {
+        assertEquals(heuristic.lenghtThatIsReturned(1, 2, 2, 'O'),2);
+        assertEquals(heuristic.lenghtThatIsReturned(1, 2, 0, 'O'),1);
+        assertEquals(heuristic.lenghtThatIsReturned(1, 0, 2, 'O'),1);
+        assertEquals(heuristic.lenghtThatIsReturned(2, 0, 2, 'O'),4);
+        assertEquals(heuristic.lenghtThatIsReturned(1, 0, 0, 'O'),0);
+        assertEquals(heuristic.lenghtThatIsReturned(2, 2, 2, 'X'),4);
+        assertEquals(heuristic.lenghtThatIsReturned(2, 0, 2, 'X'),4);
+        assertEquals(heuristic.lenghtThatIsReturned(1, 2, 0, 'X'),1);
+    }
+     @Test
     public void evaluateHeuristicTest() {       
-        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X',false),59);
-        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O',false),63);
+        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X',false),-31);
+        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O',false),27);
         this.gameStatus.setBoardValue(2, 2);
-        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X',false),108);
-        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O',false),32);
+        assertEquals(heuristic.evaluate(gameStatus, 'O', 'X',false),0);
+        assertEquals(heuristic.evaluate(gameStatus, 'X', 'O',false),-4);
         
-        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X',false),83);
+        assertEquals(heuristic2.evaluate(gameStatus2, 'O', 'X',false),91);
         assertEquals(gameStatus2.vcl,2);
-        assertEquals(heuristic2.evaluate(gameStatus2, 'X', 'O',false),-12);   
+        assertEquals(heuristic2.evaluate(gameStatus2, 'X', 'O',false),-52);   
         
        
     }

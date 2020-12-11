@@ -19,8 +19,8 @@ public class Container {
     public int value;
     
     public Container(Board key, int value) {
-	this.key = key;
-	this.value = value;
+        this.key = key;
+        this.value = value;
     }
 }
 

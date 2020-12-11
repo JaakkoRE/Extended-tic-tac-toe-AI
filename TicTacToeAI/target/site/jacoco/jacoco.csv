@@ -1,0 +1,13 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+TicTacToeAi,com.mycompany.tictactoeai.AILogic,DepthStop,0,112,0,30,0,35,0,18,0,3
+TicTacToeAi,com.mycompany.tictactoeai.AILogic,AIVSAI,10,65,3,7,2,20,3,4,0,2
+TicTacToeAi,com.mycompany.tictactoeai.AILogic,MinMaxAI,48,774,4,130,10,108,5,70,1,7
+TicTacToeAi,com.mycompany.tictactoeai.AILogic,Heuristic,108,1961,16,306,31,263,15,163,1,16
+TicTacToeAi,com.mycompany.tictactoeai.Methods,ArrayListContainer,73,84,8,6,14,21,6,8,2,5
+TicTacToeAi,com.mycompany.tictactoeai.Methods,HashMap,0,96,0,12,0,24,0,9,0,3
+TicTacToeAi,com.mycompany.tictactoeai.Methods,AbsoluteValue,0,11,0,2,0,4,0,3,0,2
+TicTacToeAi,com.mycompany.tictactoeai.Methods,MinimumMaximum,0,17,0,4,0,7,0,5,0,3
+TicTacToeAi,com.mycompany.tictactoeai.Methods,Container,0,9,0,0,0,4,0,1,0,1
+TicTacToeAi,com.mycompany.tictactoeai.Methods,ArrayList,0,105,0,8,0,25,0,10,0,6
+TicTacToeAi,com.mycompany.tictactoeai.BoardLogic,GameStatus,0,420,0,74,0,107,0,49,0,12
+TicTacToeAi,com.mycompany.tictactoeai.BoardLogic,Board,79,301,18,44,19,58,13,29,2,9

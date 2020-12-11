@@ -14,6 +14,9 @@ import org.junit.Test;
  *
  * @author Jaakko
  */
+
+//tests if there are better combinations
+// default values are 1 1 2 1 since that is the current configuration
 public class RandomHeuristicTournament {
     
     public MinMaxAI topContender;
@@ -21,52 +24,43 @@ public class RandomHeuristicTournament {
     public boolean change;
     
  
-     @Test
+    // @Test
     public void testBoard1() {
         System.out.println("test 1");
         GameStatus testStatus = new GameStatus(new Board(10,10,5),'O');
         topContender = new MinMaxAI(testStatus);
-        topContender.heuristic.Val1 = 1;
-        topContender.heuristic.Val2 = 0;
-        topContender.heuristic.Val3 = 2;
-        topContender.heuristic.Val4 = 1;
-        // 1 0 1
-        // 1 0 3
         change = false;
         int i = 0;
         while (i < 25) {
             i++;
-            System.out.println(i);
+            System.out.println("round " + i);
             testIfXWins(new GameStatus(new Board(10,10,5),'O'), topContender);
             if (change == true) {
                 i = 0;
-                change = false;
+                 change = false;
             }
         }
-         System.out.println("Best: ");
+        System.out.println("Best: ");
         System.out.println(topContender.heuristic.Val1 + " " + topContender.heuristic.Val2 + " " + topContender.heuristic.Val3 + " " + topContender.heuristic.Val4);         
     }
-    // @Test
+     @Test
     public void testBoard2() {
         System.out.println("test 2");
-        GameStatus testStatus = new GameStatus(new Board(10,10,4),'O');
+        GameStatus testStatus = new GameStatus(new Board(8,8,4),'O');
         topContender = new MinMaxAI(testStatus);
-        topContender.heuristic.Val1 = 5;
-        topContender.heuristic.Val2 = 5;
-        topContender.heuristic.Val3 = 5;
-        topContender.heuristic.Val4 = 5;
         change = false;
         int i = 0;
         while (i < 20) {
             i++;
-            testIfXWins(new GameStatus(new Board(10,10,5),'O'), topContender);
+            System.out.println("round " + i);
+            testIfXWins(new GameStatus(new Board(8,8,4),'O'), topContender);
             if (change == true) {
                 i = 0;
                 change = false;
             }
         }
-         System.out.println("Best: ");
-         System.out.println(topContender.heuristic.Val1 + " " + topContender.heuristic.Val2 + " " + topContender.heuristic.Val3 + " " + topContender.heuristic.Val4);
+        System.out.println("Best: ");
+        System.out.println(topContender.heuristic.Val1 + " " + topContender.heuristic.Val2 + " " + topContender.heuristic.Val3 + " " + topContender.heuristic.Val4);
 
     }
      @Test
@@ -74,15 +68,11 @@ public class RandomHeuristicTournament {
         System.out.println("test 3");
         GameStatus testStatus = new GameStatus(new Board(7,7,4),'O');
         topContender = new MinMaxAI(testStatus);
-        topContender.heuristic.Val1 = 1;
-        topContender.heuristic.Val2 = 0;
-        topContender.heuristic.Val3 = 2;
-        topContender.heuristic.Val4 = 1;
         change = false;
         int i = 0;
         while (i < 20) {
             i++;
-            System.out.println(i);
+            System.out.println("round " + i);
             testIfXWins(new GameStatus(new Board(7,7,4),'O'), topContender);
             if (change == true) {
                 i = 0;
@@ -112,6 +102,7 @@ public class RandomHeuristicTournament {
             if (result == 'X') {
                 topContender = ai;
                 System.out.println("changed");
+                System.out.println(topContender.heuristic.Val1 + " " + topContender.heuristic.Val2 + " " + topContender.heuristic.Val3 + " " + topContender.heuristic.Val4);
                 change = true;
             }
     }

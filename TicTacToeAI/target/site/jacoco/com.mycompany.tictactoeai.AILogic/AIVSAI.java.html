@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AIVSAI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.AILogic</a> &gt; <span class="el_source">AIVSAI.java</span></div><h1>AIVSAI.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.AILogic;
+
+import com.mycompany.tictactoeai.BoardLogic.GameStatus;
+
+/**
+ *
+ * @author Jaakko
+ */
+<span class="fc" id="L14">public class AIVSAI {</span>
+
+    public void AIVSAIPlay(GameStatus status, boolean hashMapBool, boolean print) {
+<span class="fc" id="L17">        long Start = System.nanoTime();</span>
+<span class="fc" id="L18">        MinMaxAI ai = new MinMaxAI(status, hashMapBool);</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        while (!status.isBoardFull()) {</span>
+<span class="fc" id="L20">            status = ai.alphaBetaBoard(status);</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">            if (print) {</span>
+<span class="nc" id="L22">                System.out.println(status.board.toString());</span>
+            }
+<span class="fc" id="L24">            char result = status.checkAll();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">            if (!(result == 0)) {</span>
+<span class="fc" id="L26">                System.out.println(result);</span>
+<span class="fc" id="L27">                break;</span>
+            } 
+            
+<span class="fc" id="L30">            status = ai.alphaBetaBoard(status);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">            if (print) {</span>
+<span class="nc" id="L32">                System.out.println(status.board.toString());</span>
+            }
+<span class="fc" id="L34">            result = status.checkAll();</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            if (!(result == 0)) {</span>
+<span class="fc" id="L36">                System.out.println(result);</span>
+<span class="fc" id="L37">                break;</span>
+            }
+<span class="fc" id="L39">        }</span>
+<span class="fc" id="L40">        long end = System.nanoTime();</span>
+<span class="fc" id="L41">        System.out.println(&quot;Time to calculate: &quot; + ((end - Start) / 1e9) + &quot; s&quot;);</span>
+
+
+<span class="fc" id="L44">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

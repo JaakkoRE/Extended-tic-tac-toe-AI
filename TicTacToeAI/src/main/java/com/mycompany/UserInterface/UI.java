@@ -29,22 +29,22 @@ public class UI {
  //  work in progress
     public void UILogicStart() {
         try {
-        System.out.println("set board height: ");
-        int xLength = Integer.parseInt(scanner.nextLine()); 
-        System.out.println("set board length: ");
-        int yLength = Integer.parseInt(scanner.nextLine()); 
-        System.out.println("set victory row length: ");
-        int vcl = Integer.parseInt(scanner.nextLine()); 
-        this.status = new GameStatus(new Board(xLength, yLength, vcl));
-        System.out.println("Type 's' if you want to play vs AI or 'a' if u want ai to play vs itself: ");
-        String AIOrSolo = scanner.nextLine(); 
-        if (AIOrSolo.equals("s")) {
-            UILogicPlayerVSAI();
-        }
-        if (AIOrSolo.equals("a")) {
-            UILogicAIVSAI();
-        }
-        }catch (Exception e) {
+            System.out.println("set board height: ");
+            int xLength = Integer.parseInt(scanner.nextLine()); 
+            System.out.println("set board length: ");
+            int yLength = Integer.parseInt(scanner.nextLine()); 
+            System.out.println("set victory row length: ");
+            int vcl = Integer.parseInt(scanner.nextLine()); 
+            this.status = new GameStatus(new Board(xLength, yLength, vcl));
+            System.out.println("Type 's' if you want to play vs AI or 'a' if u want ai to play vs itself: ");
+            String AIOrSolo = scanner.nextLine(); 
+            if (AIOrSolo.equals("s")) {
+                UILogicPlayerVSAI();
+            }
+            if (AIOrSolo.equals("a")) {
+                UILogicAIVSAI();
+            }
+        } catch (Exception e) {
             System.out.println("Bad input (restart)");
             UILogicStart();
         }

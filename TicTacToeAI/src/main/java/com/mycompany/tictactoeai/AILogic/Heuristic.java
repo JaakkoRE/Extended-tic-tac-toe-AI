@@ -44,11 +44,12 @@ public class Heuristic {
         this.vcl = board.vcl;
         heuristicBaseSetUp();
         Val1 = 1;
-        Val2 = 1 ;
+        Val2 = 1;
         Val3 = 2;
         Val4 = 1;
-        // 1, 0 ,2, 1
-        //own: 1,1,4,2
+        // 3 1 1 4
+        // 1 2 4 1
+        // 1 1 2 1 mun
         heuristicVerticalTested = new boolean[xLength][yLength];
         heuristicHorizontalTested = new boolean[xLength][yLength];
         heuristicDiagonal1Tested = new boolean[xLength][yLength];
@@ -69,7 +70,7 @@ public class Heuristic {
                 } else {
                     //the closer to the middle, the better.
                     heuristicBoard[i][j] = 2 * (heuristicBoard.length - intAbs.absoluteValueOfInt(heuristicBoard.length / 2 - i) + heuristicBoard[0].length - intAbs.absoluteValueOfInt(heuristicBoard[0].length / 2 - j));
-                    if (i == 0 || j == 0 || i == heuristicBoard.length - 1|| j == heuristicBoard[0].length - 1) {
+                    if (i == 0 || j == 0 || i == heuristicBoard.length - 1 || j == heuristicBoard[0].length - 1) {
                         heuristicBoard[i][j] = heuristicBoard[i][j] / 2;
                     }
                    
@@ -84,7 +85,7 @@ public class Heuristic {
     public void randomiseValues() {
         Random r = new Random();
         Val1 = r.nextInt(6) + 1;
-        Val2 = r.nextInt(6);
+        Val2 = r.nextInt(6) + 1;
         Val3 = r.nextInt(6) + 1;
         Val4 = r.nextInt(6) + Val1;
     }
@@ -151,7 +152,7 @@ public class Heuristic {
             heuristic -= heuricticDirections(gameBoard, i, j, opponentSymbol);
             heuristic -= heuristicHowManyWaysOfWinning(gameBoard, i, j);
             if (!heuristicSameSymbolNear[i][j]) {
-                heuristic -= (int)(heuristicSameSymbolNearSameSymbol(gameBoard, i, j, opponentSymbol, 0) * 1.2); //slightly prioritising sabotaging opponent is probably better
+                heuristic -= (int) (heuristicSameSymbolNearSameSymbol(gameBoard, i, j, opponentSymbol, 0) * 1.2); //slightly prioritising sabotaging opponent is probably better
             }
         }
         return heuristic;
@@ -530,7 +531,9 @@ public class Heuristic {
             i++;
             j++;
         }
-        
+        if (length == 0) {
+            return length;
+        }
         return lenghtThatIsReturned(length, length2, length3, sideToBeChecked);
     }
     /**
@@ -541,29 +544,35 @@ public class Heuristic {
     * @param sideToBeChecked is the players symbol whose value at coordinate is checked
     * @return modified length value.
     */
+       
     public int lenghtThatIsReturned(int length, int length2, int length3, char sideToBeChecked) {
         if (length + length2 + length3 < vcl) {
             return 0;
         }
         if (length >= vcl - 1) {
-                if (sideToBeChecked == currentSymbol) {
-                    return length * (Val4 + Val2);
+            if (sideToBeChecked == currentSymbol) {
+                return length * Val4 + 2;
             }
-                return length * Val4;
-            }
+            return length * (Val4 + Val2);
+        }
         if (length >= vcl - 2 && length2 > 0 && length3 > 0) {
             if (sideToBeChecked == currentSymbol) {
-                return length * Val1;
+                return length * Val1 + 1;
             }
             return length * (Val1 + Val2); // opponent can force a win in 2 moves
         }
-        if (length2 > 0) {
-            length++;
-        }
-        if (length3 > 0) {
-            length++;
+        if (length >= 3 && sideToBeChecked == opponentSymbol) {
+            if (length2 > 0) {
+                length++;
+            }
+            if (length3 > 0) {
+                length++;
+            } 
+        } else if (length == 2 && sideToBeChecked == opponentSymbol) {
+            if (length > 0 || length3 > 0) {
+                length++;
+            }
         }
         return length;
     }
-
 }

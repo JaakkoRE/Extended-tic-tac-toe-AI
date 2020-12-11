@@ -41,6 +41,9 @@ public class GUI extends Application {
         this.gameBoard = board.getGameBoard();
         this.ai = new MinMaxAI(this.status);
     }
+    public static void main(String[] args) {
+        launch(args);
+    }
     public void setBoard(Board board) {
         this.board = board;
         this.gameBoard = board.getGameBoard();
@@ -248,6 +251,5 @@ public class GUI extends Application {
         gridpane.add(backButton,gameBoard[0].length,gameBoard.length);
         return gridpane;
     }
-
 
 }

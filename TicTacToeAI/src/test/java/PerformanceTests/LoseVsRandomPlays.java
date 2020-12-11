@@ -16,11 +16,12 @@ import org.junit.Test;
  *
  * @author Jaakko
  */
+//random plays preferably should cause a loss.
 public class LoseVsRandomPlays {
     // takes a while
      @Test 
     public void randomTest() {
-        Random r = new Random();
+        Random r = new Random(1337);
         GameStatus test = new GameStatus (new Board(6, 6, 4), 'O');
         testRandomly(test);
         

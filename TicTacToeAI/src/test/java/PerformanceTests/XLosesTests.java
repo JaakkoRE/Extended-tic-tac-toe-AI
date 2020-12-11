@@ -28,8 +28,8 @@ public class XLosesTests {
         GameStatus test3 = new GameStatus(new Board(7,7,5),'O');
         GameStatus test4 = new GameStatus(new Board(9,9,5),'O');
         GameStatus test5 = new GameStatus(new Board(11,11,4),'O');
-        GameStatus test6 = new GameStatus(new Board(15,15,7),'O');
-        GameStatus test7 = new GameStatus(new Board(15,15,6),'O');
+        GameStatus test6 = new GameStatus(new Board(15,15,9),'O');
+        GameStatus test7 = new GameStatus(new Board(15,15,8),'O');
         GameStatus test8 = new GameStatus(new Board(9,9,6),'O');
         GameStatus test9 = new GameStatus(new Board(8,8,4),'O');
         testIfXWins(test1);
@@ -41,9 +41,9 @@ public class XLosesTests {
         testIfXWins(test7);
         testIfXWins(test8);
         testIfXWins(test9);
-         System.out.println("extra tests");
-        for (int i = 0; i <= 10; i++) {
-            GameStatus testRepeated = new GameStatus(new Board(r.nextInt(14),r.nextInt(14),r.nextInt(10)),'O');
+        System.out.println("extra tests");
+        for (int i = 0; i <= 25; i++) {
+            GameStatus testRepeated = new GameStatus(new Board(r.nextInt(9)+2,r.nextInt(9)+2,r.nextInt(4)+2),'O');
             testIfXWins(testRepeated);
         }
     }

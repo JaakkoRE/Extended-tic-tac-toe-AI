@@ -16,7 +16,8 @@ package com.mycompany.tictactoeai.AILogic;
 public class DepthStop {
     /**
     * Method tells how to deep to check (how many boards are checked) before estimating the board value using heuristics
-    *  
+    *  @param boardSize size of the board
+    * @return depth
     */
     public int depthStopStart(int boardSize) {
         int depthWhereToCalculateHeuristic = 9999;
@@ -32,8 +33,7 @@ public class DepthStop {
             
             } else if (boardSize <= 121) {
                 depthWhereToCalculateHeuristic = 3;  // decent            
-            }
-            else if (boardSize <= 324) {
+            } else if (boardSize <= 324) {
                 depthWhereToCalculateHeuristic = 2;  // pretty bad
             } else {
                 depthWhereToCalculateHeuristic = 1; // very imprecise, practically useless
@@ -43,7 +43,11 @@ public class DepthStop {
     }  
     /**
     * Method corrects the algorithm on the depth. As boardsize gets smaller the deeper the recursion can go before significant slow down. 
-    *  
+    *  @param  size boards size
+    *  @param fullfillment how full the board is
+    *  @param oldDepthWhereToCalculateHeuristic old depth that is being corrected
+    * 
+    *  @return depth
     */
     public int depthStopCorrection(int size, int fullfillment, int oldDepthWhereToCalculateHeuristic) {
        //   System.out.print(oldDepthWhereToCalculateHeuristic + " hö ");
@@ -51,17 +55,16 @@ public class DepthStop {
         if (size - fullfillment >= 9) {
             if (size - fullfillment <= 11) {
                 depthWhereToCalculateHeuristic = 7;  
-            } else if (size - fullfillment <= 13) {
+            } else if (size - fullfillment <= 14) {
                 depthWhereToCalculateHeuristic = 6;  
-            } else if (size - fullfillment <= 15) {
+            } else if (size - fullfillment <= 16) {
                 depthWhereToCalculateHeuristic = 5; 
-            } else if (size - fullfillment <= 23) {
+            } else if (size - fullfillment <= 25) {
                 depthWhereToCalculateHeuristic = 4;              
             
-            } else if (size - fullfillment <= 81) {
+            } else if (size - fullfillment <= 90) {
                 depthWhereToCalculateHeuristic = 3;              
-            }
-            else if (size - fullfillment <= 300) {
+            } else if (size - fullfillment <= 250) {
                 depthWhereToCalculateHeuristic = 2;  
             } else {
                 depthWhereToCalculateHeuristic = 1;

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinMaxAI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.AILogic</a> &gt; <span class="el_source">MinMaxAI.java</span></div><h1>MinMaxAI.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.AILogic;
+
+import com.mycompany.tictactoeai.BoardLogic.Board;
+import com.mycompany.tictactoeai.BoardLogic.GameStatus;
+import com.mycompany.tictactoeai.Methods.MinimumMaximum;
+import com.mycompany.tictactoeai.Methods.ArrayList;
+
+/**
+ *
+ * @author Jaakko
+ */
+
+/**
+ * Class is the MinMax part of the AI 
+ */
+public class MinMaxAI {
+    public GameStatus status;
+    public MinimumMaximum minmax;
+    public int bestV;
+    public GameStatus bestStatus;
+    public char originalStart;
+    public char opponentOriginalStart;
+    public DepthStop depthStop;
+    public Heuristic heuristic;
+    private int depthWhereToCalculateHeuristic;
+    private boolean hashMapused;
+    
+<span class="fc" id="L33">    public MinMaxAI(GameStatus status) {</span>
+<span class="fc" id="L34">        heuristic = new Heuristic(status.board);</span>
+<span class="fc" id="L35">        this.status = status;</span>
+        
+<span class="fc" id="L37">        this.depthStop = new DepthStop();</span>
+<span class="fc" id="L38">        this.depthWhereToCalculateHeuristic = this.depthStop.depthStopStart(status.board.boardSize);</span>
+        
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (status.currentPlayer == 'O') {</span>
+<span class="fc" id="L41">            opponentOriginalStart = 'X';</span>
+        } else {
+<span class="nc" id="L43">            opponentOriginalStart = 'O';</span>
+        }
+<span class="fc" id="L45">        this.minmax = new MinimumMaximum();</span>
+<span class="fc" id="L46">    }</span>
+<span class="fc" id="L47">    public MinMaxAI(GameStatus status, boolean hashMapused) {</span>
+<span class="fc" id="L48">        this.hashMapused = hashMapused;</span>
+       
+<span class="fc" id="L50">        heuristic = new Heuristic(status.board);</span>
+<span class="fc" id="L51">        this.status = status;</span>
+        
+<span class="fc" id="L53">        this.depthStop = new DepthStop();</span>
+<span class="fc" id="L54">        this.depthWhereToCalculateHeuristic = this.depthStop.depthStopStart(status.board.boardSize);</span>
+        
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (status.currentPlayer == 'O') {</span>
+<span class="fc" id="L57">            opponentOriginalStart = 'X';</span>
+        } else {
+<span class="nc" id="L59">            opponentOriginalStart = 'O';</span>
+        }
+<span class="fc" id="L61">        this.minmax = new MinimumMaximum();</span>
+<span class="fc" id="L62">    }</span>
+    /**
+    * Method returns the heuristic value of the best possible move 
+    * 
+    * @return int heuristic value
+    */
+    public int alphaBetaValue(GameStatus status) {
+<span class="nc" id="L69">        this.status = status;   </span>
+<span class="nc" id="L70">        this.originalStart = status.currentPlayer;</span>
+<span class="nc" id="L71">        this.opponentOriginalStart = status.otherPlayer();</span>
+<span class="nc" id="L72">        this.depthWhereToCalculateHeuristic = depthStop.depthStopCorrection(status.board.boardSize, status.board.boardfulfillment, depthWhereToCalculateHeuristic);</span>
+<span class="nc" id="L73">        int returnVal = maxValue(this.status, -2000000000, 2000000000, 0);</span>
+<span class="nc" id="L74">        return returnVal;</span>
+    }
+    /**
+    * Method returns the best next move 
+    * 
+     *@param status 
+    * @return GameStatus status of the best move
+    */
+    public GameStatus alphaBetaBoard(GameStatus status) {
+<span class="fc" id="L83">        this.status = status;</span>
+<span class="fc" id="L84">        this.originalStart = status.currentPlayer;</span>
+<span class="fc" id="L85">        this.opponentOriginalStart = status.otherPlayer();</span>
+<span class="fc" id="L86">        this.depthWhereToCalculateHeuristic = depthStop.depthStopCorrection(status.board.boardSize, status.board.boardfulfillment, depthWhereToCalculateHeuristic);</span>
+<span class="fc" id="L87">        bestV = -2100000001;</span>
+<span class="fc" id="L88">        maxValue(this.status, -2000000000, 2000000000, 0);</span>
+<span class="fc" id="L89">        return bestStatus;</span>
+    }
+    /**
+    * Max part of the min max algorithm
+    * 
+    * 
+    * @param status GameStatus that is being checked 
+    * @param alpha int alpha value of the min-max 
+    * @param beta int beta value of the min-max 
+    * @param depth tells how deep is the recursion
+    * @return int of the max value
+    */
+    public int maxValue(GameStatus status, int alpha, int beta, int depth) {
+<span class="fc" id="L102">        this.status = status;</span>
+<span class="fc" id="L103">        char statusValue = status.checkAll();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (statusValue == 'n') {</span>
+<span class="fc" id="L105">            return 0;</span>
+        }
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (statusValue == originalStart) {</span>
+<span class="nc" id="L108">            return 1000000100 - depth; //better to win faster</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        } else if (statusValue == opponentOriginalStart) {</span>
+<span class="fc" id="L110">            return -1000000100 + depth; //better to lose faster</span>
+        }
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (depth == depthWhereToCalculateHeuristic) {</span>
+<span class="fc" id="L113">            return heuristic.evaluate(status, originalStart, opponentOriginalStart, hashMapused);</span>
+        }
+<span class="fc" id="L115">        int v = -2100000000;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
+<span class="fc" id="L117">            v = minmax.max(v, minValue(nodeChild, alpha, beta, depth + 1));</span>
+<span class="fc" id="L118">            alpha = minmax.max(alpha, v);</span>
+<span class="fc bfc" id="L119" title="All 4 branches covered.">            if (depth == 0 &amp;&amp; v &gt; bestV) {</span>
+<span class="fc" id="L120">                this.bestStatus = nodeChild.copyGameStatus();</span>
+<span class="fc" id="L121">                bestV = v;</span>
+            }
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            if (alpha  &gt;= beta) {</span>
+<span class="fc" id="L124">                return v;                </span>
+            }
+        }
+<span class="fc" id="L127">        return v;</span>
+
+    }
+    /**
+    * Min part of the min max algorithm
+    * 
+    * 
+    * @param status GameStatus that is being checked 
+    * @param alpha int alpha value of the min-max 
+    * @param beta int beta value of the min-max 
+    * @param depth tells how deep is the recursion
+    * int of the min value
+    */
+    public int minValue(GameStatus status, int alpha, int beta, int depth) {
+<span class="fc" id="L141">        this.status = status;</span>
+<span class="fc" id="L142">        char statusValue = status.checkAll();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (statusValue == 'n') {            </span>
+<span class="fc" id="L144">            return 0;</span>
+        }
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (statusValue == originalStart) {</span>
+<span class="fc" id="L147">            return 1000000100 - depth; // better to win faster</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        } else if (statusValue == opponentOriginalStart) {</span>
+<span class="nc" id="L149">            return -1000000100 + depth; // better to lose slower</span>
+        }        
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (depth == depthWhereToCalculateHeuristic) {</span>
+<span class="fc" id="L152">            return heuristic.evaluate(status, originalStart, opponentOriginalStart, hashMapused);</span>
+        }
+<span class="fc" id="L154">        int v = 2100000000;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        for (GameStatus nodeChild: generateBoards().getAll()) {</span>
+<span class="fc" id="L156">            v = minmax.min(v, maxValue(nodeChild, alpha, beta, depth + 1));</span>
+<span class="fc" id="L157">            beta = minmax.min(beta, v);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            if (alpha  &gt;= beta) {</span>
+<span class="fc" id="L159">                return v;</span>
+            }
+        }
+
+<span class="fc" id="L163">        return v;        </span>
+        
+    }
+    /**
+    * Methods generates all legal boards possible and returns an ArrayList of them
+    * @return ArrayList that contains all legal possible moves
+    */
+    
+    public ArrayList generateBoards() {
+<span class="fc" id="L172">        ArrayList children = new ArrayList();</span>
+<span class="fc" id="L173">        Board board = status.board;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        for (int i = 0; i &lt; board.gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">            for (int j = 0; j &lt; board.gameBoard[0].length; j++) {</span>
+<span class="fc bfc" id="L176" title="All 4 branches covered.">                if (board.boardfulfillment &lt;= 3 &amp;&amp; board.gameBoard[i][j] == '_') { // if the board is nearly empty you shouldn't try to limit options</span>
+<span class="fc" id="L177">                    GameStatus copy = status.copyGameStatus();</span>
+<span class="fc" id="L178">                    copy.setBoardValue(i, j);</span>
+<span class="fc" id="L179">                    children.add(copy);                    </span>
+<span class="fc bfc" id="L180" title="All 4 branches covered.">                } else if (board.gameBoard[i][j] == '_' &amp;&amp; nearSymbol(board, i, j)) { // options that are far from anything are likely useless</span>
+<span class="fc" id="L181">                    GameStatus copy = status.copyGameStatus();</span>
+<span class="fc" id="L182">                    copy.setBoardValue(i, j);</span>
+<span class="fc" id="L183">                    children.add(copy);</span>
+                }
+            }
+        }
+
+<span class="fc" id="L188">        return children;</span>
+    }
+    /**
+    * Methods returns true if the board position is near symbol 'O' or 'X'
+    * @param board the board that is checked
+    * @param i coordinate
+    * @param j the other coordinate
+    * @return boolean
+    */
+    public boolean nearSymbol(Board board, int i, int j) {
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        for (int ind = 1; ind &lt;= 2; ind++) {</span>
+<span class="fc bfc" id="L199" title="All 4 branches covered.">            if (i + ind &lt; board.gameBoard.length &amp;&amp; board.gameBoard[i + ind][j] != '_') {</span>
+<span class="fc" id="L200">                return true;</span>
+            }
+<span class="fc bfc" id="L202" title="All 4 branches covered.">            if (i - ind &gt;= 0 &amp;&amp; board.gameBoard[i - ind][j] != '_') {</span>
+<span class="fc" id="L203">                return true;</span>
+            }
+<span class="fc bfc" id="L205" title="All 4 branches covered.">            if (j + ind &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i][j + ind] != '_') {</span>
+<span class="fc" id="L206">                return true;</span>
+            }
+<span class="fc bfc" id="L208" title="All 4 branches covered.">            if (j - ind &gt;= 0 &amp;&amp; board.gameBoard[i][j - ind] != '_') {</span>
+<span class="fc" id="L209">                return true;</span>
+            }
+            
+            
+<span class="fc bfc" id="L213" title="All 6 branches covered.">            if (i + ind &lt; board.gameBoard.length &amp;&amp; j + ind &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i + ind][j + ind] != '_') {</span>
+<span class="fc" id="L214">                return true;</span>
+            }
+<span class="fc bfc" id="L216" title="All 6 branches covered.">            if (i - ind &gt;= 0 &amp;&amp; j - ind &gt;= 0 &amp;&amp; board.gameBoard[i - ind][j - ind] != '_') {</span>
+<span class="fc" id="L217">                return true;</span>
+            }            
+<span class="fc bfc" id="L219" title="All 6 branches covered.">            if (i + ind &lt; board.gameBoard.length &amp;&amp; j - ind &gt;= 0 &amp;&amp; board.gameBoard[i + ind][j - ind] != '_') {</span>
+<span class="fc" id="L220">                return true;</span>
+            }
+<span class="fc bfc" id="L222" title="All 6 branches covered.">            if (i - ind &gt;= 0 &amp;&amp; j + ind &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i - ind][j + ind] != '_') {</span>
+<span class="fc" id="L223">                return true;</span>
+            }
+        }
+<span class="fc bfc" id="L226" title="All 6 branches covered.">        if (i - 2 &gt;= 0 &amp;&amp; j - 1 &gt;= 0 &amp;&amp; board.gameBoard[i - 2][j - 1] != '_') {</span>
+<span class="fc" id="L227">            return true;</span>
+        }
+<span class="fc bfc" id="L229" title="All 6 branches covered.">        if (i - 2 &gt;= 0 &amp;&amp; j + 1 &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i - 2][j + 1] != '_') {</span>
+<span class="fc" id="L230">            return true;</span>
+        }
+<span class="fc bfc" id="L232" title="All 6 branches covered.">        if (i - 1 &gt;= 0 &amp;&amp; j - 2 &gt;= 0 &amp;&amp; board.gameBoard[i - 1][j - 2] != '_') {</span>
+<span class="fc" id="L233">            return true;</span>
+        }
+<span class="fc bfc" id="L235" title="All 6 branches covered.">        if (i - 1 &gt;= 0 &amp;&amp; j + 2 &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i - 1][j + 2] != '_') {</span>
+<span class="fc" id="L236">            return true;</span>
+        }
+        
+<span class="fc bfc" id="L239" title="All 6 branches covered.">        if (i + 2 &lt; board.gameBoard.length &amp;&amp; j - 1 &gt;= 0 &amp;&amp; board.gameBoard[i + 2][j - 1] != '_') {</span>
+<span class="fc" id="L240">            return true;</span>
+        }
+<span class="fc bfc" id="L242" title="All 6 branches covered.">        if (i + 2 &lt; board.gameBoard.length &amp;&amp; j + 1 &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i + 2][j + 1] != '_') {</span>
+<span class="fc" id="L243">            return true;</span>
+        }
+<span class="fc bfc" id="L245" title="All 6 branches covered.">        if (i + 1 &lt; board.gameBoard.length &amp;&amp; j - 2 &gt;= 0 &amp;&amp; board.gameBoard[i + 1][j - 2] != '_') {</span>
+<span class="fc" id="L246">            return true;</span>
+        }
+<span class="fc bfc" id="L248" title="All 6 branches covered.">        if (i + 1 &lt; board.gameBoard.length &amp;&amp; j + 2 &lt; board.gameBoard[0].length &amp;&amp; board.gameBoard[i + 1][j + 2] != '_') {</span>
+<span class="fc" id="L249">            return true;</span>
+        }
+        
+<span class="fc" id="L252">        return false;</span>
+    }
+
+}
+
+    
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

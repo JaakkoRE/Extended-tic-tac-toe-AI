@@ -27,13 +27,13 @@ public class ArrayList {
     /**
     * Method adds GameStatus to ArrayList
     * 
-    * @param GameStatus GameStatus that is added to the ArrayList
+    * @param gameStatus GameStatus that is added to the ArrayList
     */
-    public void add(GameStatus GameStatus) {
+    public void add(GameStatus gameStatus) {
         if (index >= size) {
             increaseSize();
         }
-        list[index] = GameStatus;
+        list[index] = gameStatus;
         index++;
 
     }

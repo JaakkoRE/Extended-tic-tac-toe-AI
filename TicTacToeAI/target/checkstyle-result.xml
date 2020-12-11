@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\AILogic\AIVSAI.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\AILogic\DepthStop.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\AILogic\Heuristic.java">
+<error line="214" column="5" severity="error" message="Method length is 44 lines (max allowed is 40)." source="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck"/>
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\AILogic\MinMaxAI.java">
+<error line="197" column="5" severity="error" message="Method length is 53 lines (max allowed is 40)." source="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck"/>
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\BoardLogic\Board.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\BoardLogic\GameStatus.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\Methods\AbsoluteValue.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\Methods\ArrayList.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\Methods\ArrayListContainer.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\Methods\Container.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\Methods\HashMap.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\tictactoeai\Methods\MinimumMaximum.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\UserInterface\GUI.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\UserInterface\Main.java">
+</file>
+<file name="C:\Users\Jaakko\Documents\NetBeansProjects\TicTacToeAI\src\main\java\com\mycompany\UserInterface\UI.java">
+<error line="53" column="5" severity="error" message="Method length is 42 lines (max allowed is 40)." source="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck"/>
+</file>
+</checkstyle>

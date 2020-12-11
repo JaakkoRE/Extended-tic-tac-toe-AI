@@ -17,11 +17,10 @@ import org.junit.Test;
  * @author Jaakko
  */
 public class TimeTests {
-     @Test
-    public void TestLogicAiSmallTest() {
+    // @Test
+    public void TestLogicAiLinearTest() {
         GameStatus status;
         AIVSAI AIVersus = new AIVSAI();
-        System.out.println("toiset");
         
         System.out.println("Board 4,4,4 without HashMap utilization" );
         status = new GameStatus(new Board(4,4,4));
@@ -29,7 +28,7 @@ public class TimeTests {
         System.out.println("");
         
         System.out.println("Board 4,5,5 without HashMap utilization" );
-        status = new GameStatus(new Board(5,5,5));
+        status = new GameStatus(new Board(4,5,5));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
@@ -38,8 +37,8 @@ public class TimeTests {
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
-        System.out.println("Board 6,5,6 without HashMap utilization" );
-        status = new GameStatus(new Board(6,5,6));
+        System.out.println("Board 5,6,6 without HashMap utilization" );
+        status = new GameStatus(new Board(5,6,6));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
@@ -49,7 +48,7 @@ public class TimeTests {
         System.out.println("");
         
         System.out.println("Board 6,7,7 without HashMap utilization" );
-        status = new GameStatus(new Board(7,7,7));
+        status = new GameStatus(new Board(6,7,7));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
@@ -58,8 +57,8 @@ public class TimeTests {
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
-        System.out.println("Board 8,7,8 without HashMap utilization" );
-        status = new GameStatus(new Board(8,8,8));
+        System.out.println("Board 7,8,8 without HashMap utilization" );
+        status = new GameStatus(new Board(7,8,8));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
@@ -68,18 +67,28 @@ public class TimeTests {
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
+        System.out.println("Board 8,9,9 without HashMap utilization" );
+        status = new GameStatus(new Board(8,9,9));
+        AIVersus.AIVSAIPlay(status, false, false);
+        System.out.println("");
+        
         System.out.println("Board 9,9,9 without HashMap utilization" );
         status = new GameStatus(new Board(9,9,9));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
-        System.out.println("Board 9,10,9 without HashMap utilization" );
+        System.out.println("Board 9,10,10 without HashMap utilization" );
         status = new GameStatus(new Board(9,10,10));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
         System.out.println("Board 10,10,10 without HashMap utilization" );
         status = new GameStatus(new Board(10,10,10));
+        AIVersus.AIVSAIPlay(status, false, false);
+        System.out.println("");
+        
+        System.out.println("Board 10,11,11 without HashMap utilization" );
+        status = new GameStatus(new Board(10,11,11));
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
         
@@ -128,8 +137,9 @@ public class TimeTests {
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
     }
-     
+     @Test
     public void TestLogicAiBigTest() {
+         System.out.println("other test");
         GameStatus status;
         System.out.println("Board 3,3,3");
         status = new GameStatus(new Board(3, 3, 3));
@@ -234,7 +244,7 @@ public class TimeTests {
         AIVersus.AIVSAIPlay(status, false, false);
         System.out.println("");
 
-        System.out.println("toiset");
+        System.out.println("2");
         
         System.out.println("Board 5,5,5 without HashMap utilization" );
         status = new GameStatus(new Board(5,5,5));

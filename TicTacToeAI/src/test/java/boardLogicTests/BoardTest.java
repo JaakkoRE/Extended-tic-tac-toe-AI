@@ -67,14 +67,14 @@ public class BoardTest {
     }
      @Test
      public void hashTest() {
-        assertEquals(board.hashCode(), 9140526);
+        assertEquals(board.hashCode(), 3123226);
         
         Board testBoard1 = new Board(3,2,1);
         Board testBoard2 = new Board(3,2,2);
         assertEquals(testBoard1.hashCode(), testBoard2.hashCode());
         
         Board testBoard3 = new Board(10,10,5);
-        assertEquals(testBoard3.hashCode(), 4969531);
+        assertEquals(testBoard3.hashCode(), 3067531);
         GameStatus status = new GameStatus(new Board(15,15,5),'O');
         MinMaxAI forTests = new MinMaxAI(status);
         int[] hashValues = new int[225];

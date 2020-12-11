@@ -28,7 +28,7 @@ public class MinMaxAI {
     public DepthStop depthStop;
     public Heuristic heuristic;
     private int depthWhereToCalculateHeuristic;
-    private boolean HashMapUsed;
+    private boolean hashMapused;
     
     public MinMaxAI(GameStatus status) {
         heuristic = new Heuristic(status.board);
@@ -44,8 +44,8 @@ public class MinMaxAI {
         }
         this.minmax = new MinimumMaximum();
     }
-    public MinMaxAI(GameStatus status, boolean HashMapUsed) {
-        this.HashMapUsed = HashMapUsed;
+    public MinMaxAI(GameStatus status, boolean hashMapused) {
+        this.hashMapused = hashMapused;
        
         heuristic = new Heuristic(status.board);
         this.status = status;
@@ -110,7 +110,7 @@ public class MinMaxAI {
             return -1000000100 + depth; //better to lose faster
         }
         if (depth == depthWhereToCalculateHeuristic) {
-            return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);
+            return heuristic.evaluate(status, originalStart, opponentOriginalStart, hashMapused);
         }
         int v = -2100000000;
         for (GameStatus nodeChild: generateBoards().getAll()) {
@@ -149,7 +149,7 @@ public class MinMaxAI {
             return -1000000100 + depth; // better to lose slower
         }        
         if (depth == depthWhereToCalculateHeuristic) {
-            return heuristic.evaluate(status, originalStart, opponentOriginalStart, HashMapUsed);
+            return heuristic.evaluate(status, originalStart, opponentOriginalStart, hashMapused);
         }
         int v = 2100000000;
         for (GameStatus nodeChild: generateBoards().getAll()) {
@@ -163,27 +163,93 @@ public class MinMaxAI {
         return v;        
         
     }
-    /*
+    /**
     * Methods generates all legal boards possible and returns an ArrayList of them
     * @return ArrayList that contains all legal possible moves
     */
+    
     public ArrayList generateBoards() {
         ArrayList children = new ArrayList();
         Board board = status.board;
         for (int i = 0; i < board.gameBoard.length; i++) {
             for (int j = 0; j < board.gameBoard[0].length; j++) {
-                if ((board.gameBoard[i][j] == '_')) {
+                if (board.boardfulfillment <= 3 && board.gameBoard[i][j] == '_') { // if the board is nearly empty you shouldn't try to limit options
+                    GameStatus copy = status.copyGameStatus();
+                    copy.setBoardValue(i, j);
+                    children.add(copy);                    
+                } else if (board.gameBoard[i][j] == '_' && nearSymbol(board, i, j)) { // options that are far from anything are likely useless
                     GameStatus copy = status.copyGameStatus();
                     copy.setBoardValue(i, j);
                     children.add(copy);
-//                    board.gameBoard[i][j] = status.currentPlayer;
-//                    children.add(new GameStatus(this.status.board.copyBoard(), status.otherPlayer()));
-//                    board.gameBoard[i][j] = '_';
                 }
             }
         }
 
         return children;
+    }
+    /**
+    * Methods returns true if the board position is near symbol 'O' or 'X'
+    * @param board the board that is checked
+    * @param i coordinate
+    * @param j the other coordinate
+    * @return boolean
+    */
+    public boolean nearSymbol(Board board, int i, int j) {
+        for (int ind = 1; ind <= 2; ind++) {
+            if (i + ind < board.gameBoard.length && board.gameBoard[i + ind][j] != '_') {
+                return true;
+            }
+            if (i - ind >= 0 && board.gameBoard[i - ind][j] != '_') {
+                return true;
+            }
+            if (j + ind < board.gameBoard[0].length && board.gameBoard[i][j + ind] != '_') {
+                return true;
+            }
+            if (j - ind >= 0 && board.gameBoard[i][j - ind] != '_') {
+                return true;
+            }
+            
+            
+            if (i + ind < board.gameBoard.length && j + ind < board.gameBoard[0].length && board.gameBoard[i + ind][j + ind] != '_') {
+                return true;
+            }
+            if (i - ind >= 0 && j - ind >= 0 && board.gameBoard[i - ind][j - ind] != '_') {
+                return true;
+            }            
+            if (i + ind < board.gameBoard.length && j - ind >= 0 && board.gameBoard[i + ind][j - ind] != '_') {
+                return true;
+            }
+            if (i - ind >= 0 && j + ind < board.gameBoard[0].length && board.gameBoard[i - ind][j + ind] != '_') {
+                return true;
+            }
+        }
+        if (i - 2 >= 0 && j - 1 >= 0 && board.gameBoard[i - 2][j - 1] != '_') {
+            return true;
+        }
+        if (i - 2 >= 0 && j + 1 < board.gameBoard[0].length && board.gameBoard[i - 2][j + 1] != '_') {
+            return true;
+        }
+        if (i - 1 >= 0 && j - 2 >= 0 && board.gameBoard[i - 1][j - 2] != '_') {
+            return true;
+        }
+        if (i - 1 >= 0 && j + 2 < board.gameBoard[0].length && board.gameBoard[i - 1][j + 2] != '_') {
+            return true;
+        }
+        
+        if (i + 2 < board.gameBoard.length && j - 1 >= 0 && board.gameBoard[i + 2][j - 1] != '_') {
+            return true;
+        }
+        if (i + 2 < board.gameBoard.length && j + 1 < board.gameBoard[0].length && board.gameBoard[i + 2][j + 1] != '_') {
+            return true;
+        }
+        if (i + 1 < board.gameBoard.length && j - 2 >= 0 && board.gameBoard[i + 1][j - 2] != '_') {
+            return true;
+        }
+        if (i + 1 < board.gameBoard.length && j + 2 < board.gameBoard[0].length && board.gameBoard[i + 1][j + 2] != '_') {
+            return true;
+        }
+        
+        return false;
     }
 
 }

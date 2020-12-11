@@ -21,10 +21,6 @@ import org.junit.Test;
 
 
 public class AiLogicTests {
-     @Before
-    public void setUp() {
-        
-    }
      @Test
     public void minMaxAIBoardTestWithSmallBoards() {
         GameStatus statusTest = new GameStatus(new Board(1,1,1),'O');
@@ -88,7 +84,7 @@ public class AiLogicTests {
         assertEquals(ai.maxValue(statusTest, -2000000000, 2000000000, 0),0);
     }
      @Test
-    public void generateChildrenBoards() {
+    public void generateChildrenBoardsTest() {
         GameStatus statusTest = new GameStatus(new Board(2,2,2),'O');
         MinMaxAI ai = new MinMaxAI(statusTest);
         ArrayList testList = ai.generateBoards();
@@ -118,5 +114,50 @@ public class AiLogicTests {
         assertEquals(testList.getValueIndex(1).board.toString(),statusTest2.board.toString()); 
         assertEquals(testList.getValueIndex(2).board.toString(),statusTest3.board.toString()); 
     }
-    
+    @Test
+   public void symbolNearTest() {
+        GameStatus statusTest = new GameStatus(new Board(7,7,7),'O');
+        statusTest.setBoardValue(0, 0);
+        statusTest.setBoardValue(0, 1);
+        statusTest.setBoardValue(0, 2);
+        statusTest.setBoardValue(0, 3);
+        statusTest.setBoardValue(0, 4);
+        statusTest.setBoardValue(0, 5);
+        statusTest.setBoardValue(0, 6);
+       
+        statusTest.setBoardValue(6, 0);
+        statusTest.setBoardValue(6, 1);
+        statusTest.setBoardValue(6, 2);
+        statusTest.setBoardValue(6, 3);
+        statusTest.setBoardValue(6, 4);
+        statusTest.setBoardValue(6, 5);
+        statusTest.setBoardValue(6, 6);
+       
+        statusTest.setBoardValue(1, 0);
+        statusTest.setBoardValue(2, 0);
+        statusTest.setBoardValue(3, 0);
+        statusTest.setBoardValue(4, 0);
+        statusTest.setBoardValue(5, 0);
+        statusTest.setBoardValue(6, 0);
+       
+        statusTest.setBoardValue(0, 6);
+        statusTest.setBoardValue(1, 6);
+        statusTest.setBoardValue(2, 6);
+        statusTest.setBoardValue(3, 6);
+        statusTest.setBoardValue(4, 6);
+        statusTest.setBoardValue(5, 6);
+       
+        MinMaxAI ai = new MinMaxAI(statusTest);
+        assertEquals(ai.nearSymbol(statusTest.board, 3, 3),false); 
+        
+        for (int i = 1; i < 6; i++) {
+            for (int j = 1; j < 6; j++) {
+                if (i != 3 || j != 3) {
+                GameStatus copy = statusTest.copyGameStatus();
+                copy.setBoardValue(i, j);
+                assertEquals(ai.nearSymbol(copy.board, 3, 3),true);      
+                }
+            }
+        }
+   }
 }

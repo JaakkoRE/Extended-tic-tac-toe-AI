@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Heuristic.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.AILogic</a> &gt; <span class="el_source">Heuristic.java</span></div><h1>Heuristic.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.AILogic;
+
+import com.mycompany.tictactoeai.BoardLogic.Board;
+import com.mycompany.tictactoeai.BoardLogic.GameStatus;
+import com.mycompany.tictactoeai.Methods.AbsoluteValue;
+import com.mycompany.tictactoeai.Methods.HashMap;
+import java.util.Random;
+
+/**
+ *
+ * @author Jaakko
+ */
+
+/**
+ * Class is used for getting heuristic value of the current board
+ */
+public class Heuristic {
+    public int[][] heuristicBoard;
+    public boolean[][] heuristicVerticalTested;
+    public boolean[][] heuristicHorizontalTested;
+    public boolean[][] heuristicDiagonal1Tested;
+    public boolean[][] heuristicDiagonal2Tested;
+    public boolean[][] heuristicSameSymbolNear;
+    public HashMap heuristicValuesMap;
+    public int xLength;
+    public int yLength;
+    public int vcl;
+    public char currentSymbol;
+    public char opponentSymbol;
+    public int Val1;
+    public int Val2;
+    public int Val3;
+    public int Val4;
+
+<span class="fc" id="L40">    public Heuristic(Board board) {</span>
+<span class="fc" id="L41">        this.heuristicValuesMap = new HashMap();</span>
+<span class="fc" id="L42">        this.xLength = board.sizex;</span>
+<span class="fc" id="L43">        this.yLength = board.sizey;</span>
+<span class="fc" id="L44">        this.vcl = board.vcl;</span>
+<span class="fc" id="L45">        heuristicBaseSetUp();</span>
+<span class="fc" id="L46">        Val1 = 1;</span>
+<span class="fc" id="L47">        Val2 = 1;</span>
+<span class="fc" id="L48">        Val3 = 2;</span>
+<span class="fc" id="L49">        Val4 = 1;</span>
+        // 3 1 1 4
+        // 1 2 4 1
+        // 1 1 2 1 mun
+<span class="fc" id="L53">        heuristicVerticalTested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L54">        heuristicHorizontalTested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L55">        heuristicDiagonal1Tested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L56">        heuristicDiagonal2Tested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L57">        heuristicSameSymbolNear = new boolean[xLength][yLength];   </span>
+<span class="fc" id="L58">    }</span>
+    /**
+    * Method sets value to the board to give base values of locations based on coordinates. 
+    */ 
+    public void heuristicBaseSetUp() {
+<span class="fc" id="L63">        AbsoluteValue intAbs = new AbsoluteValue();</span>
+<span class="fc" id="L64">        heuristicBoard = new int[xLength][yLength];        </span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; heuristicBoard.length; i++) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            for (int j = 0; j &lt; heuristicBoard[0].length; j++) {</span>
+<span class="fc bfc" id="L67" title="All 16 branches covered.">                if (i == 0 &amp;&amp; j == 0 || i == 0 &amp;&amp; j == heuristicBoard[0].length - 1 || i == heuristicBoard.length - 1 &amp;&amp; j == 0 || i == heuristicBoard.length - 1 &amp;&amp; j == heuristicBoard[0].length - 1) {</span>
+                    //corners are bad
+<span class="fc" id="L69">                    heuristicBoard[i][j] = (heuristicBoard[0].length + heuristicBoard.length) / 4;</span>
+                } else {
+                    //the closer to the middle, the better.
+<span class="fc" id="L72">                    heuristicBoard[i][j] = 2 * (heuristicBoard.length - intAbs.absoluteValueOfInt(heuristicBoard.length / 2 - i) + heuristicBoard[0].length - intAbs.absoluteValueOfInt(heuristicBoard[0].length / 2 - j));</span>
+<span class="fc bfc" id="L73" title="All 8 branches covered.">                    if (i == 0 || j == 0 || i == heuristicBoard.length - 1 || j == heuristicBoard[0].length - 1) {</span>
+<span class="fc" id="L74">                        heuristicBoard[i][j] = heuristicBoard[i][j] / 2;</span>
+                    }
+                   
+                }
+            }
+        }
+        
+<span class="fc" id="L81">    }</span>
+    /**
+     * Method randomises few values
+     */
+    public void randomiseValues() {
+<span class="nc" id="L86">        Random r = new Random();</span>
+<span class="nc" id="L87">        Val1 = r.nextInt(6) + 1;</span>
+<span class="nc" id="L88">        Val2 = r.nextInt(6) + 1;</span>
+<span class="nc" id="L89">        Val3 = r.nextInt(6) + 1;</span>
+<span class="nc" id="L90">        Val4 = r.nextInt(6) + Val1;</span>
+<span class="nc" id="L91">    }</span>
+    /**
+    * Method evaluates the current boards heuristic value
+    * @param status is the current game's status
+    * @param useHashMap tells if the heuristic values should be safed for later use in case the board has already been calculated (generally slows performance wip).
+    * @param currentSymbol is the current player's symbol
+    * @param opponentSymbol is the current player's opponent's symbol
+    * @return int of the current board value
+    */ 
+    public int evaluate(GameStatus status, char currentSymbol, char opponentSymbol, boolean useHashMap) {
+<span class="fc" id="L101">        Board board = status.board;</span>
+<span class="fc" id="L102">        this.currentSymbol = currentSymbol;</span>
+<span class="fc" id="L103">        this.opponentSymbol = opponentSymbol;</span>
+        //-7777 random int from HashMap
+<span class="pc bpc" id="L105" title="3 of 4 branches missed.">        if (useHashMap &amp;&amp; heuristicValuesMap.get(board) != -7777) {</span>
+<span class="nc" id="L106">            return heuristicValuesMap.get(board);</span>
+        }
+<span class="fc" id="L108">        int heuristic = 0;</span>
+<span class="fc" id="L109">        char[][] gameBoard = board.gameBoard;</span>
+<span class="fc" id="L110">        heuristicVerticalTested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L111">        heuristicHorizontalTested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L112">        heuristicDiagonal1Tested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L113">        heuristicDiagonal2Tested = new boolean[xLength][yLength];</span>
+<span class="fc" id="L114">        heuristicSameSymbolNear = new boolean[xLength][yLength];   </span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc" id="L117">                heuristic += evaluateHeuristic(gameBoard, i, j);</span>
+                //if heuristic is so strong (win or lose guaranteed) no need to calculate further
+                //But this shouldn't happen since victory is checked with victorycheck with every board
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">                if (heuristic &gt;= 90000000) {</span>
+<span class="nc" id="L121">                    return 1000000000;</span>
+                }
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">                if (heuristic &lt;= -90000000) {</span>
+<span class="nc" id="L124">                    return -1000000000;</span>
+                }
+            }
+        }
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (useHashMap) {</span>
+<span class="nc" id="L129">            heuristicValuesMap.put(board, heuristic);</span>
+        }
+<span class="fc" id="L131">        return heuristic;</span>
+    }
+    /**
+    * Method approximates heuristic value to be added based on one square. Uses the other heuristic methods to determine value.
+    * @param gameBoard is the current game's board
+    * @param i x coordinate
+    * @param j y coordinate
+    * @return int of the current board value at location value
+    */
+    public int evaluateHeuristic(char[][] gameBoard, int i, int j) {
+<span class="fc" id="L141">        int heuristic = 0;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (gameBoard[i][j] == currentSymbol) {</span>
+<span class="fc" id="L143">            heuristic += heuristicBoard[i][j];</span>
+<span class="fc" id="L144">            heuristic += heuricticDirections(gameBoard, i, j, currentSymbol);</span>
+<span class="fc" id="L145">            heuristic += heuristicHowManyWaysOfWinning(gameBoard, i, j);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            if (!heuristicSameSymbolNear[i][j]) {</span>
+<span class="fc" id="L147">                heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, i, j, currentSymbol, 0);</span>
+            }
+        }
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (gameBoard[i][j] == opponentSymbol) {</span>
+<span class="fc" id="L151">            heuristic -= heuristicBoard[i][j];</span>
+<span class="fc" id="L152">            heuristic -= heuricticDirections(gameBoard, i, j, opponentSymbol);</span>
+<span class="fc" id="L153">            heuristic -= heuristicHowManyWaysOfWinning(gameBoard, i, j);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if (!heuristicSameSymbolNear[i][j]) {</span>
+<span class="fc" id="L155">                heuristic -= (int) (heuristicSameSymbolNearSameSymbol(gameBoard, i, j, opponentSymbol, 0) * 1.2); //slightly prioritising sabotaging opponent is probably better</span>
+            }
+        }
+<span class="fc" id="L158">        return heuristic;</span>
+    }
+    /**
+    * Method gives points when there are big clusters of the same symbol even if the symbols aren't in long lines.
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param heuristic value that is send forwards
+    * @param sideToBeChecked is the current symbol that is checked
+    * @return int of the current board value at location value
+    */
+    public int heuristicSameSymbolNearSameSymbol(char[][] gameBoard, int x, int y, char sideToBeChecked, int heuristic) {
+<span class="fc bfc" id="L170" title="All 6 branches covered.">        if (x - 1 &gt;= 0 &amp;&amp; gameBoard[x - 1][y] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x - 1][y]) {</span>
+<span class="fc" id="L171">            heuristicSameSymbolNear[x - 1][y] = true;</span>
+<span class="fc" id="L172">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x - 1, y, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+<span class="fc bfc" id="L174" title="All 6 branches covered.">        if (x + 1 &lt; gameBoard.length &amp;&amp; gameBoard[x + 1][y] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x + 1][y]) {</span>
+<span class="fc" id="L175">            heuristicSameSymbolNear[x + 1][y] = true;</span>
+<span class="fc" id="L176">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x + 1, y, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+        
+<span class="fc bfc" id="L179" title="All 6 branches covered.">        if (y - 1 &gt;= 0 &amp;&amp; gameBoard[x][y - 1] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x][y - 1]) {</span>
+<span class="fc" id="L180">            heuristicSameSymbolNear[x][y - 1] = true;</span>
+<span class="fc" id="L181">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x, y - 1, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+<span class="fc bfc" id="L183" title="All 6 branches covered.">        if (y + 1 &lt; gameBoard[0].length &amp;&amp; gameBoard[x][y + 1] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x][y + 1]) {</span>
+<span class="fc" id="L184">            heuristicSameSymbolNear[x][y + 1] = true;</span>
+<span class="fc" id="L185">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x, y + 1, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+        
+<span class="fc bfc" id="L188" title="All 8 branches covered.">        if (x - 1 &gt;= 0 &amp;&amp; y - 1 &gt;= 0 &amp;&amp; gameBoard[x - 1][y - 1] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x - 1][y - 1]) {</span>
+<span class="fc" id="L189">            heuristicSameSymbolNear[x - 1][y - 1] = true;</span>
+<span class="fc" id="L190">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x - 1, y - 1, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+<span class="fc bfc" id="L192" title="All 8 branches covered.">        if (x + 1 &lt; gameBoard.length &amp;&amp; y + 1 &lt; gameBoard[0].length &amp;&amp; gameBoard[x + 1][y + 1] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x + 1][y + 1]) {</span>
+<span class="fc" id="L193">            heuristicSameSymbolNear[x + 1][y + 1] = true;</span>
+<span class="fc" id="L194">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x + 1, y + 1, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+        
+<span class="fc bfc" id="L197" title="All 8 branches covered.">        if (x - 1 &gt;= 0 &amp;&amp; y + 1 &lt; gameBoard[0].length &amp;&amp; gameBoard[x - 1][y + 1] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x - 1][y + 1]) {</span>
+<span class="fc" id="L198">            heuristicSameSymbolNear[x - 1][y + 1] = true;</span>
+<span class="fc" id="L199">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x - 1, y + 1, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+<span class="fc bfc" id="L201" title="All 8 branches covered.">        if (x + 1 &lt; gameBoard.length &amp;&amp; y - 1 &gt;= 0 &amp;&amp; gameBoard[x + 1][y - 1] == sideToBeChecked &amp;&amp; !heuristicSameSymbolNear[x + 1][y - 1]) {</span>
+<span class="fc" id="L202">            heuristicSameSymbolNear[x + 1][y - 1] = true;</span>
+<span class="fc" id="L203">            heuristic += heuristicSameSymbolNearSameSymbol(gameBoard, x + 1, y - 1, sideToBeChecked, heuristic + gameBoard.length * gameBoard[0].length / 2);</span>
+        }
+<span class="fc" id="L205">        return heuristic;</span>
+    }
+    /**
+    * Method gives points if there is possibility of creating a winning line from the point from a direction. More directions, more points.
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @return int of the current board value at location value
+    */
+    public int heuristicHowManyWaysOfWinning(char[][] gameBoard, int x, int y) {
+<span class="fc" id="L215">        int waysOfWinning = 0;</span>
+<span class="fc bfc" id="L216" title="All 4 branches covered.">        if (x - 1 &gt;= 0 &amp;&amp; gameBoard[x - 1][y] == '_') {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            if (heuristicVertical(gameBoard, x - 1, y, '_') &gt;= vcl) {</span>
+<span class="fc" id="L218">                waysOfWinning++;</span>
+            }
+        }
+<span class="fc bfc" id="L221" title="All 4 branches covered.">        if (x + 1 &lt; gameBoard.length &amp;&amp; gameBoard[x + 1][y] == '_') {</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">            if (heuristicVertical(gameBoard, x + 1, y, '_') &gt;= vcl) {</span>
+<span class="fc" id="L223">                waysOfWinning++;</span>
+            }        
+        }       
+<span class="fc bfc" id="L226" title="All 4 branches covered.">        if (y - 1 &gt;= 0 &amp;&amp; gameBoard[x][y - 1] == '_') {</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (heuristicHorizontal(gameBoard, x, y - 1, '_') &gt;= vcl) {</span>
+<span class="fc" id="L228">                waysOfWinning++;</span>
+            } 
+        }
+<span class="fc bfc" id="L231" title="All 4 branches covered.">        if (y + 1 &lt; gameBoard[0].length &amp;&amp; gameBoard[x][y + 1] == '_') {</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            if (heuristicHorizontal(gameBoard, x, y + 1, '_') &gt;= vcl) {</span>
+<span class="fc" id="L233">                waysOfWinning++;</span>
+            }
+        }
+<span class="fc bfc" id="L236" title="All 6 branches covered.">        if (x - 1 &gt;= 0 &amp;&amp; y + 1 &lt; gameBoard[0].length &amp;&amp; gameBoard[x - 1][y + 1] == '_') {</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">            if (heuristicDiagonal1(gameBoard, x - 1, y + 1, '_') &gt;= vcl) {</span>
+<span class="fc" id="L238">                waysOfWinning++;</span>
+            }
+        }
+<span class="fc bfc" id="L241" title="All 6 branches covered.">        if (x + 1 &lt; gameBoard.length &amp;&amp; y - 1 &gt;= 0 &amp;&amp; gameBoard[x + 1][y - 1] == '_') {</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            if (heuristicDiagonal1(gameBoard, x + 1, y - 1, '_') &gt;= vcl) {</span>
+<span class="fc" id="L243">                waysOfWinning++;</span>
+            }
+        }        
+<span class="fc bfc" id="L246" title="All 6 branches covered.">        if (x - 1 &gt;= 0 &amp;&amp; y - 1 &gt;= 0 &amp;&amp; gameBoard[x - 1][y - 1] == '_') {</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">            if (heuristicDiagonal2(gameBoard, x - 1, y - 1, '_') &gt;= vcl) {</span>
+<span class="fc" id="L248">                waysOfWinning++;</span>
+            }        
+        }
+<span class="fc bfc" id="L251" title="All 6 branches covered.">        if (x + 1 &lt; gameBoard.length &amp;&amp; y + 1 &lt; gameBoard[0].length &amp;&amp; gameBoard[x + 1][y + 1] == '_') {</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">            if (heuristicDiagonal2(gameBoard, x + 1, y + 1, '_') &gt;= vcl) {</span>
+<span class="fc" id="L253">                waysOfWinning++;</span>
+            }
+        }       
+        
+<span class="fc" id="L257">        return waysOfWinning * 2;</span>
+    }
+    /**
+    * Method gives points when there are long straight lines of the same symbol. 
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the current symbol that is checked
+    * @return int of the current board value at location value
+    */
+    public int heuricticDirections(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L268">        int heuristic = 0;</span>
+        int length;
+<span class="fc bfc" id="L270" title="All 2 branches covered.">        if (!heuristicVerticalTested[x][y]) {</span>
+<span class="fc" id="L271">            length = heuristicVerticalCanWin(gameBoard, x, y, sideToBeChecked);</span>
+<span class="fc" id="L272">            heuristic += Val3 * length * length * gameBoard.length * gameBoard[0].length / vcl; </span>
+        }
+<span class="fc bfc" id="L274" title="All 2 branches covered.">        if (!heuristicHorizontalTested[x][y]) {</span>
+<span class="fc" id="L275">            length = heuristicHorizontalCanWin(gameBoard, x, y, sideToBeChecked);</span>
+<span class="fc" id="L276">            heuristic += Val3 * length * length * gameBoard.length * gameBoard[0].length / vcl;</span>
+        }
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        if (!heuristicDiagonal1Tested[x][y]) {</span>
+<span class="fc" id="L279">            length = heuristicDiagonal1CanWin(gameBoard, x, y, sideToBeChecked);</span>
+<span class="fc" id="L280">            heuristic += Val3 * length * length * gameBoard.length * gameBoard[0].length / vcl;</span>
+        }
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        if (!heuristicDiagonal2Tested[x][y]) {</span>
+<span class="fc" id="L283">            length = heuristicDiagonal2CanWin(gameBoard, x, y, sideToBeChecked);</span>
+<span class="fc" id="L284">            heuristic += Val3 * length * length * gameBoard.length * gameBoard[0].length / vcl;</span>
+            
+        }
+<span class="fc" id="L287">        return heuristic;</span>
+    }
+    
+     /**
+    * Method tells the length of the same symbol based on how many of the same symbols are vertically next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the vertical length of the same symbol.
+    */
+    public int heuristicVertical(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L299">        int length = 1;</span>
+<span class="fc" id="L300">        int i = x - 1;</span>
+<span class="fc bfc" id="L301" title="All 4 branches covered.">        while (i &gt;= 0 &amp;&amp; gameBoard[i][y] == sideToBeChecked) {</span>
+<span class="fc" id="L302">            length++;</span>
+<span class="fc" id="L303">            i--;</span>
+        }
+<span class="fc" id="L305">        i = x + 1;</span>
+<span class="fc bfc" id="L306" title="All 4 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; gameBoard[i][y] == sideToBeChecked) {</span>
+<span class="fc" id="L307">            length++;</span>
+<span class="fc" id="L308">            i++;</span>
+        }
+<span class="fc" id="L310">        return length;</span>
+    }
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are horizontally next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the horizontal length of the same symbol.
+    */
+    public int heuristicHorizontal(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L321">        int length = 1;</span>
+<span class="fc" id="L322">        int j = y - 1;</span>
+<span class="fc bfc" id="L323" title="All 4 branches covered.">        while (j &gt;= 0 &amp;&amp; gameBoard[x][j] == sideToBeChecked) {</span>
+<span class="fc" id="L324">            length++;</span>
+<span class="fc" id="L325">            j--;</span>
+        }
+<span class="fc" id="L327">        j = y + 1;</span>
+<span class="fc bfc" id="L328" title="All 4 branches covered.">        while (j &lt; gameBoard[0].length &amp;&amp; gameBoard[x][j] == sideToBeChecked) {</span>
+<span class="fc" id="L329">            length++;</span>
+<span class="fc" id="L330">            j++;</span>
+        }
+<span class="fc" id="L332">        return length;</span>
+    }
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are diagonally in one direction next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the diagonal length of the same symbol.
+    */
+    public int heuristicDiagonal1(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L343">        int length = 1;</span>
+<span class="fc" id="L344">        int i = x - 1;</span>
+<span class="fc" id="L345">        int j = y + 1;</span>
+<span class="fc bfc" id="L346" title="All 6 branches covered.">        while (i &gt;= 0 &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L347">            length++;</span>
+<span class="fc" id="L348">            i--;</span>
+<span class="fc" id="L349">            j++;</span>
+        }
+<span class="fc" id="L351">        i = x + 1;</span>
+<span class="fc" id="L352">        j = y - 1;</span>
+<span class="fc bfc" id="L353" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L354">            length++;</span>
+<span class="fc" id="L355">            i++;</span>
+<span class="fc" id="L356">            j--;</span>
+        }
+<span class="fc" id="L358">        return length;</span>
+    }
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are diagonally in the other direction next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the diagonal length of the same symbol.
+    */
+    public int heuristicDiagonal2(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L369">        int length = 1;</span>
+<span class="fc" id="L370">        int i = x - 1;</span>
+<span class="fc" id="L371">        int j = y - 1;</span>
+<span class="fc bfc" id="L372" title="All 6 branches covered.">        while (i &gt;= 0 &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L373">            length++;</span>
+<span class="fc" id="L374">            i--;</span>
+<span class="fc" id="L375">            j--;</span>
+        }
+<span class="fc" id="L377">        i = x + 1;</span>
+<span class="fc" id="L378">        j = y + 1;</span>
+<span class="fc bfc" id="L379" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L380">            length++;</span>
+<span class="fc" id="L381">            i++;</span>
+<span class="fc" id="L382">            j++;</span>
+        }
+<span class="fc" id="L384">        return length;</span>
+    }
+    
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are vertically next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the vertical length of the same symbol if there is room to win else 0.
+    */
+    public int heuristicVerticalCanWin(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L396">        int length = 1;</span>
+<span class="fc" id="L397">        int length2 = 0;</span>
+<span class="fc" id="L398">        int i = x - 1;</span>
+<span class="fc" id="L399">        int length3 = 0;</span>
+<span class="pc bpc" id="L400" title="1 of 4 branches missed.">        while (i &gt;= 0 &amp;&amp; gameBoard[i][y] == sideToBeChecked) {</span>
+<span class="nc" id="L401">            length++;</span>
+<span class="nc" id="L402">            heuristicVerticalTested[i][y] = true;</span>
+<span class="nc" id="L403">            i--;</span>
+        }
+<span class="fc bfc" id="L405" title="All 4 branches covered.">        while (i &gt;= 0 &amp;&amp; gameBoard[i][y] == '_') {</span>
+<span class="fc" id="L406">            length2++;</span>
+<span class="fc" id="L407">            i--;</span>
+        }
+<span class="fc" id="L409">        i = x + 1;</span>
+<span class="fc bfc" id="L410" title="All 4 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; gameBoard[i][y] == sideToBeChecked) {</span>
+<span class="fc" id="L411">            length++;</span>
+<span class="fc" id="L412">            heuristicVerticalTested[i][y] = true;</span>
+<span class="fc" id="L413">            i++;</span>
+        }
+<span class="fc bfc" id="L415" title="All 4 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; gameBoard[i][y] == '_') {</span>
+<span class="fc" id="L416">            length3++;</span>
+<span class="fc" id="L417">            i++;</span>
+        }
+<span class="fc" id="L419">        return lenghtThatIsReturned(length, length2, length3, sideToBeChecked);</span>
+    }
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are horizontally next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the horizontal length of the same symbol if there is room to win else 0.
+    */
+    public int heuristicHorizontalCanWin(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L430">        int length = 1;</span>
+<span class="fc" id="L431">        int length2 = 0;</span>
+<span class="fc" id="L432">        int length3 = 0;</span>
+<span class="fc" id="L433">        int j = y - 1;</span>
+<span class="pc bpc" id="L434" title="1 of 4 branches missed.">        while (j &gt;= 0 &amp;&amp; gameBoard[x][j] == sideToBeChecked) {</span>
+<span class="nc" id="L435">            length++;</span>
+<span class="nc" id="L436">            heuristicHorizontalTested[x][j] = true;</span>
+<span class="nc" id="L437">            j--;</span>
+        }
+<span class="fc bfc" id="L439" title="All 4 branches covered.">        while (j &gt;= 0 &amp;&amp; gameBoard[x][j] == '_') {</span>
+<span class="fc" id="L440">            length2++;</span>
+<span class="fc" id="L441">            j--;</span>
+        }
+<span class="fc" id="L443">        j = y + 1;</span>
+<span class="fc bfc" id="L444" title="All 4 branches covered.">        while (j &lt; gameBoard[0].length &amp;&amp; gameBoard[x][j] == sideToBeChecked) {</span>
+<span class="fc" id="L445">            length++;</span>
+<span class="fc" id="L446">            heuristicHorizontalTested[x][j] = true;</span>
+<span class="fc" id="L447">            j++;</span>
+        }
+<span class="fc bfc" id="L449" title="All 4 branches covered.">        while (j &lt; gameBoard[0].length &amp;&amp; gameBoard[x][j] == '_') {</span>
+<span class="fc" id="L450">            length3++;</span>
+<span class="fc" id="L451">            j++;</span>
+        }
+<span class="fc" id="L453">        return lenghtThatIsReturned(length, length2, length3, sideToBeChecked);</span>
+    }
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are diagonally in one direction next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the diagonal length of the same symbol if there is room to win else 0.
+    */
+    public int heuristicDiagonal1CanWin(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L464">        int length = 1;</span>
+<span class="fc" id="L465">        int length2 = 0;</span>
+<span class="fc" id="L466">        int length3 = 0;</span>
+<span class="fc" id="L467">        int i = x - 1;</span>
+<span class="fc" id="L468">        int j = y + 1;</span>
+<span class="pc bpc" id="L469" title="1 of 6 branches missed.">        while (i &gt;= 0 &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="nc" id="L470">            length++;</span>
+<span class="nc" id="L471">            heuristicDiagonal1Tested[i][j] = true;</span>
+<span class="nc" id="L472">            i--;</span>
+<span class="nc" id="L473">            j++;</span>
+        }
+<span class="pc bpc" id="L475" title="1 of 6 branches missed.">        while (i &gt;= 0 &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="nc" id="L476">            length2++;</span>
+<span class="nc" id="L477">            i--;</span>
+<span class="nc" id="L478">            j++;</span>
+        }
+<span class="fc" id="L480">        i = x + 1;</span>
+<span class="fc" id="L481">        j = y - 1;</span>
+<span class="fc bfc" id="L482" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L483">            length++;</span>
+<span class="fc" id="L484">            heuristicDiagonal1Tested[i][j] = true;</span>
+<span class="fc" id="L485">            i++;</span>
+<span class="fc" id="L486">            j--;</span>
+        }
+<span class="pc bpc" id="L488" title="1 of 6 branches missed.">        while (i &lt; gameBoard.length &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="nc" id="L489">            length3++;</span>
+<span class="nc" id="L490">            i++;</span>
+<span class="nc" id="L491">            j--;</span>
+        }
+<span class="fc" id="L493">        return lenghtThatIsReturned(length, length2, length3, sideToBeChecked);</span>
+    }
+    /**
+    * Method tells the length of the same symbol based on how many of the same symbols are diagonally in the other direction next to each other
+    * @param gameBoard is the current game's board
+    * @param x x coordinate
+    * @param y y coordinate
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return int of the diagonal length of the same symbol if there is room to win else 0.
+    */
+    public int heuristicDiagonal2CanWin(char[][] gameBoard, int x, int y, char sideToBeChecked) {
+<span class="fc" id="L504">        int length = 1;</span>
+<span class="fc" id="L505">        int length2 = 0;</span>
+<span class="fc" id="L506">        int length3 = 0;</span>
+<span class="fc" id="L507">        int i = x - 1;</span>
+<span class="fc" id="L508">        int j = y - 1;</span>
+<span class="pc bpc" id="L509" title="1 of 6 branches missed.">        while (i &gt;= 0 &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="nc" id="L510">            length++;</span>
+<span class="nc" id="L511">            heuristicDiagonal2Tested[i][j] = true;</span>
+<span class="nc" id="L512">            i--;</span>
+<span class="nc" id="L513">            j--;</span>
+        }        
+<span class="fc bfc" id="L515" title="All 6 branches covered.">        while (i &gt;= 0 &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == '_') {</span>
+<span class="fc" id="L516">            length2++;</span>
+<span class="fc" id="L517">            i--;</span>
+<span class="fc" id="L518">            j--;</span>
+        }
+        
+<span class="fc" id="L521">        i = x + 1;</span>
+<span class="fc" id="L522">        j = y + 1;</span>
+<span class="fc bfc" id="L523" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L524">            length++;</span>
+<span class="fc" id="L525">            heuristicDiagonal2Tested[i][j] = true;</span>
+<span class="fc" id="L526">            i++;</span>
+<span class="fc" id="L527">            j++;</span>
+        }
+<span class="fc bfc" id="L529" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == '_') {</span>
+<span class="fc" id="L530">            length3++;</span>
+<span class="fc" id="L531">            i++;</span>
+<span class="fc" id="L532">            j++;</span>
+        }
+<span class="pc bpc" id="L534" title="1 of 2 branches missed.">        if (length == 0) {</span>
+<span class="nc" id="L535">            return length;</span>
+        }
+<span class="fc" id="L537">        return lenghtThatIsReturned(length, length2, length3, sideToBeChecked);</span>
+    }
+    /**
+    * Method is used to modify the length that is returned
+    * @param length length of the same symbol
+    * @param length2 otherside empty length
+    * @param length3 othersides empty length
+    * @param sideToBeChecked is the players symbol whose value at coordinate is checked
+    * @return modified length value.
+    */
+       
+    public int lenghtThatIsReturned(int length, int length2, int length3, char sideToBeChecked) {
+<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (length + length2 + length3 &lt; vcl) {</span>
+<span class="fc" id="L550">            return 0;</span>
+        }
+<span class="fc bfc" id="L552" title="All 2 branches covered.">        if (length &gt;= vcl - 1) {</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">            if (sideToBeChecked == currentSymbol) {</span>
+<span class="fc" id="L554">                return length * Val4 + 2;</span>
+            }
+<span class="fc" id="L556">            return length * (Val4 + Val2);</span>
+        }
+<span class="fc bfc" id="L558" title="All 6 branches covered.">        if (length &gt;= vcl - 2 &amp;&amp; length2 &gt; 0 &amp;&amp; length3 &gt; 0) {</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">            if (sideToBeChecked == currentSymbol) {</span>
+<span class="fc" id="L560">                return length * Val1 + 1;</span>
+            }
+<span class="fc" id="L562">            return length * (Val1 + Val2); // opponent can force a win in 2 moves</span>
+        }
+<span class="fc bfc" id="L564" title="All 4 branches covered.">        if (length &gt;= 3 &amp;&amp; sideToBeChecked == opponentSymbol) {</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">            if (length2 &gt; 0) {</span>
+<span class="fc" id="L566">                length++;</span>
+            }
+<span class="fc bfc" id="L568" title="All 2 branches covered.">            if (length3 &gt; 0) {</span>
+<span class="fc" id="L569">                length++;</span>
+            } 
+<span class="fc bfc" id="L571" title="All 4 branches covered.">        } else if (length == 2 &amp;&amp; sideToBeChecked == opponentSymbol) {</span>
+<span class="pc bpc" id="L572" title="3 of 4 branches missed.">            if (length &gt; 0 || length3 &gt; 0) {</span>
+<span class="fc" id="L573">                length++;</span>
+            }
+        }
+<span class="fc" id="L576">        return length;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

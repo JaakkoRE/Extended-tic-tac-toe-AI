@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TicTacToeAi</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.tictactoeai.BoardLogic</a> &gt; <span class="el_source">GameStatus.java</span></div><h1>GameStatus.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.tictactoeai.BoardLogic;
+
+/**
+ *
+ * @author Jaakko
+ */
+
+/**
+ * Class stores the status of the game, the board and gives operations on checking the status of the game
+ */
+public class GameStatus {
+    public Board board;
+    public char[][] gameBoard;
+    public int vcl;
+    public char currentPlayer;
+    
+<span class="fc" id="L22">    public GameStatus(Board board, char currentPlayer) {</span>
+<span class="fc" id="L23">        this.board = board;</span>
+<span class="fc" id="L24">        this.gameBoard = board.getGameBoard();</span>
+<span class="fc" id="L25">        this.vcl = board.getVcl();</span>
+<span class="fc" id="L26">        this.currentPlayer = currentPlayer;</span>
+<span class="fc" id="L27">    }</span>
+<span class="fc" id="L28">    public GameStatus(Board board) {</span>
+<span class="fc" id="L29">        this.board = board;</span>
+<span class="fc" id="L30">        this.gameBoard = board.getGameBoard();</span>
+<span class="fc" id="L31">        this.vcl = board.getVcl();</span>
+<span class="fc" id="L32">        this.currentPlayer = 'O';</span>
+<span class="fc" id="L33">    }</span>
+    public GameStatus copyGameStatus() {
+<span class="fc" id="L35">        return new GameStatus(board.copyBoard(), currentPlayer);</span>
+    }
+    /**
+    * Method returns the other player than the current player 
+    * @return the other player
+    */ 
+    public char otherPlayer() {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (this.currentPlayer == 'O') {</span>
+<span class="fc" id="L43">            return 'X';</span>
+        } else {
+<span class="fc" id="L45">            return 'O';</span>
+        }
+    }
+    /**
+    * Method sets value to the board according to the coordinates and the current user
+    * @param x sets the x coordinates
+    * @param y sets the y coordinates
+    * @return the status of the game
+    */ 
+    public char setBoardValue(int x, int y) {
+<span class="fc" id="L55">        boolean BoolCouldChangeValue = this.board.changeBoardValue(x, y, currentPlayer);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (BoolCouldChangeValue) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (currentPlayer == 'O') {</span>
+<span class="fc" id="L58">                currentPlayer = 'X';</span>
+            } else {
+<span class="fc" id="L60">                currentPlayer = 'O';</span>
+            } 
+<span class="fc" id="L62">            this.gameBoard = board.getGameBoard();</span>
+        } else {
+<span class="fc" id="L64">            return 'e';</span>
+        }
+<span class="fc" id="L66">        return victoryCheck(x, y);</span>
+    }
+    /**
+    * Method checks if the board is filled, which means that there are no empty '_' chars
+    * @return true if board is full else false
+    */ 
+    public boolean isBoardFull() {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (board.boardSize == board.boardfulfillment) {</span>
+<span class="fc" id="L74">            return true;</span>
+        }
+<span class="fc" id="L76">        return false;</span>
+//System.out.println(board.boardSize + &quot; ja &quot; + board.boardfulfillment);
+//        this.gameBoard = board.getGameBoard();
+//        for (int i = 0; i &lt; gameBoard.length; i++) {
+//            for (int j = 0; j &lt; gameBoard[0].length; j++) {
+//                if ((gameBoard[i][j] == '_')) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+    }
+    /**
+    * Method checks all points of the board and tells the status of the game
+    * @return the status of the game
+    */ 
+    public char checkAll() {
+       
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            for (int j = 0; j &lt; gameBoard[0].length; j++) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">                if (!(victoryCheck(i, j) == 0)) {</span>
+<span class="fc" id="L97">                    return victoryCheck(i, j);</span>
+                }
+            }
+        }
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (isBoardFull()) {</span>
+<span class="fc" id="L102">            return 'n';</span>
+        }
+<span class="fc" id="L104">        return 0;</span>
+    }
+    /**
+    * Method checks points from x,y fullfill the victory condition
+    * @return returns 0 if no victory, else the victors symbol
+    */ 
+    public char victoryCheck(int x, int y) {
+<span class="fc" id="L111">        this.gameBoard = board.getGameBoard();</span>
+<span class="fc" id="L112">        char sideToBeChecked = gameBoard[x][y]; </span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (sideToBeChecked == '_') {</span>
+<span class="fc" id="L114">            return 0;</span>
+        }
+<span class="fc" id="L116">        char returnValue = horizontalVictoryCheck(x, y, sideToBeChecked);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (!(returnValue == 0)) {</span>
+<span class="fc" id="L118">            return returnValue;</span>
+        }
+<span class="fc" id="L120">        returnValue = verticalVictoryCheck(x, y, sideToBeChecked);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (!(returnValue == 0)) {</span>
+<span class="fc" id="L122">            return returnValue;</span>
+        }
+<span class="fc" id="L124">        returnValue = diagonalVictoryCheck1(x, y, sideToBeChecked);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (!(returnValue == 0)) {</span>
+<span class="fc" id="L126">            return returnValue;</span>
+        }
+<span class="fc" id="L128">        returnValue = diagonalVictoryCheck2(x, y, sideToBeChecked);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (!(returnValue == 0)) {</span>
+<span class="fc" id="L130">            return returnValue;</span>
+        }
+<span class="fc" id="L132">        return 0;</span>
+    }
+    /**
+    * Method checks the horizontal victory condition from the point
+    * @return returns n if no victory, else the victors symbol
+    */ 
+    public char horizontalVictoryCheck(int x, int y, char sideToBeChecked) {
+<span class="fc" id="L139">        int length = 1;</span>
+<span class="fc" id="L140">        int i = x - 1;</span>
+<span class="fc bfc" id="L141" title="All 4 branches covered.">        while (i &gt;= 0 &amp;&amp; gameBoard[i][y] == sideToBeChecked) {</span>
+<span class="fc" id="L142">            length++;</span>
+<span class="fc" id="L143">            i--;</span>
+        }
+<span class="fc" id="L145">        i = x + 1;</span>
+<span class="fc bfc" id="L146" title="All 4 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; gameBoard[i][y] == sideToBeChecked) {</span>
+<span class="fc" id="L147">            length++;</span>
+<span class="fc" id="L148">            i++;</span>
+        }
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (length &gt;= vcl) {</span>
+<span class="fc" id="L151">            return sideToBeChecked;</span>
+        } else {
+<span class="fc" id="L153">            return 0;</span>
+        }
+    }
+    /**
+    * Method checks the vertical victory condition from the point
+    * @return returns n if no victory, else the victors symbol
+    */ 
+    public char verticalVictoryCheck(int x, int y,  char sideToBeChecked) {
+<span class="fc" id="L161">        int length = 1;</span>
+<span class="fc" id="L162">        int j = y - 1;</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">        while (j &gt;= 0 &amp;&amp; gameBoard[x][j] == sideToBeChecked) {</span>
+<span class="fc" id="L164">            length++;</span>
+<span class="fc" id="L165">            j--;</span>
+        }
+<span class="fc" id="L167">        j = y + 1;</span>
+<span class="fc bfc" id="L168" title="All 4 branches covered.">        while (j &lt; gameBoard[0].length &amp;&amp; gameBoard[x][j] == sideToBeChecked) {</span>
+<span class="fc" id="L169">            length++;</span>
+<span class="fc" id="L170">            j++;</span>
+        }
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (length &gt;= vcl) {</span>
+<span class="fc" id="L173">            return sideToBeChecked;</span>
+        } else {
+<span class="fc" id="L175">            return 0;</span>
+        }
+    }
+     
+    /**
+    * Method checks the first diagonal victory condition from the point
+    * @return returns n if no victory, else the victors symbol
+    */ 
+    public char diagonalVictoryCheck1(int x, int y,  char sideToBeChecked) {
+<span class="fc" id="L184">        int length = 1;</span>
+<span class="fc" id="L185">        int i = x - 1;</span>
+<span class="fc" id="L186">        int j = y + 1;</span>
+<span class="fc bfc" id="L187" title="All 6 branches covered.">        while (i &gt;= 0 &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L188">            length++;</span>
+<span class="fc" id="L189">            i--;</span>
+<span class="fc" id="L190">            j++;</span>
+        }
+<span class="fc" id="L192">        i = x + 1;</span>
+<span class="fc" id="L193">        j = y - 1;</span>
+<span class="fc bfc" id="L194" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L195">            length++;</span>
+<span class="fc" id="L196">            i++;</span>
+<span class="fc" id="L197">            j--;</span>
+        }
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (length &gt;= vcl) {</span>
+<span class="fc" id="L200">            return sideToBeChecked;</span>
+        } else {
+<span class="fc" id="L202">            return 0;</span>
+        }
+    }
+    
+    /**
+    * Method checks the second diagonal victory condition from the point
+    * @return returns n if no victory, else the victors symbol
+    */ 
+    public char diagonalVictoryCheck2(int x, int y,  char sideToBeChecked) {
+<span class="fc" id="L211">        int length = 1;</span>
+<span class="fc" id="L212">        int i = x - 1;</span>
+<span class="fc" id="L213">        int j = y - 1;</span>
+<span class="fc bfc" id="L214" title="All 6 branches covered.">        while (i &gt;= 0 &amp;&amp; j &gt;= 0 &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L215">            length++;</span>
+<span class="fc" id="L216">            i--;</span>
+<span class="fc" id="L217">            j--;</span>
+        }
+<span class="fc" id="L219">        i = x + 1;</span>
+<span class="fc" id="L220">        j = y + 1;</span>
+<span class="fc bfc" id="L221" title="All 6 branches covered.">        while (i &lt; gameBoard.length &amp;&amp; j &lt; gameBoard[0].length &amp;&amp; gameBoard[i][j] == sideToBeChecked) {</span>
+<span class="fc" id="L222">            length++;</span>
+<span class="fc" id="L223">            i++;</span>
+<span class="fc" id="L224">            j++;</span>
+        }
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (length &gt;= vcl) {</span>
+<span class="fc" id="L227">            return sideToBeChecked;</span>
+        } else {
+<span class="fc" id="L229">            return 0;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
